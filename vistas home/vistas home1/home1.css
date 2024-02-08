@@ -1,0 +1,15 @@
+.HomePrincipal {
+    padding: 2%;
+}
+
+.card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh; /* Espacio entre cards */
+}
+
+.card {
+    display: flex;
+    border-radius: 10px;
+}
+
