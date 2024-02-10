@@ -1,81 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!--Bootstrap-->
-    <link rel="stylesheet" href="home1.css">    
-    <title>Home 1</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Bootstrap-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="home1.css">    
+        <title>Home 1</title>
+    </head>
 
-<body>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark   ">
-        <div class="container-fluid ">
-            <a class="navbar-brand" href="#Home1">
-                <div class="Logo d-flex align-items-center">
-                    <img src="image/mapache.png" height="80" width="80">
-                    <span><h2>TaskMate</h2></span>
+    <body>
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid ">
+                <!--Logo-->
+                <a class="navbar-brand" href="#Home1">
+                    <div class="Logo d-flex align-items-center">
+                        <img src="image/mapache.png" height="70" width="70">
+                        <span><h2>TaskMate</h2></span>
+                    </div>
+                </a>
+                <!--Menu-->
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav">
+                        <!--Tareas-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Tareas">Tareas</a>
+                        </li>
+                        <!--Gastos-->
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="#Gastos">Gastos</a>
+                        </li>
+                    </ul>
                 </div>
-            </a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#Tareas">Tareas</a>
-                  </li>
-    
-                  <li class="nav-item mx-2">
-                    <a class="nav-link" href="#Gastos">Gastos</a>
-                  </li>
-                </ul>
+                
+                <!--Notificaciones-->
+                <div class="Notificaciones mx-4">
+                    <img src="image/bell-fill.svg" alt="" height="25" width="25">
+                </div>
+                <!--Usuario-->
+                <div class="Perfil mx-4" > 
+                    <img src="image/hombre.png" height="50" width="50"> 
+                </div>
             </div>
-            
-            <div class="Notificaciones mx-4">
-                <img src="image/notificaciones.png" height="50" width="50"> 
-            </div>
-            <div class="Perfil mx-4" > 
-                <img src="image/hombre.png" height="70" width="70"> 
-            </div>
-        </div>
-    </nav>
+        </nav>
 
-    <div class="HomePrincipal">
-        <div class="row row-cols-2">
-            <div class="col bg-warning rounded p-3">
-                <div class="card-list">
-                    <div class="card">
-                        <img src="image/cocina.png" alt="Imagen" width="50" height="50">
-                        <div class="card-content">
-                            <h3>Hacer la comida</h3>
-                        </div>
-                    </div>
-                    <div class="card d-flex">
-                        <img src="image/cuarto-de-bano.png" alt="Imagen" width="50" height="50">
-                        <div class="card-content">
-                            <h3>Limpiar baño</h3>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content d-flex">
-                            <div>
-                                <img src="image/sofa.png" alt="Imagen" width="50" height="50">
+        <!--Pagina Principal-->
+        <div class="HomePrincipal container-fluid">
+            <div class="row" id="contenido">
+                <!--Tareas-->
+                <div class="col card-list tareas">
+                    <div class="TituloTareas">TAREAS</div>
+                    <div class="p-3">
+                        <div class="card my-4">
+                            <div class="card-content d-flex p-3 bg align-items-center">
+                                <img src="image/cocina.png" alt="Imagen" width="65" height="65" style="margin-right: 5%;">
+                                <div class="col">
+                                    <h2>Hacer la comida</h2>
+                                    <h4>Lucas</h4>
+                                </div>
+                                <div class="col text-center">
+                                    <h4>10/02/2024</h4>
+                                    <h4>Cocina</h4>
+                                </div>
                             </div>
-                            <h3>Recoger salón</h3>
                         </div>
-                    </div> 
-                </div>     
-            </div>
 
-            <div>
-                <div class="col bg-danger">
-                    b
+                        <div class="card my-4">
+                            <div class="card-content d-flex p-3 bg align-items-center">
+                                <img src="image/cuarto-de-bano.png" alt="Imagen" width="65" height="65" style="margin-right: 5%;">
+                                <div class="col">
+                                    <h2>Limpiar baño</h2>
+                                    <h4>David</h4>
+                                </div>
+                                <div class="col text-center">
+                                    <h4>11/03/2024</h3>
+                                    <h4>Baño</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card my-4">
+                            <div class="card-content d-flex p-3 bg align-items-center">
+                                <img src="image/sofa.png" alt="Imagen" width="65" height="65" style="margin-right: 5%;">
+                                <div class="col">
+                                    <h2>Recoger salón</h2>
+                                    <h4>Clara</h4>
+                                </div>
+                                <div class="col text-center">
+                                    <h4>12/04/2024</h4>
+                                    <h4>Salón</h4>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
                 </div>
-                <div class="col bg-success">
-                    c
+
+                <div class="col" id="containerDerecha">
+                    <!--Notas-->
+                    <div class="row justify-content-center align-items-center text-center">
+                        <div class="notas">
+                            <div class="TituloNotas">NOTAS</div>
+
+                            <div class="carousel slide p-3" id="taskCarousel" data-ride="carousel">
+                                <div class="carousel-inner  p-3">
+                                    <div class="carousel-item active">
+                                        <div class="task-card">
+                                            <h2>Nota 1</h2>
+                                            <p>Falta pan</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="carousel-item">
+                                        <div class="task-card">
+                                            <h2>Nota 2</h2>
+                                            <p>Esta noche no duermo aquí</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="carousel-item">
+                                        <div class="task-card">
+                                            <h2>Nota 3</h2>
+                                            <p>Os quiero</p>
+                                        </div>
+                                    </div>
+
+                                    <a class="carousel-control-prev" href="#taskCarousel" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    </a>
+    
+                                    <a class="carousel-control-next" href="#taskCarousel" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    
+                    <!--Gastos-->
+                    <div class="row justify-content-center align-items-center text-center">
+                        <div class="gastos">
+                            <div class="TituloGastos">GASTOS</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
+
+    <!--Para el carousel-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </html>
