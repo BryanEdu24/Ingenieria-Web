@@ -1,0 +1,60 @@
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 30%  10% 30%;
+    grid-template-areas:
+     "datos . habitaciones "
+     "miembros miembros miembros ";
+    margin: 0 auto;
+    text-align: center;
+
+    padding: 10px;
+    justify-content: center;
+    background-color: rgb(248, 244, 234);
+    column-gap: 16px;
+    row-gap: 32px;
+  }
+  .wrapper div{
+    border:2px solid rgb(7, 7, 7);
+    border-radius: 5px;
+  }
+ .Datos { 
+    
+    background-color: rgb(255, 255, 255);
+    padding: 2px;
+    grid-area: datos;
+ }
+ .Habitaciones { 
+    background-color: rgb(255, 255, 255);
+    padding: 2px;
+    grid-area: habitaciones;
+}
+ .Miembros {
+    background-color: rgb(255, 255, 255);
+    padding: 2px;
+    grid-area: miembros;
+
+}
+h1{
+    color: black;
+}
+h2{
+    color: black;
+}
+ul {
+    list-style: none;
+ }
+ p{
+    text-align: left;
+    color: black;
+ }
+li{
+    border:1px solid rgb(0, 0, 0);
+    color: black;
+    border-radius: 10px;
+    text-align:left;
+}
+body{
+    color: rgb(247, 236, 236);
+    text-align: center;
+}
