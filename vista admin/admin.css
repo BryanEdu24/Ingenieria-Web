@@ -1,0 +1,18 @@
+body{
+    background-color: #faedcd;
+}
+
+.tareas{
+    border-radius: 35px;
+    box-shadow: 10px 5px 12px rgba(0,0,0,.2);
+    background-color:#4e4e4e;
+}
+
+.letra{
+    font-weight: bold;
+    color: aliceblue;
+}
+
+.letraInfo{
+    color: aliceblue;
+}
