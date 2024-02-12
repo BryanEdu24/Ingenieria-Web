@@ -1,0 +1,7 @@
+#div-list {
+    height: 45.6rem;
+}
+
+#div-list > div {
+    border: 0.3rem solid black;
+}
