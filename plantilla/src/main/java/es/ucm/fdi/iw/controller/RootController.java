@@ -34,17 +34,17 @@ public class RootController {
         return "TM_home2";
     }
 
-    @GetMapping("/tareas")
+    @GetMapping("/task")
     public String TM_tareas(Model model) {
         return "TM_task";
     }
 
-    @GetMapping("/jefe")
+    @GetMapping("/manager")
     public String TM_jefe(Model model) {
-        return "TM_jefe";
+        return "TM_manager";
     }
 
-    @GetMapping("/gastos")
+    @GetMapping("/expenses")
     public String TM_gastos(Model model) {
         return "TM_expenses";
     }
