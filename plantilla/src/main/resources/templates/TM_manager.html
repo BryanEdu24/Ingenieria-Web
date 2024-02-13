@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <th:block th:replace="fragments/head :: header" />
+        <title>Manager</title>
+    </head>
+
+	<body>
+		<!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid ">
+                <!--Logo-->
+                <a class="navbar-brand" href="#Home1">
+                    <div class="Logo d-flex align-items-center">
+                        <img src="image/mapache.png" height="70" width="70">
+                        <span><h2>TaskMate</h2></span>
+                    </div>
+                </a>
+                <!--Menu-->
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav">
+                        <!--Tareas-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Tareas">Tareas</a>
+                        </li>
+                        <!--Gastos-->
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="#Gastos">Gastos</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!--Notificaciones-->
+                <div class="Notificaciones mx-4">
+                    <img src="image/bell-fill.svg" alt="" height="25" width="25">
+                </div>
+                <!--Usuario-->
+                <div class="Perfil mx-4" > 
+                    <img src="image/hombre.png" height="50" width="50"> 
+                </div>
+            </div>
+        </nav>
+
+		<div class="container-fluid contenedor">
+			<div class="row d-flex mb-4">
+				<div class="col align-items-center d-flex justify-content-center">
+					<div class="Datos">
+						<div class="TituloDatos">Datos de casa</div>
+						<div class="p-3">
+							<div class="card my-2">
+								<div class="card-content p-2">
+									<ul>
+										<li>Lorem: ipsum dolor sit amet</li>
+										<li>consectetur: adipiscing elit</li>
+										<li>ed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+										<li>Ut enim: ad minim veniam</li>
+										<li>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col card-list">
+					<div class="Habitaciones">
+						<div class="TituloHabitacion">Habitaciones</div>
+						<div class="p-3">
+							<div class="card my-2">
+								<div class="card-content d-flex p-2 align-items-center">
+									<img src="https://cdn.iconscout.com/icon/free/png-256/free-bed-rest-person-room-sleep-take-care-44428.png" width="20" height="20" style="margin-right: 3%;">
+									Habitacion 1
+								</div>
+							</div>
+							<div class="card my-2">
+								<div class="card-content d-flex p-2 align-items-center">
+									<img src="https://cdn.iconscout.com/icon/free/png-256/free-bed-rest-person-room-sleep-take-care-44428.png" width="20" height="20" style="margin-right: 3%;">
+									Habitacion 2
+								</div>
+							</div>
+							<div class="card my-2">
+								<div class="card-content d-flex p-2 align-items-center">
+									<img src="https://icons.veryicon.com/png/o/miscellaneous/font-awesome-1/bathtub-28.png" width="20" height="20" style="margin-right: 3%;">
+									Baño 1
+								</div>
+							</div>
+							<div class="card my-2">
+								<div class="card-content d-flex p-2 align-items-center">
+									<img src="https://icons.veryicon.com/png/o/miscellaneous/hekr/operation-living-room.png" width="20" height="20" style="margin-right: 3%;">
+									Salón
+								</div>
+							</div>
+							<div class="card my-2">
+								<div class="card-content d-flex p-2 bg align-items-center">
+									<img src="https://icons.veryicon.com/png/o/miscellaneous/hekr/operation-kitchen.png" width="20" height="20" style="margin-right: 3%;">
+									Cocina
+								</div>
+							</div>		
+							
+							<div class="d-flex justify-content-end">
+								<button class="btn rounded"> <img src="image/agregar.png" alt="Imagen" width="50" height="50"> </button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="Miembros">
+				<div class="TituloMiembros">Miembros</div>
+
+				<div class="p-3">
+					<div class="card my-2">
+						<div class="card-content d-flex p-2 bg align-items-center">
+							<img src="https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" width="20" height="20" style="margin-right: 3%;">
+							David
+						</div>
+					</div>
+					<div class="card my-2">
+						<div class="card-content d-flex p-2 bg align-items-center">
+							<img src="https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" width="20" height="20" style="margin-right: 3%;">
+							Juan
+						</div>
+					</div>
+					<div class="card my-2">
+						<div class="card-content d-flex p-2 bg align-items-center">
+							<img src="https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" width="20" height="20" style="margin-right: 3%;">
+							Elsa
+						</div>
+					</div>
+					<div class="card my-2">
+						<div class="card-content d-flex p-2 bg align-items-center">
+							<img src="https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" width="20" height="20" style="margin-right: 3%;">
+							Carlos
+						</div>
+					</div>
+
+					<div class="d-flex justify-content-end">
+						<button class="btn rounded"> <img src="image/agregar.png" alt="Imagen" width="50" height="50"> </button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

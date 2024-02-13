@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <title>Expenses</title>
+</head>
+
+<body>
+       <!--Navbar-->
+       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid ">
+            <!--Logo-->
+            <a class="navbar-brand" href="#Home1">
+                <div class="Logo d-flex align-items-center">
+                    <img src="/image/mapache.png" height="70" width="70">
+                    <span><h2>TaskMate</h2></span>
+                </div>
+            </a>
+            <!--Menu-->
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <!--Tareas-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#Tareas">Tareas</a>
+                    </li>
+                    <!--Gastos-->
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="#Gastos">Gastos</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!--Notificaciones-->
+            <div class="Notificaciones mx-4">
+                <img src="/image/bell-fill.svg" alt="" height="25" width="25">
+            </div>
+            <!--Usuario-->
+            <div class="Perfil mx-4" > 
+                <img src="/image/hombre.png" height="50" width="50"> 
+            </div>
+        </div>
+    </nav>
+    <!-- Principal -->
+    <div>
+        <!-- Nuevo Gasto -->
+        <div>
+            <button class="m-3 rounded-pill p-2"><img src="/image/add.svg" alt="Nuevo Gasto" width="30"></button>
+        </div>
+        <div id="div-list" class="d-flex ps-4 pb-4 pe-5">
+            <!-- Lista Gastos -->
+            <div class="col-3 p-2 me-2">
+                Lista Gastos
+            </div>
+            <!-- Balance -->
+            <div class="col-6 p-2">
+                Balance
+            </div>
+            <!-- Reparto -->
+            <div class="col-3 p-2 ms-2">
+                Reparto
+            </div>
+        </div>
+        <!-- Historial -->
+        <div class="d-flex justify-content-end">
+            <button class="m-3 rounded-pill p-2"><img src="/image/history.svg" alt="Historial" width="30"></button>
+        </div>
+    </div>
+
+</body>
+
+</html>
