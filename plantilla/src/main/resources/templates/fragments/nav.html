@@ -44,6 +44,20 @@
                     <img th:src="@{/img/hombre.png}" src="/img/hombre.png" height="50" width="50">
                 </div>
             </div>
+            <li class="nav-item debug align-self-center" th:if="${application.debug}">
+                <form class="d-flex" th:action="@{/login}" method="post">
+                    <input type="hidden" name="username" value="a">
+                    <input type="hidden" name="password" value="aa">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">a</button>
+                </form>
+            </li>
+            <li class="nav-item debug align-self-center" th:if="${application.debug}">
+                <form class="d-flex" th:action="@{/login}" method="post">
+                    <input type="hidden" name="username" value="b">
+                    <input type="hidden" name="password" value="aa">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">b</button>
+                </form>
+            </li>
         </nav>
     </header>
 </body>

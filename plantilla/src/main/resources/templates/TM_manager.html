@@ -8,7 +8,7 @@
 
 <body>
 	<!--Navbar-->
-    <header th:replace="fragments/nav.html :: nav"></header>
+	<header th:replace="fragments/nav.html :: nav"></header>
 
 	<div class="container-fluid contenedor">
 		<div class="row d-flex mb-4">
@@ -73,8 +73,8 @@
 						</div>
 
 						<div class="d-flex justify-content-end">
-							<button class="btn rounded"> <img src="image/agregar.png" alt="Imagen" width="50"
-									height="50"> </button>
+							<button class="btn rounded"> <img th:src="@{/img/agregar.png}" src="/img/agregar.png"
+									alt="Imagen" width="50" height="50"> </button>
 						</div>
 					</div>
 				</div>
@@ -115,7 +115,8 @@
 				</div>
 
 				<div class="d-flex justify-content-end">
-					<button class="btn rounded"> <img src="image/agregar.png" alt="Imagen" width="50" height="50">
+					<button class="btn rounded"> <img th:src="@{/img/agregar.png}" src="/img/agregar.png" alt="Imagen"
+							width="50" height="50">
 					</button>
 				</div>
 			</div>
