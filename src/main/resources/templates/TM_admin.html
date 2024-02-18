@@ -15,10 +15,11 @@
             <!--Casas-->
             <div class="col card-list tareas p-4 mt-2 justify-content-center">
                 <div class="">
-                    <div class="card my-2">
+
+                    <div th:each="house: ${houses}" class="card my-2">
                         <div class="card-content d-flex p-1 bg align-items-center">
                             <div class="col">
-                                <h5> Casa AGHIUA </h5>
+                                <h5 th:text="${house.name}"> NOMBRE CASA </h5>
                             </div>
                             <button class="btn">
                                 <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" alt="Imagen" width="25" height="25"
@@ -31,53 +32,6 @@
                         </div>
                     </div>
 
-                    <div class="card my-2">
-                        <div class="card-content d-flex p-1 bg align-items-center">
-                            <div class="col">
-                                <h5> Casa PROBLEMAS </h5>
-                            </div>
-                            <button class="btn">
-                                <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" alt="Imagen" width="25" height="25"
-                                    style="margin-right: 5%;">
-                            </button>
-                            <button class="btn">
-                                <img th:src="@{/img/papelera.png}" src="/img/papelera.png" alt="Imagen" width="25"
-                                    height="25" style="margin-right: 5%;">
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="card my-2">
-                        <div class="card-content d-flex p-1 bg align-items-center">
-                            <div class="col">
-                                <h5> Casa BANEO </h5>
-                            </div>
-                            <button class="btn">
-                                <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" alt="Imagen" width="25" height="25"
-                                    style="margin-right: 5%;">
-                            </button>
-                            <button class="btn">
-                                <img th:src="@{/img/papelera.png}" src="/img/papelera.png" alt="Imagen" width="25"
-                                    height="25" style="margin-right: 5%;">
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="card my-2">
-                        <div class="card-content d-flex p-1 bg align-items-center">
-                            <div class="col">
-                                <h5> Casa EJEMPLO </h5>
-                            </div>
-                            <button class="btn">
-                                <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" alt="Imagen" width="25" height="25"
-                                    style="margin-right: 5%;">
-                            </button>
-                            <button class="btn">
-                                <img th:src="@{/img/papelera.png}" src="/img/papelera.png" alt="Imagen" width="25"
-                                    height="25" style="margin-right: 5%;">
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

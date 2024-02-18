@@ -14,7 +14,7 @@
         <div class="row">
 
             <div class="col justify-content-center p-1">
-                <!--Filtro y titulo-->
+                <!--Filtro y titulo REVISAR THYMELEAF-->
                 <div class="d-flex tareas justify-content-center align-items-center">
                     <div class="letra">TAREAS (función click tareas no hecha)</div>
                     <div class="d-flex">
@@ -46,15 +46,16 @@
                 <!--Tareas-->
                 <div class="card-list tareas p-3 mt-2 justify-content-center">
                     <div class="">
-                        <div class="card my-2">
+
+                        <div th:each="task: ${tasks}" class="card my-2">
                             <div class="card-content d-flex p-1 bg align-items-center">
                                 <div class="col">
-                                    <h5>Hacer la comida</h5>
-                                    <h7>Lucas</h7>
+                                    <h5 th:text="${task.name}">Hacer la comida</h5>
+                                    <h7 th:text="${task.author}">Lucas</h7>
                                 </div>
                                 <div class="col text-center">
-                                    <h7>10/02/2024<h7>
-                                            <h7>Cocina</h7>
+                                    <h7 th:text="${task.date}">10/02/2024<h7>
+                                    <h7 th:text="${task.room}">Cocina</h7>
                                 </div>
                                 <button class="btn">
                                     <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
@@ -63,56 +64,6 @@
                             </div>
                         </div>
 
-                        <div class="card my-2">
-                            <div class="card-content d-flex p-1 bg align-items-center">
-                                <div class="col">
-                                    <h5>Hacer la comida</h5>
-                                    <h7>Lucas</h7>
-                                </div>
-                                <div class="col text-center">
-                                    <h7>10/02/2024<h7>
-                                            <h7>Cocina</h7>
-                                </div>
-                                <button class="btn">
-                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
-                                        height="50" style="margin-right: 5%;">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="card my-2">
-                            <div class="card-content d-flex p-1 bg align-items-center">
-                                <div class="col">
-                                    <h5>Hacer la comida</h5>
-                                    <h7>Lucas</h7>
-                                </div>
-                                <div class="col text-center">
-                                    <h7>10/02/2024<h7>
-                                            <h7>Cocina</h7>
-                                </div>
-                                <button class="btn">
-                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
-                                        height="50" style="margin-right: 5%;">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="card my-2">
-                            <div class="card-content d-flex p-1 bg align-items-center">
-                                <div class="col">
-                                    <h5>Limpiar baño</h5>
-                                    <h7>David</h7>
-                                </div>
-                                <div class="col text-center">
-                                    <h7>12/02/2024<h7>
-                                            <h7>Baño</h7>
-                                </div>
-                                <button class="btn">
-                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
-                                        height="50" style="margin-right: 5%;">
-                                </button>
-                            </div>
-                        </div>
                     </div>
                     <button class="btn rounded"> <img th:src="@{/img/agregar.png}" src="/img/agregar.png" alt="Imagen"
                             width="50" height="50" style="margin-right: 5%;"> </button>
@@ -134,42 +85,20 @@
                     <div class="letra"> Notas de la tarea </div>
                     <div class="card-list">
                         <div class="p-3">
-                            <div class="card my-2">
+
+                            <div th:each="note: ${notes}" class="card my-2">
                                 <div class="card-content d-flex p-1 bg align-items-center">
                                     <div class="card-header">
                                         <div>
-                                            <h7> David </h7>
+                                            <h7 th:text="${note.author}"> David </h7>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <h6>Esta tarea hay que hacerla ya</h6>
+                                        <h6 th:text="${note.msg}">Esta tarea hay que hacerla ya</h6>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card my-4">
-                                <div class="card-content d-flex p-1 bg align-items-center">
-                                    <div class="card-header">
-                                        <div>
-                                            <h7> Eduardo </h7>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <h6>Mal hecha</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card my-4">
-                                <div class="card-content d-flex p-1 bg align-items-center">
-                                    <div class="card-header">
-                                        <div>
-                                            <h7> Fumu </h7>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <h6>Tarea ya hecha, ¿por qué la reabrís?</h6>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                         <div class="p-2 justify-content-center">
                             <form action="" method="post">
