@@ -9,6 +9,16 @@
             "projectName": "plantilla",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-IwApplication<Ingenieria-Web>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "es.ucm.fdi.iw.IwApplication",
+            "projectName": "Ingenieria-Web",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

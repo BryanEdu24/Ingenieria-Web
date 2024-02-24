@@ -17,49 +17,22 @@
             <div class="col card-list tareas">
                 <div class="TituloTareas">TAREAS</div>
                 <div class="p-3">
-                    <div class="card my-4">
-                        <div class="card-content d-flex p-3 bg align-items-center">
-                            <img th:src="@{/img/cocina.png}" src="/img/cocina.png" alt="Imagen" width="65" height="65"
-                                style="margin-right: 5%;">
-                            <div class="col">
-                                <h2>Hacer la comida</h2>
-                                <h4>Lucas</h4>
+                    <div th:each="task : ${tasklist}"> 
+                        <span th:if="${task.usuario.username == user.username}">
+                            <div class="card my-4">
+                                <div class="card-content d-flex p-3 bg align-items-center">
+                                    <img th:src="${task.image}" alt="Imagen de la tarea"  width="65" height="65" style="margin-right: 5%;"/>
+                                    <div class="col">
+                                        <h2 th:text="${task.title}"></h2>
+                                        <h4 th:text="${task.username}"></h4>
+                                    </div>
+                                    <div class="col text-center">
+                                        <h4 th:text="${task.date}"></h4>
+                                        <h4 th:text="${task.room}"></h4>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col text-center">
-                                <h4>10/02/2024</h4>
-                                <h4>Cocina</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card my-4">
-                        <div class="card-content d-flex p-3 bg align-items-center">
-                            <img th:src="@{/img/cuarto-de-bano.png}" src="/img/cuarto-de-bano.png" alt="Imagen"
-                                width="65" height="65" style="margin-right: 5%;">
-                            <div class="col">
-                                <h2>Limpiar baño</h2>
-                                <h4>David</h4>
-                            </div>
-                            <div class="col text-center">
-                                <h4>11/03/2024</h3>
-                                    <h4>Baño</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card my-4">
-                        <div class="card-content d-flex p-3 bg align-items-center">
-                            <img th:src="@{/img/sofa.png}" src="/img/sofa.png" alt="Imagen" width="65" height="65"
-                                style="margin-right: 5%;">
-                            <div class="col">
-                                <h2>Recoger salón</h2>
-                                <h4>Clara</h4>
-                            </div>
-                            <div class="col text-center">
-                                <h4>12/04/2024</h4>
-                                <h4>Salón</h4>
-                            </div>
-                        </div>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -69,37 +42,33 @@
                 <div class="row justify-content-center align-items-center text-center">
                     <div class="notas">
                         <div class="TituloNotas">NOTAS</div>
-
                         <div class="carousel slide p-3" id="taskCarousel" data-ride="carousel">
                             <div class="carousel-inner  p-3">
-                                <div class="carousel-item active">
-                                    <div class="task-card">
-                                        <h2>Nota 1</h2>
-                                        <p>Falta pan</p>
-                                    </div>
+                                <div th:each="note : ${noteslist}"> 
+                                    <span th:if="${note.task.usuario.username == user.username}">
+                                        <div class="carousel-item active">
+                                            <div class="task-card">
+                                                <h2 th:text="${note.title}"></h2>
+                                                <p th:text="${note.description}"></p>
+                                            </div>
+                                        </div>
+
+                                       <!-- <div class="carousel-item">
+                                            <div class="task-card">
+                                                <h2>Nota 3</h2>
+                                                <p>Os quiero</p>
+                                            </div>
+                                        </div>-->
+
+                                        <a class="carousel-control-prev" href="#taskCarousel" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        </a>
+
+                                        <a class="carousel-control-next" href="#taskCarousel" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        </a>
+                                    </span>
                                 </div>
-
-                                <div class="carousel-item">
-                                    <div class="task-card">
-                                        <h2>Nota 2</h2>
-                                        <p>Esta noche no duermo aquí</p>
-                                    </div>
-                                </div>
-
-                                <div class="carousel-item">
-                                    <div class="task-card">
-                                        <h2>Nota 3</h2>
-                                        <p>Os quiero</p>
-                                    </div>
-                                </div>
-
-                                <a class="carousel-control-prev" href="#taskCarousel" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                </a>
-
-                                <a class="carousel-control-next" href="#taskCarousel" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -110,10 +79,10 @@
                     <div class="gastos">
                         <div class="TituloGastos">GASTOS</div>
                         <div class="Gastos_actuales">
-                            <h1>-50 &euro;</h1>
+                            <h1 th:text="${expenses?.total}">&euro;</h1> <!--Comprueba campo nulable--> 
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
     </div>
