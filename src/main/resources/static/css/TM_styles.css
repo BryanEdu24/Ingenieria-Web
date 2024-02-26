@@ -18,7 +18,7 @@ body{
 }
 
 #div-list {
-    height: 45.6rem;
+    height: 44.5rem;
 }
 
 #div-list > div {
@@ -27,6 +27,41 @@ body{
 
 .contenedor {
     padding: 2%;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.bolder {
+    font-weight: bold;
+}
+
+.balance > p {
+    font-size: 2.5em;
+    margin: 1.5em;
+}
+
+.div-gastos > div > p {
+    margin: 1em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.div-gastos > div {
+    margin: 3em 2em 0em 2em;
+    border-radius: 3em;
+    background-color: #fefae0;
+}
+
+.div-gastos > div > button {
+    border: none;
+    background: none;
+    padding: 0;
 }
 
 .TituloDatos, .TituloHabitacion, .TituloMiembros {

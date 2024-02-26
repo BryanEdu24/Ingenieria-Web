@@ -19,21 +19,65 @@
         </div>
         <div id="div-list" class="d-flex ps-4 pb-4 pe-5">
             <!-- Lista Gastos -->
-            <div class="col-3 p-2 me-2">
-                Lista Gastos
+            <div class="col-5 p-2 me-2 div-gastos">
+                <div class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
+                    <p>Clara</p>
+                    <p>72.50€</p>
+                    <p>Concierto</p>
+                    <p>23/02/2024</p>
+                </div>
+                <div class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
+                    <p>David</p>
+                    <p>34.21€</p>
+                    <p>Fiesta</p>
+                    <p>23/02/2024</p>
+                </div>
+                <div class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
+                    <p>Fumu</p>
+                    <p>67.85€</p>
+                    <p>Compra semanal</p>
+                    <p>23/02/2024</p>
+                </div>
             </div>
             <!-- Balance -->
-            <div class="col-6 p-2">
-                Balance
+            <div class="col-3 p-2 balance">
+                <p>Lucas <span class="red bolder">-187.54€</span></p>
+                <p>David <span class="green bolder">+34.21€</span></p>
+                <p>Fumu <span class="green bolder">+67.85€</span></p>
+                <p>Clara <span class="green bolder">+72.50€</span></p>
+                <p>Eduardo <span class="bolder">0€</span></p>
             </div>
             <!-- Reparto -->
-            <div class="col-3 p-2 ms-2">
-                Reparto
+            <div class="col-4 p-2 ms-2 div-gastos">
+                <div class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
+                    <p>Lucas</p>
+                    <p>Paga</p>
+                    <p>34.21€</p>
+                    <p>A</p>
+                    <p>David</p>
+                    <button><img th:src="@{/img/tick.svg}" src="/img/tick.svg" width="30" alt="Tick"></button>
+                </div>
+                <div class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
+                    <p>Lucas</p>
+                    <p>Paga</p>
+                    <p>67.85€</p>
+                    <p>A</p>
+                    <p>Fumu</p>
+                    <button><img th:src="@{/img/tick.svg}" src="/img/tick.svg" width="30" alt="Tick"></button>
+                </div>
+                <div class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
+                    <p>Lucas</p>
+                    <p>Paga</p>
+                    <p>72.50€</p>
+                    <p>A</p>
+                    <p>Clara</p>
+                    <button><img th:src="@{/img/tick.svg}" src="/img/tick.svg" width="30" alt="Tick"></button>
+                </div>
             </div>
         </div>
         <!-- Historial -->
         <div class="d-flex justify-content-end">
-            <button class="m-3 rounded-pill p-2"><img th:src="@{/img/history.svg}" src="/img/history.svg"
+            <button class="m-3 rounded-pill p-3"><img th:src="@{/img/history.svg}" src="/img/history.svg"
                     alt="Historial" width="30"></button>
         </div>
     </div>
