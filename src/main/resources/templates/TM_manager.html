@@ -17,15 +17,8 @@
 					<div class="TituloDatos">Datos de casa</div>
 					<div class="p-3">
 						<div class="card my-2">
-							<div class="card-content p-2">
-								<ul>
-									<li>Lorem: ipsum dolor sit amet</li>
-									<li>consectetur: adipiscing elit</li>
-									<li>ed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
-									<li>Ut enim: ad minim veniam</li>
-									<li>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat</li>
-								</ul>
+							<div  th:each="history : ${historical}" class="card-content p-2">
+								<p th:text="${history.message}">Habitacion</p>	
 							</div>
 						</div>
 					</div>
@@ -35,47 +28,15 @@
 			<div class="col card-list">
 				<div class="Habitaciones">
 					<div class="TituloHabitacion">Habitaciones</div>
-					<div class="p-3">
+					<div  class="p-3">
 						<div class="card my-2">
-							<div class="card-content d-flex p-2 align-items-center">
-								<img src="https://cdn.iconscout.com/icon/free/png-256/free-bed-rest-person-room-sleep-take-care-44428.png"
-									width="20" height="20" style="margin-right: 3%;">
-								Habitacion 1
+							<div th:each="room : ${rooms}" class="card-content d-flex p-2 align-items-center">
+								<img th:src="${room.image}"
+								   width="20" height="20" style="margin-right: 3%;">
+								 <p th:text="${room.name}">Habitacion</p>	
 							</div>
 						</div>
-						<div class="card my-2">
-							<div class="card-content d-flex p-2 align-items-center">
-								<img src="https://cdn.iconscout.com/icon/free/png-256/free-bed-rest-person-room-sleep-take-care-44428.png"
-									width="20" height="20" style="margin-right: 3%;">
-								Habitacion 2
-							</div>
-						</div>
-						<div class="card my-2">
-							<div class="card-content d-flex p-2 align-items-center">
-								<img src="https://icons.veryicon.com/png/o/miscellaneous/font-awesome-1/bathtub-28.png"
-									width="20" height="20" style="margin-right: 3%;">
-								Baño 1
-							</div>
-						</div>
-						<div class="card my-2">
-							<div class="card-content d-flex p-2 align-items-center">
-								<img src="https://icons.veryicon.com/png/o/miscellaneous/hekr/operation-living-room.png"
-									width="20" height="20" style="margin-right: 3%;">
-								Salón
-							</div>
-						</div>
-						<div class="card my-2">
-							<div class="card-content d-flex p-2 bg align-items-center">
-								<img src="https://icons.veryicon.com/png/o/miscellaneous/hekr/operation-kitchen.png"
-									width="20" height="20" style="margin-right: 3%;">
-								Cocina
-							</div>
-						</div>
-
-						<div class="d-flex justify-content-end">
-							<button class="btn rounded"> <img th:src="@{/img/agregar.png}" src="/img/agregar.png"
-									alt="Imagen" width="50" height="50"> </button>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -86,34 +47,12 @@
 
 			<div class="p-3">
 				<div class="card my-2">
-					<div class="card-content d-flex p-2 bg align-items-center">
-						<img src="https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" width="20"
+					<div th:each="user : ${users}" class="card-content d-flex p-2 bg align-items-center">
+						<img th:src="${user.image}" width="20"
 							height="20" style="margin-right: 3%;">
-						David
+							<p th:text="${user.name}">Lucas</p>
 					</div>
 				</div>
-				<div class="card my-2">
-					<div class="card-content d-flex p-2 bg align-items-center">
-						<img src="https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" width="20"
-							height="20" style="margin-right: 3%;">
-						Juan
-					</div>
-				</div>
-				<div class="card my-2">
-					<div class="card-content d-flex p-2 bg align-items-center">
-						<img src="https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" width="20"
-							height="20" style="margin-right: 3%;">
-						Elsa
-					</div>
-				</div>
-				<div class="card my-2">
-					<div class="card-content d-flex p-2 bg align-items-center">
-						<img src="https://assets.stickpng.com/images/585e4beacb11b227491c3399.png" width="20"
-							height="20" style="margin-right: 3%;">
-						Carlos
-					</div>
-				</div>
-
 				<div class="d-flex justify-content-end">
 					<button class="btn rounded"> <img th:src="@{/img/agregar.png}" src="/img/agregar.png" alt="Imagen"
 							width="50" height="50">
