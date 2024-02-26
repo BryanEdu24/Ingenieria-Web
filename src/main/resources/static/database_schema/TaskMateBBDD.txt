@@ -1,0 +1,73 @@
+user {
+	id integer pk increments unique
+	active boolean
+	name string
+	password string
+	email string
+	houseId integer > house.id
+}
+
+expense {
+	id integer pk increments unique
+	active boolean
+	title text
+	author text
+	quantity float
+	date date
+}
+
+expenseUser{
+	userId integer > user.id
+	expenseId integer > expense.id
+}
+
+note {
+	id integer pk increments unique
+	active boolean
+	title text
+	message integer
+	taskId integer > task.id
+}
+
+task {
+	id integer pk increments unique
+	active boolean
+	title text
+	author text
+	date date
+	userId integer > user.id
+	roomId integer > room.id
+}
+
+notification {
+	id integer pk increments unique
+	active boolean
+	message text
+	date date
+	read boolean
+	userId integer > user.id
+}
+
+house {
+	id integer pk increments unique
+	active boolean
+	key text
+	name text
+}
+
+room {
+	id integer pk increments unique
+	active boolean
+	name text
+	photo blob
+	houseId integer > house.id
+}
+
+historical {
+	id integer pk increments unique
+	active boolean
+	task text
+	expense float
+	user text
+	message text
+}
