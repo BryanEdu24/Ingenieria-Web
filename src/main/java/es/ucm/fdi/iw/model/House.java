@@ -22,6 +22,7 @@ public class House implements Transferable<House.Transfer> {
     @Column(nullable = false)
     private String pass;
 
+    private boolean enabled;
 
     @Getter
     @AllArgsConstructor
