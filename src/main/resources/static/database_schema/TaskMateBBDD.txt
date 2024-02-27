@@ -5,7 +5,7 @@ user {
 	password string
 	email string
 	role string
-	houseId integer > house.id
+	house_id integer > house.id
 }
 
 expense {
@@ -18,8 +18,8 @@ expense {
 }
 
 userExpense{
-	userId integer > user.id
-	expenseId integer > expense.id
+	user_id integer > user.id
+	expense_id integer > expense.id
 }
 
 note {
@@ -27,7 +27,7 @@ note {
 	enabled boolean
 	title text
 	message integer
-	taskId integer > task.id
+	task_id integer > task.id
 }
 
 task {
@@ -36,8 +36,8 @@ task {
 	title text
 	author text
 	date date
-	userId integer > user.id
-	roomId integer > room.id
+	user_id integer > user.id
+	room_id integer > room.id
 }
 
 notification {
@@ -46,13 +46,13 @@ notification {
 	message text
 	date date
 	read boolean
-	userId integer > user.id
+	user_id integer > user.id
 }
 
 house {
 	id integer pk increments unique
 	enabled boolean
-	key text
+	pass text
 	name text
 }
 
@@ -61,14 +61,12 @@ room {
 	enabled boolean
 	name text
 	photo blob
-	houseId integer > house.id
+	house_id integer > house.id
 }
 
 historical {
 	id integer pk increments unique
 	enabled boolean
-	task text
-	expense float
-	user text
+	type boolean
 	message text
 }

@@ -184,7 +184,7 @@ public class UserController {
 				target.setPassword(encodePassword(edited.getPassword()));
 			}
 		}
-		target.setUsername(edited.getUsername());
+		target.setName(edited.getName());
 
 		// update user session so that changes are persisted in the session, too
 		if (requester.getId() == target.getId()) {

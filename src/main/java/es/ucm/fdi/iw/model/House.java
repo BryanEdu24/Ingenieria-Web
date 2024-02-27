@@ -17,12 +17,12 @@ public class House implements Transferable<House.Transfer> {
     @SequenceGenerator(name = "gen", sequenceName = "gen")
     private long id;
 
-    @Column(nullable = false, unique = true)
-    private String name;
+    private boolean enabled;
+
     @Column(nullable = false)
     private String pass;
-
-    private boolean enabled;
+    @Column(nullable = false, unique = true)
+    private String name;
 
     @Getter
     @AllArgsConstructor
