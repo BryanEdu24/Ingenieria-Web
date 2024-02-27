@@ -18,47 +18,43 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @NamedQueries({
-        @NamedQuery(name="User.byUsername",
-                query="SELECT u FROM User u "
-                        + "WHERE u.username = :username AND u.enabled = TRUE"),
-        @NamedQuery(name="User.hasUsername",
-                query="SELECT COUNT(u) "
-                        + "FROM User u "
-                        + "WHERE u.username = :username")
+        @NamedQuery(name = "User.byUsername", query = "SELECT u FROM User u "
+                + "WHERE u.username = :username AND u.enabled = TRUE"),
+        @NamedQuery(name = "User.hasUsername", query = "SELECT COUNT(u) "
+                + "FROM User u "
+                + "WHERE u.username = :username")
 })
-@Table(name="IWUser")
+@Table(name = "IWUser")
 public class User implements Transferable<User.Transfer> {
 
     public enum Role {
-        USER,			// normal users 
-        ADMIN,          // admin users
+        USER, // normal users
+        ADMIN, // admin users
+        MANAGER, // manager users
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")
-	private long id;
+    private long id;
 
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;
 
-    private String firstName;
-    private String lastName;
+    private String email;
 
     private boolean enabled;
     private String roles; // split by ',' to separate roles
 
-	@OneToMany
-	@JoinColumn(name = "sender_id")
-	private List<Message> sent = new ArrayList<>();
-	@OneToMany
-	@JoinColumn(name = "recipient_id")	
-	private List<Message> received = new ArrayList<>();		
+    @ManyToOne
+    // @JoinColumn(name = "house_id")
+    private House house;
 
     /**
      * Checks whether this user has a given role.
+     * 
      * @param role to check
      * @return true iff this user has that role.
      */
@@ -70,20 +66,19 @@ public class User implements Transferable<User.Transfer> {
     @Getter
     @AllArgsConstructor
     public static class Transfer {
-		private long id;
+        private long id;
         private String username;
-		private int totalReceived;
-		private int totalSent;
+        private String email;
+        private long houseId;
     }
 
-	@Override
+    @Override
     public Transfer toTransfer() {
-		return new Transfer(id,	username, received.size(), sent.size());
-	}
-	
-	@Override
-	public String toString() {
-		return toTransfer().toString();
-	}
-}
+        return new Transfer(id, username, email, house.getId());
+    }
 
+    @Override
+    public String toString() {
+        return toTransfer().toString();
+    }
+}

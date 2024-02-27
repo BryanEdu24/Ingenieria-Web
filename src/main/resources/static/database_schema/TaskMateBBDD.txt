@@ -16,7 +16,7 @@ expense {
 	date date
 }
 
-expenseUser{
+userExpense{
 	userId integer > user.id
 	expenseId integer > expense.id
 }
