@@ -1,15 +1,16 @@
 user {
 	id integer pk increments unique
-	active boolean
+	enabled boolean
 	name string
 	password string
 	email string
+	role string
 	houseId integer > house.id
 }
 
 expense {
 	id integer pk increments unique
-	active boolean
+	enabled boolean
 	title text
 	author text
 	quantity float
@@ -23,7 +24,7 @@ userExpense{
 
 note {
 	id integer pk increments unique
-	active boolean
+	enabled boolean
 	title text
 	message integer
 	taskId integer > task.id
@@ -31,7 +32,7 @@ note {
 
 task {
 	id integer pk increments unique
-	active boolean
+	enabled boolean
 	title text
 	author text
 	date date
@@ -41,7 +42,7 @@ task {
 
 notification {
 	id integer pk increments unique
-	active boolean
+	enabled boolean
 	message text
 	date date
 	read boolean
@@ -50,14 +51,14 @@ notification {
 
 house {
 	id integer pk increments unique
-	active boolean
+	enabled boolean
 	key text
 	name text
 }
 
 room {
 	id integer pk increments unique
-	active boolean
+	enabled boolean
 	name text
 	photo blob
 	houseId integer > house.id
@@ -65,7 +66,7 @@ room {
 
 historical {
 	id integer pk increments unique
-	active boolean
+	enabled boolean
 	task text
 	expense float
 	user text
