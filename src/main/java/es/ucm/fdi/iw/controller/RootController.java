@@ -16,11 +16,11 @@ public class RootController {
 
     @GetMapping("/login")
     public String login(Model model) {
-        return "login";
+        return "TM_login";
     }
 
     @GetMapping("/")
     public String index(Model model) {
-        return "login";
+        return "TM_login";
     }
 }

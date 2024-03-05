@@ -14,13 +14,35 @@
     <div>
         <!-- Nuevo Gasto -->
         <div>
-            <button class="m-3 rounded-pill p-2"><img th:src="@{/img/add.svg}" src="/img/add.svg" alt="Nuevo Gasto"
-                    width="30"></button>
+            <button class="m-3 rounded-pill p-2"><img th:src="@{/img/add.svg}" src="/img/add.svg" alt="Nuevo Gasto"width="30" data-bs-toggle="modal" data-bs-target="#newmodaltask"></button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="newmodaltask" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Nuevo Gasto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action="@{/newExpense}" method="post">
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="div-list" class="d-flex ps-4 pb-4 pe-5">
             <!-- Lista Gastos -->
             <div class="col-5 p-2 me-2 div-gastos">
-                <div th:each="expens : ${expenses}" class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
+                <div th:each="expens : ${expenses}"
+                    class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
                     <p th:text="${expens.name}">Clara</p>
                     <p th:text="${expens.money}">72.50€</p>
                     <p th:text="${expens.issue}">Concierto</p>
@@ -29,11 +51,13 @@
             </div>
             <!-- Balance -->
             <div class="col-3 p-2 balance">
-                <p th:each="user : ${users}" th:text="${user.name}"><span th:text="${user.money}" class="bolder"></span></p>
+                <p th:each="user : ${users}" th:text="${user.name}"><span th:text="${user.money}" class="bolder"></span>
+                </p>
             </div>
             <!-- Reparto -->
             <div class="col-4 p-2 ms-2 div-gastos">
-                <div th:each="distribution : ${distributions}" class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
+                <div th:each="distribution : ${distributions}"
+                    class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
                     <p th:text="${distribution.source}">Lucas</p>
                     <p>Paga</p>
                     <p th:text="${distribution.money}">34.21€</p>

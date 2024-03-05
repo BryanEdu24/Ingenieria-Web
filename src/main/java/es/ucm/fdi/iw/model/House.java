@@ -28,7 +28,7 @@ public class House implements Transferable<House.Transfer> {
     @AllArgsConstructor
     public static class Transfer {
         private long id;
-        private String username;
+        private String name;
     }
 
     @Override

@@ -2,8 +2,9 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="login.css">
+        <th:block th:replace="fragments/head :: header" />
+
+        <link rel="stylesheet" th:href="@{/css/login.css}" href="css/login.css" type="text/css" />
         <title>LOGIN</title>
     </head>
 
@@ -18,7 +19,10 @@
             </div>
 
             <div class="card-body">
-                <form>
+                <form method="post" th:action="@{/login}">
+                    <p th:if="${#request.getQueryString() == 'error'}" class="error bg-danger p-1 rounded">
+                        <b>Error en nombre de usuario o contraseña</b>
+                    </p>
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
@@ -41,6 +45,20 @@
                         ¿No tienes una cuenta? <a href="register.html">Haz click aquí</a>
                     </div>
                 </form>
+                <li class="nav-item debug align-self-center" th:if="${application.debug}">
+                    <form class="d-flex" th:action="@{/login}" method="post">
+                        <input type="hidden" name="username" value="a">
+                        <input type="hidden" name="password" value="aa">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">a</button>
+                    </form>
+                </li>
+                <li class="nav-item debug align-self-center" th:if="${application.debug}">
+                    <form class="d-flex" th:action="@{/login}" method="post">
+                        <input type="hidden" name="username" value="b">
+                        <input type="hidden" name="password" value="aa">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">b</button>
+                    </form>
+                </li>
             </div>
         </div>
     </body>

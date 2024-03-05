@@ -19,10 +19,10 @@ import java.util.List;
 @NoArgsConstructor
 @NamedQueries({
         @NamedQuery(name = "User.byUsername", query = "SELECT u FROM User u "
-                + "WHERE u.name = :name AND u.enabled = TRUE"),
+                + "WHERE u.username = :username AND u.enabled = TRUE"),
         @NamedQuery(name = "User.hasUsername", query = "SELECT COUNT(u) "
                 + "FROM User u "
-                + "WHERE u.name = :name")
+                + "WHERE u.username = :username")
 })
 @Table(name = "IWUser")
 public class User implements Transferable<User.Transfer> {
@@ -41,7 +41,7 @@ public class User implements Transferable<User.Transfer> {
     private boolean enabled;
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String username;
     @Column(nullable = false)
     private String password;
 
@@ -75,7 +75,7 @@ public class User implements Transferable<User.Transfer> {
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, name, email, house.getId());
+        return new Transfer(id, username, email, house.getId());
     }
 
     @Override
