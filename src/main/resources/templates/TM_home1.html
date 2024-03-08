@@ -15,7 +15,7 @@
         <div class="row">
             <!--Tareas-->
             <div class="col card-list tareas">
-                <div class="TituloTareas">TAREAS</div>
+                <div class="titleStyle mt-2">TAREAS</div>
                 <div class="p-3">
                     <div th:each="task : ${tasklist}"> 
                         <span th:if="${task.usuario.username == user.username}">
@@ -41,7 +41,7 @@
                 <!--Notas-->
                 <div class="row justify-content-center align-items-center text-center">
                     <div class="notas">
-                        <div class="TituloNotas">NOTAS</div>
+                        <div class="titleStyle mt-2">NOTAS</div>
                         <div class="carousel slide p-3" id="taskCarousel" data-ride="carousel">
                             <div class="carousel-inner  p-3">
                                 <div th:each="note : ${noteslist}"> 
@@ -77,7 +77,7 @@
                 <!--Gastos-->
                 <div class="row justify-content-center align-items-center text-center">
                     <div class="gastos">
-                        <div class="TituloGastos">GASTOS</div>
+                        <div class="titleStyle mt-2">GASTOS</div>
                         <div class="Gastos_actuales">
                             <h1 th:text="${expenses?.total}">&euro;</h1> <!--Comprueba campo nulable--> 
                         </div>

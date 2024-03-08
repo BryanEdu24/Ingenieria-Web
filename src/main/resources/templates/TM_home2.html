@@ -20,21 +20,155 @@
         <div class="Botones p-5">
             <div>
                 <button class="botonCrear">
-                    <img th:src="@{/img/nuevaCasapng.png}" src="/img/nuevaCasapng.png" alt="Imagen" height="75"
-                        width="75">
+                    <img th:src="@{/img/nuevaCasapng.png}" src="/img/nuevaCasapng.png" alt="Imagen" height="75" width="75" data-bs-toggle="modal" data-bs-target="#newHouseModal">
                 </button>
                 <div class="botonTexto my-2"><b>Crear Casa</b></div>
             </div>
 
             <div>
                 <button class="botonUnirse">
-                    <img th:src="@{/img/buscarCasa.png}" src="/img/buscarCasa.png" alt="Imagen" height="75" width="75">
+                    <img th:src="@{/img/buscarCasa.png}" src="/img/buscarCasa.png" alt="Imagen" height="75" width="75" data-bs-toggle="modal" data-bs-target="#newTaskModal">
                 </button>
                 <div class="botonTexto my-2"><b>Unirse a Casa</b></div>
             </div>
         </div>
     </div>
 
+    <!-- Modal CREAR CASA -->
+    <div class="modal fade" id="newHouseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><u>Nueva Casa</u> 🏠</h4>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <form>
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la casa:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" placeholder="Introduzca el nombre">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Contraseña de la casa:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" placeholder="Introduzca contraseña">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-5"><b>·&nbsp;</b> Habitaciones:</label>
+                            <div class="col-7">
+                                <div id="roomsContainer">
+                                    <input type="text" class="form-control" placeholder="Nombre habitación">
+                                </div>
+                                <div class="justify-content-end d-flex mt-3">
+                                    <button type="button" class="btn btn-success" onclick="addRoom()">Añadir habitación</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--
+                            <div class="row mb-3">
+                                <label class="col-5"><b>·&nbsp;</b> Compañer@s:</label>
+                                <div class="col-7">
+                                    <div id="roomMateContainer" class="mb-3">
+                                        <input type="text" class="form-control" placeholder="Nombre compañer@">
+                                    </div>
+                                    <div class="justify-content-end d-flex mt-3">
+                                        <button type="button" class="btn btn-success" onclick="addMate()">Añadir compañero</button>
+                                    </div>
+                                </div>
+                            </div>
+                        -->
+                    </form>
+                </div>
+                
+                <div class="modal-footer text-center d-flex justify-content-between align-items-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary btnCreateTask">Crear Casa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal BUSCAR CASA -->
+    <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><u>Encuentra tu casa</u> 🔐</h4>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <form>
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la casa:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" placeholder="Introduzca el nombre">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Clave de acceso:</label>
+                            <div class="col-7 d-flex">
+                                <input type="password" id="keyHouse" class="form-control" placeholder="Contraseña de la casa">
+                                <button class="btn btn-dark" type="button" id="btnPassword" style="border: solid 1px;"><i class="bi bi-eye-fill"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer text-center d-flex justify-content-between align-items-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary btnCreateTask">Unirme a Casa</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+
+<script>
+    const passButton = document.getElementById('btnPassword');
+    const passwordInput = document.getElementById('keyHouse');
+
+    passButton.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.querySelector('i').classList.toggle('bi-eye-fill');
+        this.querySelector('i').classList.toggle('bi-eye-slash-fill');
+    });
+
+    function addRoom() {
+        var habitacionHtml = `
+            <div class="mb-3 d-flex">
+                <input type="text" class="form-control" placeholder="Nombre habitación">
+                <button class="btn btn-light" type="button" onclick="eliminarCampo(this)">
+                    <img th:src="@{/img/basura.png}" src="/img/basura.png" alt="Eliminar" height="25" width="25">
+                </button>
+            </div>
+        `;
+        document.getElementById('roomsContainer').insertAdjacentHTML('beforeend', habitacionHtml);
+    }
+
+    function addMate() {
+        var companeroHtml = `
+            <div class="mb-3 d-flex">
+                <input type="text" class="form-control" placeholder="Nombre compañer@">
+                <button class="btn btn-light" type="button" onclick="eliminarCampo(this)">
+                    <img th:src="@{/img/basura.png}" src="/img/basura.png" alt="Eliminar" height="20" width="20">
+                </button>
+            </div>
+        `;
+        document.getElementById('roomMateContainer').insertAdjacentHTML('beforeend', companeroHtml);
+    }
+
+    function eliminarCampo(elemento) {
+        elemento.parentNode.remove();
+    }
+</script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
 
 </html>

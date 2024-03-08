@@ -8,15 +8,6 @@ body{
     background-color:#4e4e4e;
 }
 
-.letra{
-    font-weight: bold;
-    color: aliceblue;
-}
-
-.letraInfo{
-    color: aliceblue;
-}
-
 #div-list {
     height: 44.5rem;
 }
@@ -64,7 +55,17 @@ body{
     padding: 0;
 }
 
-.TituloDatos, .TituloHabitacion, .TituloMiembros {
+.TituloBienvenida {
+    text-align: center;
+    font-family: Arial Black; 
+    font-size: 55px; 
+    background: black; 
+    background-clip: text; 
+    color: transparent; 
+    text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3); 
+}
+
+.titleStyle {
     text-align: center;
     font-family: Arial Black; 
     font-size: 35px; 
@@ -74,19 +75,7 @@ body{
     text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3); 
 }
 
-.TituloTareas, .TituloNotas, .TituloGastos {
-    text-align: center;
-    font-family: Arial Black; 
-    font-size: 35px; 
-    background: black; 
-    background-clip: text; 
-    color: transparent; 
-    text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3); 
-    padding-top: 20px;
-
-}
-
-.Datos, .Habitaciones, .Miembros { 
+.Datos, .Habitaciones, .Miembros, .tareas, .notas, .gastos { 
     border-radius: 35px;
     box-shadow: 10px 5px 12px rgba(0,0,0,.2);
     background-color:#fefae0;
@@ -97,12 +86,6 @@ body{
     width: 70%;
 }
 
-.tareas, .notas, .gastos {
-    border-radius: 35px;
-    box-shadow: 10px 5px 12px rgba(0,0,0,.2);
-    background-color:#fefae0;
-}
-
 .notas, .gastos {
     width: 90%;
 }
@@ -111,6 +94,7 @@ body{
     margin:20px;
     padding-bottom: 30px;
 }
+
 .notas {
     padding-bottom: 30px;
 }
@@ -149,16 +133,6 @@ body{
     padding: 2%;
 }
 
-.TituloBienvenida {
-    text-align: center;
-    font-family: Arial Black; 
-    font-size: 55px; 
-    background: black; 
-    background-clip: text; 
-    color: transparent; 
-    text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3); 
-}
-
 .Botones {
     border-radius: 35px;
     box-shadow: 10px 5px 12px rgba(0,0,0,.2);
@@ -189,4 +163,22 @@ body{
     background-clip: text; 
     color: transparent; 
     text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3); 
+}
+
+.image-container img {
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.image-container:hover img {
+    transform: scale(1.2);
+    filter: invert(9%);
+}
+
+/* Estilo Modal */
+.modal-footer {
+    border: none;
+}
+
+.modalCross:hover {
+    filter: drop-shadow(0px 0px 2px crimson);
 }

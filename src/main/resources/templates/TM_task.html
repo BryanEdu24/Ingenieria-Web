@@ -15,29 +15,31 @@
             <div class="col justify-content-center p-1">
                 <!--Filtro y titulo REVISAR THYMELEAF-->
                 <div class="d-flex tareas justify-content-center align-items-center">
-                    <div class="letra">TAREAS (función click tareas no hecha)</div>
-                    <div class="d-flex">
-                        <div class="dropdown m-2">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Filtro habitación
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#">Baño</a></li>
-                                <li><a class="dropdown-item" href="#">Cocina</a></li>
-                                <li><a class="dropdown-item" href="#">Salón</a></li>
-                            </ul>
-                        </div>
-                        <div class="dropdown m-2">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Filtro persona
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#">Lucas</a></li>
-                                <li><a class="dropdown-item" href="#">David</a></li>
-                                <li><a class="dropdown-item" href="#">Clara</a></li>
-                            </ul>
+                    <div>
+                        <div class="titleStyle mt-2">TAREAS</div>
+                        <div class="d-flex">
+                            <div class="dropdown m-2">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Filtro habitación
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Baño</a></li>
+                                    <li><a class="dropdown-item" href="#">Cocina</a></li>
+                                    <li><a class="dropdown-item" href="#">Salón</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown m-2">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Filtro persona
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Lucas</a></li>
+                                    <li><a class="dropdown-item" href="#">David</a></li>
+                                    <li><a class="dropdown-item" href="#">Clara</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,15 +66,21 @@
                         </div>
 
                     </div>
-                    <button type="button" class="btn rounded"> <img th:src="@{/img/agregar.png}" src="/img/agregar.png" alt="Imagen"
-                            width="50" height="50" style="margin-right: 5%;"  data-bs-toggle="modal" data-bs-target="#newmodaltask"> 
-                    </button>
+
+                    <div>
+                        <button type="button" class="btn rounded">
+                            <span class="image-container">
+                                <img th:src="@{/img/agregar.png}" src="/img/agregar.png" alt="Imagen" width="50" height="50" data-bs-toggle="modal" data-bs-target="#newTaskModal">
+                            </span>
+                        </button>
+                    </div>
+                    
                 </div>
             </div>
 
             <div class="col p-1">
                 <div class="d-flex flex-column p-1 tareas justify-content-center align-items-center">
-                    <div class="letra"> <u> INFORMACIÓN DE LA TAREA SELECCIONADA </u> </div>
+                    <div class="titleStyle mt-2">Información de tarea seleccionada</div>
                     <div class="letraInfo"> Cocina </div>
                     <div class="letraInfo"> Lucas </div>
                     <div>
@@ -81,7 +89,7 @@
                     </div>
                 </div>
                 <div class="mt-2 tareas justify-content-center align-items-center p-2">
-                    <div class="letra"> Notas de la tarea </div>
+                    <div class="titleStyle mt-2"> Notas de la tarea </div>
                     <div class="card-list">
                         <div class="p-3">
                             <div th:each="note: ${notes}" class="card my-2">
@@ -102,7 +110,7 @@
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Escribir nueva nota">
                                     <div class="input-group-append">
-                                        <button class="btn btn-secondary bg-gray" type="button">Enviar</button>
+                                        <button class="btn btn-secondary" type="button">Enviar</button>
                                     </div>
                                 </div>
                             </form>
@@ -114,24 +122,65 @@
     </div>
 
 
-  <!-- Modal -->
-  <div class="modal fade modal-dialog modal-dialog-centered" id="newmodaltask" tabindex="0" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal CREAR TAREA -->
+    <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><u>Nueva Tarea</u> 📝</h4>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <form>
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la Tarea:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" placeholder="Nombre de la Tarea">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Autor de la tarea:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" value="David" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Asignada a:</label>
+                            <div class="col-7">
+                                <select name="select" class="form-select">
+                                    <option disabled selected>Seleccione uno...</option>
+                                    <option value="Clara">Clara</option>
+                                    <option value="David">David</option>
+                                    <option value="Eduardo">Eduardo</option>
+                                    <option value="Fumu">Fumu</option>
+                                    <option value="Lucas">Lucas</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Habitación:</label>
+                            <div class="col-7">
+                                <select name="select" class="form-select">
+                                    <option disabled selected>Seleccione uno...</option>
+                                    <option value="Recibidor">Recibidor</option>
+                                    <option value="Cocina">Cocina</option>
+                                    <option value="Baño">Baño</option>
+                                    <option value="Habitación">Habitación</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+
+                <div class="modal-footer text-center d-flex justify-content-between align-items-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary btnCreateTask">Crear Tarea</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
     </div>
-  </div>
 </body>
 
 </html>
