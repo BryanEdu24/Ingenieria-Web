@@ -10,6 +10,12 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({
+        /*@NamedQuery(name = "Room.byHouseId", query = "SELECT u FROM Room r "
+                    + "WHERE r.house_id = :houseId")*/
+})
+
+
 public class Room implements Transferable<Room.Transfer> {
 
     @Id

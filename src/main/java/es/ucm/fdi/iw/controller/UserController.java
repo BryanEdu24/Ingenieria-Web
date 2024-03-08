@@ -8,6 +8,7 @@ import es.ucm.fdi.iw.model.User.Role;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties.Reactive.Session;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -73,7 +74,7 @@ public class UserController {
 	 * In general, admins are always authorized, but users cannot modify
 	 * each other's profiles.
 	 */
-	@ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "No eres administrador, y éste no es tu perfil") // 403
+	@ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "No eres administrador, y este no es tu perfil") // 403
 	public static class NoEsTuPerfilException extends RuntimeException {
 	}
 
@@ -117,7 +118,8 @@ public class UserController {
 	}
 
 	@GetMapping("/task")
-	public String TM_tareas(Model model) {
+	public String TM_tareas(Model model, HttpSession session) {
+		model.addAttribute("pepe", session.getAttribute("u"));
 		return "TM_task";
 	}
 

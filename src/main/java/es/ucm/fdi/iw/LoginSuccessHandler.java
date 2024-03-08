@@ -114,4 +114,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 					String.format("%s; %s", header, "SameSite=Strict"));
 		}
 	}
+
+	/* Comprobar si user loggeado tiene casa --SI--> home1
+	 * 										 --NO--> home2
+	 */
 }

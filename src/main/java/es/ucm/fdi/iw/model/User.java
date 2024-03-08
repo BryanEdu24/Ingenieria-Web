@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * An authorized user of the system.
  */
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -22,8 +23,13 @@ import java.util.List;
                 + "WHERE u.username = :username AND u.enabled = TRUE"),
         @NamedQuery(name = "User.hasUsername", query = "SELECT COUNT(u) "
                 + "FROM User u "
-                + "WHERE u.username = :username")
+                + "WHERE u.username = :username"),
+       /* @NamedQuery(name = "User.byHouseId", query = "SELECT u FROM User u "
+                + "WHERE u.house_id = :houseId")*/
 })
+
+
+
 @Table(name = "IWUser")
 public class User implements Transferable<User.Transfer> {
 
