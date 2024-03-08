@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 import javax.persistence.*;
+
 
 @Entity
 @Data
@@ -24,16 +27,21 @@ public class House implements Transferable<House.Transfer> {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @OneToMany
+    @JoinColumn(name = "house_id")
+    private List<User> users;
+
     @Getter
     @AllArgsConstructor
     public static class Transfer {
         private long id;
         private String name;
+        private List<User> users;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, name);
+        return new Transfer(id, name, users);
     }
 
     @Override

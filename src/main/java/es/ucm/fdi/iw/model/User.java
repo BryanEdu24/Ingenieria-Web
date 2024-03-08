@@ -23,9 +23,7 @@ import java.util.List;
                 + "WHERE u.username = :username AND u.enabled = TRUE"),
         @NamedQuery(name = "User.hasUsername", query = "SELECT COUNT(u) "
                 + "FROM User u "
-                + "WHERE u.username = :username"),
-       /* @NamedQuery(name = "User.byHouseId", query = "SELECT u FROM User u "
-                + "WHERE u.house_id = :houseId")*/
+                + "WHERE u.username = :username")
 })
 
 
@@ -56,7 +54,6 @@ public class User implements Transferable<User.Transfer> {
     private String roles; // split by ',' to separate roles
 
     @ManyToOne
-    @JoinColumn(name = "house_id")
     private House house;
 
     /**
@@ -76,7 +73,7 @@ public class User implements Transferable<User.Transfer> {
         private long id;
         private String username;
         private String email;
-        private long houseId;
+        private long house_id;
     }
 
     @Override
