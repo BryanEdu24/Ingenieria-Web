@@ -29,7 +29,6 @@ public class Room implements Transferable<Room.Transfer> {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "house_id")
     private House house;
 
     @Getter
@@ -37,7 +36,7 @@ public class Room implements Transferable<Room.Transfer> {
     public static class Transfer {
         private long id;
         private String name;
-        private long houseId;
+        private long house_id;
     }
 
     @Override

@@ -127,9 +127,8 @@ public class UserController {
 
 		House target = entityManager.find(House.class, h.getId());
 
-		for (User uTest : target.getUsers()) {
-			System.out.println("Lista de usuario: " + uTest.getUsername());
-		}
+		model.addAttribute("houseUsers", target.getUsers());
+		model.addAttribute("rooms", target.getRooms());
 
 		return "TM_task";
 	}

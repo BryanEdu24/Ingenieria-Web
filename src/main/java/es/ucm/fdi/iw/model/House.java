@@ -31,17 +31,22 @@ public class House implements Transferable<House.Transfer> {
     @JoinColumn(name = "house_id")
     private List<User> users;
 
+    @OneToMany
+    @JoinColumn(name = "house_id")
+    private List<Room> rooms;
+
     @Getter
     @AllArgsConstructor
     public static class Transfer {
         private long id;
         private String name;
         private List<User> users;
+        private List<Room> rooms;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, name, users);
+        return new Transfer(id, name, users, rooms);
     }
 
     @Override

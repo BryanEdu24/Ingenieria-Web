@@ -24,9 +24,7 @@
                                     Filtro habitación
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Baño</a></li>
-                                    <li><a class="dropdown-item" href="#">Cocina</a></li>
-                                    <li><a class="dropdown-item" href="#">Salón</a></li>
+                                    <li th:each="room: ${rooms}"><a class="dropdown-item" href="#" th:text="${room.name}"> ROOM </a></li>
                                 </ul>
                             </div>
                             <div class="dropdown m-2">
@@ -35,9 +33,7 @@
                                     Filtro persona
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Lucas</a></li>
-                                    <li><a class="dropdown-item" href="#">David</a></li>
-                                    <li><a class="dropdown-item" href="#">Clara</a></li>
+                                    <li th:each="houseUser: ${houseUsers}"><a class="dropdown-item" href="#" th:text="${houseUser.username}"> USER </a></li>
                                 </ul>
                             </div>
                         </div>
