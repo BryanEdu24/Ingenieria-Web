@@ -125,12 +125,11 @@ public class UserController {
 		User u = (User) session.getAttribute("u");
 		House h = u.getHouse();
 
-		System.out.println("Lista de usuario: " + h.getUsers());
+		House target = entityManager.find(House.class, h.getId());
 
-		/*
-		for (User uTest : users) {
+		for (User uTest : target.getUsers()) {
 			System.out.println("Lista de usuario: " + uTest.getUsername());
-		}*/
+		}
 
 		return "TM_task";
 	}
