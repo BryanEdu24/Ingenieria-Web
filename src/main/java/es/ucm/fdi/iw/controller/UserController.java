@@ -2,6 +2,8 @@ package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.House;
+import es.ucm.fdi.iw.model.Room;
+import es.ucm.fdi.iw.model.Task;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
@@ -40,6 +42,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.*;
 import java.security.SecureRandom;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -110,7 +113,7 @@ public class UserController {
 	// --------------------------------------------------------------------------------------------------------------------
 
 	@GetMapping("/home1")
-	public String TM_home1(Model model) {
+	public String TM_home1(Model model, HttpSession session) {
 		return "TM_home1";
 	}
 
@@ -120,7 +123,6 @@ public class UserController {
 	}
 
 	@GetMapping("/task")
-	@Transactional
 	public String TM_tareas(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 		House h = u.getHouse();
@@ -129,8 +131,36 @@ public class UserController {
 
 		model.addAttribute("houseUsers", target.getUsers());
 		model.addAttribute("rooms", target.getRooms());
+		model.addAttribute("authorName", u.getUsername());
 
 		return "TM_task";
+	}
+
+	@PostMapping("/newTask")
+	@Transactional
+	public String postMethodName(
+			HttpServletResponse response,
+			@ModelAttribute Task edited,
+			@RequestParam(required = false) String title,
+			@RequestParam(required = false) long room_id,
+			@RequestParam(required = false) long user_id,
+			Model model, HttpSession session) throws IOException {
+
+		Task target = new Task();
+		target.setTitle(title);
+		target.setAuthor(((User) session.getAttribute("u")).getUsername());
+		target.setRoom(entityManager.find(Room.class, room_id));
+		target.setUser(entityManager.find(User.class, user_id));
+		target.setEnabled(true);
+
+		long ms = System.currentTimeMillis();
+		//TODO Fecha no actualizada
+		target.setCreationDate(new Date(ms));
+
+		entityManager.persist(target);
+		entityManager.flush(); // forces DB to add user & assign valid id
+
+		return "TM_home1";
 	}
 
 	@GetMapping("/manager")

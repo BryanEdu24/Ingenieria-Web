@@ -127,52 +127,44 @@
                 </div>
                 
                 <div class="modal-body">
-                    <form>
+                    <form method="POST" th:action="@{/user/newTask}">
                         <div class="row mb-3">
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la Tarea:</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" placeholder="Nombre de la Tarea">
+                                <input type="text" class="form-control" name="title" placeholder="Nombre de la Tarea">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Autor de la tarea:</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" value="David" disabled readonly>
+                                <input type="text" class="form-control" name="author" th:value="${authorName}" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Asignada a:</label>
                             <div class="col-7">
-                                <select name="select" class="form-select">
+                                <select name="user_id" class="form-select">
                                     <option disabled selected>Seleccione uno...</option>
-                                    <option value="Clara">Clara</option>
-                                    <option value="David">David</option>
-                                    <option value="Eduardo">Eduardo</option>
-                                    <option value="Fumu">Fumu</option>
-                                    <option value="Lucas">Lucas</option>
+                                    <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}" th:text="${houseUser.username}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Habitación:</label>
                             <div class="col-7">
-                                <select name="select" class="form-select">
+                                <select name="room_id" class="form-select">
                                     <option disabled selected>Seleccione uno...</option>
-                                    <option value="Recibidor">Recibidor</option>
-                                    <option value="Cocina">Cocina</option>
-                                    <option value="Baño">Baño</option>
-                                    <option value="Habitación">Habitación</option>
+                                    <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
                                 </select>
                             </div>
                         </div>
+                        <div class="modal-footer text-center d-flex justify-content-between align-items-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button submit" class="btn btn-primary btnCreateTask">Crear Tarea</button>
+                        </div>
                     </form>
                 </div>
-                
 
-                <div class="modal-footer text-center d-flex justify-content-between align-items-center">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary btnCreateTask">Crear Tarea</button>
-                </div>
             </div>
         </div>
     </div>
