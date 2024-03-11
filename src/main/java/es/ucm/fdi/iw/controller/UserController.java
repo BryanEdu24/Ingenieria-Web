@@ -123,7 +123,7 @@ public class UserController {
 	}
 
 	@GetMapping("/task")
-	@ResponseBody
+	@Transactional
 	public String TM_tareas(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 		House h = u.getHouse();
