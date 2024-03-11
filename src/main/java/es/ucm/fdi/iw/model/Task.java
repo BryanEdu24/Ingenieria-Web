@@ -11,6 +11,11 @@ import java.util.Date;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({
+    @NamedQuery(name = "Task.forHouse", query = "SELECT t "
+            + "FROM Task t "
+            + "WHERE t.room.house = :house")
+})
 public class Task implements Transferable<Task.Transfer> {
 
     @Id
@@ -26,7 +31,7 @@ public class Task implements Transferable<Task.Transfer> {
     @Column(nullable = false, unique = false)
     private String author;
 
-    @Column(nullable = false, unique = false)
+    @Column(nullable = true, unique = false)
     private Date creationDate;
 
     @ManyToOne

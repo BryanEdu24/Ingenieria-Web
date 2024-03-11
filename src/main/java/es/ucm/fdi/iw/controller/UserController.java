@@ -129,10 +129,17 @@ public class UserController {
 		House h = u.getHouse();
 
 		House target = entityManager.find(House.class, h.getId());
+		List<Task> tasks = entityManager
+			.createNamedQuery("Task.forHouse", Task.class)
+			.setParameter("house", target)
+			.getResultList();
+
 
 		model.addAttribute("houseUsers", target.getUsers());
 		model.addAttribute("rooms", target.getRooms());
 		model.addAttribute("authorName", u.getUsername());
+
+		model.addAttribute("tasks", tasks);
 
 		return "TM_tasks";
 	}
