@@ -10,15 +10,13 @@
     <!-- barra de navegación bootstrap 5 -->
     <header th:fragment="nav">
         <!--Navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
             <div class="container-fluid ">
                 <!--Logo-->
                 <a class="navbar-brand" href="/user/home1">
                     <div class="Logo d-flex align-items-center">
-                        <img th:src="@{/img/mapache.png}" src="/img/mapache.png" alt="Logo TaskMate" height="70" width="70">
-                        <span>
-                            <h2>TaskMate</h2>
-                        </span>
+                        <img id="LogoTM" th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" alt="Logo TaskMate" height="70">
+                        <img th:src="@{/img/NombreTM.png}" src="/img/NombreTM.png" alt="Nombre TaskMate" height="50">
                     </div>
                 </a>
                 <!--Menu-->
@@ -37,11 +35,11 @@
 
                 <!--Notificaciones-->
                 <div class="Notificaciones mx-4">
-                    <img th:src="@{/img/bell-fill.svg}" src="/img/bell-fill.svg" alt="Foto notificaciones" height="25" width="25">
+                    <img th:src="@{/img/bell-fill.png}" src="/img/bell-fill.png" alt="Foto notificaciones" height="25" width="25">
                 </div>
                 <!--Usuario-->
                 <div class="Perfil mx-4">
-                    <img th:src="@{/img/hombre.png}" src="/img/hombre.png" alt="Foto de perfil" height="50" width="50">
+                    <img th:src="@{/img/User.png}" src="/img/User.png" alt="Foto de perfil" height="70">
                 </div>
             </div>
         </nav>

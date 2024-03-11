@@ -134,7 +134,7 @@ public class UserController {
 		model.addAttribute("rooms", target.getRooms());
 		model.addAttribute("authorName", u.getUsername());
 
-		return "TM_task";
+		return "TM_tasks";
 	}
 
 	@PostMapping("/newTask")
