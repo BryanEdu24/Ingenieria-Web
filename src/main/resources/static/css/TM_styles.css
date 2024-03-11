@@ -1,6 +1,6 @@
-/* --- GENRAL --- */
-body{
-    background-color: #faedcd;
+/* --- GENERAL --- */
+body {
+    background-color: #02B9D8;
 }
 
 /* --- LOGIN --- */
@@ -9,9 +9,9 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #333;
+    color: #202024;
     box-shadow: 0px 0px 15px rgba(0,0,0,0.6);
-    background-color:#fefae0;
+    background-color:#faedcd;
     border-radius: 10px;
 }
 
@@ -36,39 +36,30 @@ body{
     transform: rotate(45deg);
 }
 
-.titleLogIn {
-    font-family: Arial Black; 
-    font-size: 35px; 
-    background: black; 
-    background-clip: text; 
-    color: transparent; 
-    text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3);
-    margin-top: -12%;
-}
-
-.overlayImg {
-    position: relative;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    top: -8vh;
-    filter:drop-shadow(0px 0px 4px LightSlateGray);
-}
-
 .roundedImg {
     background-color: white;
     border: 3px solid black;
+    border-radius: 50%;
 }
 
 /* --- NAV --- */
-
+.bg-light, .navbar-light {
+    background-color: #F8F4EA !important;
+}
 
 /* --- HOME 1 --- */
 
 
 /* --- HOME 2 --- */
-
+.TituloBienvenida {
+    text-align: center;
+    font-family: Arial Black; 
+    font-size: 55px; 
+    background: black; 
+    background-clip: text; 
+    color: transparent; 
+    text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3); 
+}
 
 /* --- TASKS --- */
 
@@ -100,14 +91,6 @@ body{
     padding: 2%;
 }
 
-.red {
-    color: red;
-}
-
-.green {
-    color: green;
-}
-
 .bolder {
     font-weight: bold;
 }
@@ -133,26 +116,6 @@ body{
     border: none;
     background: none;
     padding: 0;
-}
-
-.TituloBienvenida {
-    text-align: center;
-    font-family: Arial Black; 
-    font-size: 55px; 
-    background: black; 
-    background-clip: text; 
-    color: transparent; 
-    text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3); 
-}
-
-.titleStyle {
-    text-align: center;
-    font-family: Arial Black; 
-    font-size: 35px; 
-    background: black; 
-    background-clip: text; 
-    color: transparent; 
-    text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3); 
 }
 
 .Datos, .Habitaciones, .Miembros, .tareas, .notas, .gastos { 
@@ -261,6 +224,22 @@ body{
 
 .modalCross:hover {
     filter: drop-shadow(0px 0px 2px crimson);
+}
+
+/* Estilos Randoms */
+
+.btn-primary {
+    background-color: #02B9D8;
+}
+
+.titleStyle {
+    text-align: center;
+    font-family: Arial Black; 
+    font-size: 35px; 
+    background: #202024; 
+    background-clip: text; 
+    color: transparent; 
+    text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3); 
 }
 
 #LogoTM {
