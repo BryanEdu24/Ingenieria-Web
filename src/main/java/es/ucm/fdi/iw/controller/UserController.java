@@ -146,13 +146,15 @@ public class UserController {
 
 	@PostMapping("/newTask")
 	@Transactional
+	@ResponseBody
 	public String postMethodName(
 			HttpServletResponse response,
-			@ModelAttribute Task edited,
-			@RequestParam(required = false) String title,
-			@RequestParam(required = false) long room_id,
-			@RequestParam(required = false) long user_id,
+			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
+
+		String title = data.get("title").asText();
+		long room_id = data.get("room_id").asLong();
+		long user_id = data.get("user_id").asLong();
 
 		Task target = new Task();
 		target.setTitle(title);
@@ -169,7 +171,8 @@ public class UserController {
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
 
-		return "TM_home1";
+		//TODO Json pocho.
+		return target.toString();
 	}
 
 	@GetMapping("/manager")
