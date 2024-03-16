@@ -172,7 +172,11 @@ public class UserController {
 		entityManager.flush(); // forces DB to add user & assign valid id
 
 		//TODO Json pocho.
-		return target.toString();
+		return "{\"title\": \"" + target.getTitle() + "\"," +
+				"\"author\": \"" + target.getAuthor() + "\"," +
+				"\"creationDate\": \"" + target.getCreationDate() + "\"," +
+				"\"user\": \"" + target.getUser() + "\"," +
+				"\"room\": \"" + target.getRoom() + "\"}";
 	}
 
 	@GetMapping("/manager")

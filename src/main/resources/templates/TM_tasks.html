@@ -63,8 +63,8 @@
                 <div class="card-list tareas p-3 mt-2 justify-content-center">
                     <div class="">
 
-                        <div th:each="task: ${tasks}" class="card my-2">
-                            <div class="card-content d-flex p-1 bg align-items-center">
+                        <div th:each="task: ${tasks}" id="divCardsTasks" class="card my-2">
+                            <div class="card-content d-flex p-1 bg align-items-center taskCard">
                                 <div class="col">
                                     <h3 th:text="${task.title}">Hacer la comida</h3>
                                     <h5 th:text="${task.author}">Lucas</h5>
