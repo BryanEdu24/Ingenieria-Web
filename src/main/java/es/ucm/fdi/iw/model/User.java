@@ -26,8 +26,6 @@ import java.util.List;
                 + "WHERE u.username = :username")
 })
 
-
-
 @Table(name = "IWUser")
 public class User implements Transferable<User.Transfer> {
 

@@ -17,22 +17,23 @@
             <div class="col card-list tareas">
                 <div class="titleStyle mt-2">TAREAS</div>
                 <div class="p-3">
-                    <div th:each="task : ${tasks}"> 
-                        <span th:if="${task.usuario.username == user.username}">
+                    <div th:each="task : ${tasks}">
+                        <!-- <span th:if="${task.usuario.username == user.username}"> -->
                             <div class="card my-4">
                                 <div class="card-content d-flex p-3 bg align-items-center">
-                                    <img th:src="${task.image}" alt="Imagen de la tarea"  width="65" height="65" style="margin-right: 5%;"/>
+                                    <!-- <img th:src="${task.image}" alt="Imagen de la tarea"  width="65" height="65" style="margin-right: 5%;"/> -->
+                                    <img th:src="@{/img/cocina.png}" src="/img/cocina.png" alt="Imagen de la tarea"  width="65" height="65" style="margin-right: 5%;"/>
                                     <div class="col">
                                         <h2 th:text="${task.title}"></h2>
-                                        <h4 th:text="${task.username}"></h4>
+                                        <h4 th:text="${task.author}"></h4>
                                     </div>
                                     <div class="col text-center">
-                                        <h4 th:text="${task.date}"></h4>
-                                        <h4 th:text="${task.room}"></h4>
+                                        <h4 th:text="${#dates.format(task.creationDate, 'dd-MM-yyyy')}"></h4>
+                                        <h4 th:text="${task.room.name}"></h4>
                                     </div>
                                 </div>
                             </div>
-                        </span>
+                        <!-- </span> -->
                     </div>
                 </div>
             </div>

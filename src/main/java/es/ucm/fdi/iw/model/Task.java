@@ -14,7 +14,10 @@ import java.util.Date;
 @NamedQueries({
     @NamedQuery(name = "Task.forHouse", query = "SELECT t "
             + "FROM Task t "
-            + "WHERE t.room.house = :house")
+            + "WHERE t.room.house = :house"),
+    @NamedQuery(name = "Task.byUser", query = "SELECT t "
+            + "FROM Task t "
+            + "WHERE t.user = :userId")
 })
 public class Task implements Transferable<Task.Transfer> {
 

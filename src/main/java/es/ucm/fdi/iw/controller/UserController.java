@@ -114,6 +114,15 @@ public class UserController {
 
 	@GetMapping("/home1")
 	public String TM_home1(Model model, HttpSession session) {
+		User u = (User) session.getAttribute("u");
+
+		List<Task> tasks = entityManager
+			.createNamedQuery("Task.byUser", Task.class)
+			.setParameter("userId", u)
+			.getResultList();
+
+		model.addAttribute("tasks", tasks);
+
 		return "TM_home1";
 	}
 
