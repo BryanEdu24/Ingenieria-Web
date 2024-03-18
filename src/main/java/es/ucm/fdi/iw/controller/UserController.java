@@ -116,6 +116,11 @@ public class UserController {
 	public String TM_home1(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 
+		//En caso de no tener casa asignada
+		if(u.getHouse() == null){
+			return "TM_home2";
+		}
+
 		List<Task> tasks = entityManager
 			.createNamedQuery("Task.byUser", Task.class)
 			.setParameter("userId", u)
@@ -136,6 +141,11 @@ public class UserController {
 	public String TM_tareas(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 		House h = u.getHouse();
+
+		//En caso de no tener casa asignada
+		if(h == null){
+			return "TM_home2";
+		}
 
 		House target = entityManager.find(House.class, h.getId());
 		List<Task> tasks = entityManager
@@ -180,7 +190,6 @@ public class UserController {
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
 
-		//TODO Json pocho.
 		return "{\"title\": \"" + target.getTitle() + "\"," +
 				"\"author\": \"" + target.getAuthor() + "\"," +
 				"\"creationDate\": \"" + target.getCreationDate() + "\"," +
@@ -190,11 +199,20 @@ public class UserController {
 
 	@GetMapping("/manager")
 	public String TM_jefe(Model model) {
+
+
 		return "TM_manager";
 	}
 
 	@GetMapping("/expenses")
-	public String TM_gastos(Model model) {
+	public String TM_gastos(Model model, HttpSession session) {
+		User u = (User) session.getAttribute("u");
+
+		//En caso de no tener casa asignada
+		if(u.getHouse() == null){
+			return "TM_home2";
+		}
+
 		return "TM_expenses";
 	}
 

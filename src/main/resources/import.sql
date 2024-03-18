@@ -24,6 +24,10 @@ INSERT INTO IWUser (id, enabled, roles, username, password, house_id)
 VALUES (3, TRUE, 'USER', 'c',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 1);
 
+INSERT INTO IWUser (id, enabled, roles, username, password, house_id)
+VALUES (4, TRUE, 'USER', 'd',
+    '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', null);
+
 -- INSERT INTO Task (id, enabled, title, author, user_id, room_id)
 -- VALUES (2, TRUE, 'Limpiar', 'b', 3, 1);
 

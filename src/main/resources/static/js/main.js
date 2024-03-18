@@ -14,6 +14,8 @@ function newTask(event) {
             console.log("Success");
             console.log(d);
 
+            $("#form-newTask").reset();
+
             //TODO
             /*
             $("#divCardsTasks").append(
