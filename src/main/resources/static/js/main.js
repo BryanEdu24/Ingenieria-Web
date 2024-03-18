@@ -14,30 +14,32 @@ function newTask(event) {
             console.log("Success");
             console.log(d);
 
-            $("#form-newTask").reset();
+            $("#noTasks").hide()
 
-            //TODO
-            /*
-            $("#divCardsTasks").append(
-            `<div class="card-content d-flex p-1 bg align-items-center">
-            <div class="col">
-                <h3 th:text="${d.title}">Hacer la comida</h3>
-                <h5 th:text="${d.author}">Lucas</h5>
-            </div>
-            <div class="col">
-                <div> 
-                    <h5 th:text="${d.creationDate}">10/02/2024<h5>
-                </div>
-                <div>
-                    <h5 th:text="${d.room.name}">Cocina</h5>
-                </div>
-            </div>
-            <button class="btn">
-                <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
-                    height="50" style="margin-right: 5%;">
-            </button>
-            </div>`)*/
+            $("#form-newTask")[0].reset()
 
+            //TODO Fecha y habitación
+            $('#divCardsTasks').prepend(
+            `<div class="card my-2">
+                    <div class="card-content d-flex p-1 bg align-items-center taskCard">
+                        <div class="col">
+                            <h3>${d.title}</h3>
+                            <h5>${d.author}</h5>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <h5>${d.creationDate}<h5>
+                            </div>
+                            <div>
+                                <h5>${d.room.name}</h5>
+                            </div>
+                        </div>
+                        <button class="btn">
+                            <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
+                                height="50" style="margin-right: 5%;">
+                        </button>
+                    </div>
+            </div>`)
         })
         .catch(e => {
             console.log("Fail");
