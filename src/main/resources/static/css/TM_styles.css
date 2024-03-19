@@ -224,6 +224,7 @@ body {
 /* Estilo Modal */
 .modal-footer {
     border: none;
+    padding: 0 !important;
 }
 
 .modalCross:hover {

@@ -112,19 +112,21 @@ public class UserController {
 
 	// --------------------------------------------------------------------------------------------------------------------
 
+	// GETS ----------------------------------
+
 	@GetMapping("/home1")
 	public String TM_home1(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 
-		//En caso de no tener casa asignada
-		if(u.getHouse() == null){
-			return "TM_home2";
+		// En caso de no tener casa asignada
+		if (u.getHouse() == null) {
+			return "redirect:/user/home2";
 		}
 
 		List<Task> tasks = entityManager
-			.createNamedQuery("Task.byUser", Task.class)
-			.setParameter("userId", u)
-			.getResultList();
+				.createNamedQuery("Task.byUser", Task.class)
+				.setParameter("userId", u)
+				.getResultList();
 
 		model.addAttribute("tasks", tasks);
 
@@ -132,7 +134,13 @@ public class UserController {
 	}
 
 	@GetMapping("/home2")
-	public String TM_home2(Model model) {
+	public String TM_home2(Model model, HttpSession session) {
+		User u = (User) session.getAttribute("u");
+		// En caso de no tener casa asignada
+		if (u.getHouse() != null) {
+			return "redirect:/user/home1";
+		}
+
 		return "TM_home2";
 	}
 
@@ -142,17 +150,16 @@ public class UserController {
 		User u = (User) session.getAttribute("u");
 		House h = u.getHouse();
 
-		//En caso de no tener casa asignada
-		if(h == null){
-			return "TM_home2";
+		// En caso de no tener casa asignada
+		if (h == null) {
+			return "redirect:/user/home2";
 		}
 
 		House target = entityManager.find(House.class, h.getId());
 		List<Task> tasks = entityManager
-			.createNamedQuery("Task.forHouse", Task.class)
-			.setParameter("house", target)
-			.getResultList();
-
+				.createNamedQuery("Task.forHouse", Task.class)
+				.setParameter("house", target)
+				.getResultList();
 
 		model.addAttribute("houseUsers", target.getUsers());
 		model.addAttribute("rooms", target.getRooms());
@@ -163,10 +170,41 @@ public class UserController {
 		return "TM_tasks";
 	}
 
+	@GetMapping("/manager")
+	public String TM_jefe(Model model, HttpSession session) {
+		User u = (User) session.getAttribute("u");
+
+		// En caso de no tener casa asignada
+		if (u.getHouse() == null) {
+			return "redirect:/user/home2";
+		}
+
+		// En caso de no ser manager
+		if (!u.hasRole(Role.MANAGER)) {
+			return "redirect:/user/home1";
+		}
+
+		return "TM_manager";
+	}
+
+	@GetMapping("/expenses")
+	public String TM_gastos(Model model, HttpSession session) {
+		User u = (User) session.getAttribute("u");
+
+		// En caso de no tener casa asignada
+		if (u.getHouse() == null) {
+			return "redirect:/user/home2";
+		}
+
+		return "TM_expenses";
+	}
+
+	// POSTS ----------------------------------
+
 	@PostMapping("/newTask")
 	@Transactional
 	@ResponseBody
-	public String postMethodName(
+	public String newTask(
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
@@ -184,7 +222,7 @@ public class UserController {
 
 		long ms = System.currentTimeMillis();
 
-		//TODO Fecha no actualizada
+		// TODO Fecha no actualizada
 		target.setCreationDate(new Date(ms));
 
 		entityManager.persist(target);
@@ -197,23 +235,38 @@ public class UserController {
 				"\"room\": \"" + target.getRoom().getName() + "\"}";
 	}
 
-	@GetMapping("/manager")
-	public String TM_jefe(Model model) {
+	@PostMapping("/newHouse")
+	@Transactional
+	public String newHouse(
+			HttpServletResponse response,
+			@RequestParam String houseName,
+			@RequestParam String housePassword,
+			Model model, HttpSession session) throws IOException {
 
+		// Crear casa
+		House houseNew = new House();
+		houseNew.setName(houseName);
+		houseNew.setEnabled(true);
+		houseNew.setPass(encodePassword(housePassword));
+
+		entityManager.persist(houseNew);
+		entityManager.flush();
+
+		// Usuario -> Manager
+		User u = (User) session.getAttribute("u");
+		User user = entityManager.createNamedQuery("User.byUsername", User.class)
+				.setParameter("username", u.getUsername())
+				.getSingleResult();
+
+		user.setRoles(Role.MANAGER.name());
+		user.setHouse(houseNew);
+
+		entityManager.persist(user);
+		entityManager.flush();
+
+		session.setAttribute("u", user);
 
 		return "TM_manager";
-	}
-
-	@GetMapping("/expenses")
-	public String TM_gastos(Model model, HttpSession session) {
-		User u = (User) session.getAttribute("u");
-
-		//En caso de no tener casa asignada
-		if(u.getHouse() == null){
-			return "TM_home2";
-		}
-
-		return "TM_expenses";
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------
