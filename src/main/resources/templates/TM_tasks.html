@@ -61,10 +61,14 @@
                 </div>
                 <!--Tareas-->
                 <div class="card-list tareas p-3 mt-2 justify-content-center">
-                    <div class="">
+                    <div class="divCardsTasks" id="divCardsTasks">
 
-                        <div th:each="task: ${tasks}" class="card my-2">
-                            <div class="card-content d-flex p-1 bg align-items-center">
+                        <div id="noTasks" th:if="${#lists.size(tasks) == 0}">
+                            NO HAY TAREAS PARA ESTA CASA
+                        </div>
+
+                        <div th:each="task: ${tasks}"  class="card my-2">
+                            <div class="card-content d-flex p-1 bg align-items-center taskCard">
                                 <div class="col">
                                     <h3 th:text="${task.title}">Hacer la comida</h3>
                                     <h5 th:text="${task.author}">Lucas</h5>
@@ -175,7 +179,7 @@
                         </div>
                         <div class="modal-footer text-center d-flex justify-content-between align-items-center">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" id="buttonNewTaskCreation" class="btn btn-primary btnCreateTask" onclick="newTask(event)">Crear Tarea</button>
+                            <button type="button" id="buttonNewTaskCreation" data-bs-dismiss="modal" class="btn btn-primary btnCreateTask" onclick="newTask(event)">Crear Tarea</button>
                         </div>
                     </form>
                 </div>
