@@ -25,6 +25,8 @@ public class Room implements Transferable<Room.Transfer> {
 
     private boolean enabled;
 
+    private String img;
+
     @Column(nullable = false)
     private String name;
 

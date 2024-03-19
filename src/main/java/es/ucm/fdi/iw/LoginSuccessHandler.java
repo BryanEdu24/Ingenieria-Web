@@ -87,17 +87,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		// redirects to 'admin' or 'user/{id}', depending on the user
 		String nextUrl = u.hasRole(User.Role.ADMIN) ? "admin/" : "user/home1";
 
-		//TODO Comprobar si tenes casa o no, para saber si vas a Home1 o Home2
-		if(u.hasRole(User.Role.ADMIN)){
-			nextUrl = "admin/";
-		} else{
-			if(u.getHouse() == null){
-				nextUrl = "user/home2";
-			} else{
-				nextUrl = "user/home1";
-			}
-		}
-
 		log.info("LOG IN: {} (id {}) -- session is {}, websocket is {} -- redirected to {}",
 				u.getUsername(), u.getId(), session.getId(), ws, nextUrl);
 

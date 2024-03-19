@@ -31,7 +31,7 @@ function newTask(event) {
                                 <h5>${d.creationDate}<h5>
                             </div>
                             <div>
-                                <h5>${d.room.name}</h5>
+                                <h5>${d.room}</h5>
                             </div>
                         </div>
                         <button class="btn">

@@ -194,7 +194,7 @@ public class UserController {
 				"\"author\": \"" + target.getAuthor() + "\"," +
 				"\"creationDate\": \"" + target.getCreationDate() + "\"," +
 				"\"user\": \"" + target.getUser() + "\"," +
-				"\"room\": \"" + target.getRoom() + "\"}";
+				"\"room\": \"" + target.getRoom().getName() + "\"}";
 	}
 
 	@GetMapping("/manager")
