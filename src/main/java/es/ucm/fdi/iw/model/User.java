@@ -23,7 +23,9 @@ import java.util.List;
                 + "WHERE u.username = :username AND u.enabled = TRUE"),
         @NamedQuery(name = "User.hasUsername", query = "SELECT COUNT(u) "
                 + "FROM User u "
-                + "WHERE u.username = :username")
+                + "WHERE u.username = :username"),
+        @NamedQuery(name = "User.byemail", query = "SELECT u FROM User u "
+                + "WHERE u.email = :useremail")
 })
 
 @Table(name = "IWUser")

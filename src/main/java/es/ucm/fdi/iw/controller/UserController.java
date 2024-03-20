@@ -144,6 +144,38 @@ public class UserController {
 		return "TM_home2";
 	}
 
+	@PostMapping("/register")
+	@Transactional
+	public String register(
+			HttpServletResponse response,
+			@RequestParam String useremail,
+			@RequestBody String username,
+			@RequestParam String userPassword,
+			Model model, HttpSession session) throws IOException {
+
+		User user = entityManager.createNamedQuery("User.byuseremail", User.class)
+				.setParameter("useremail", useremail)
+				.getSingleResult();
+
+		if (user == null) {
+
+			User usernew = new User();
+			usernew.setUsername(username);
+			usernew.setEmail(useremail);
+			usernew.setPassword(encodePassword(userPassword));
+			usernew.setRoles(Role.USER.name());
+			usernew.setHouse(null);
+
+			entityManager.persist(usernew);
+			entityManager.flush();
+
+			session.setAttribute("u", usernew);
+		} else {
+			return "redirect:/register";
+		}
+		return "redirect:/user/home1";
+	}
+
 	@GetMapping("/task")
 	@Transactional
 	public String TM_tareas(Model model, HttpSession session) {
@@ -292,7 +324,6 @@ public class UserController {
 		if (passwordEncoder.matches(JhousePassword, h.getPass())) {
 			user.setHouse(h);
 
-			System.out.println("User house ........................................");
 		} else {
 			return "redirect:/user/home2";
 		}
