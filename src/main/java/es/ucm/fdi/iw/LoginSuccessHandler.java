@@ -115,7 +115,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		}
 	}
 
-	/* Comprobar si user loggeado tiene casa --SI--> home1
-	 * 										 --NO--> home2
+	/*
+	 * Comprobar si user loggeado tiene casa --SI--> home1
+	 * --NO--> home2
 	 */
 }

@@ -29,7 +29,7 @@ VALUES (4, TRUE, 'USER', 'd',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', null);
 
 INSERT INTO IWUser (id, enabled, roles, username, password, house_id)
-VALUES (4, TRUE, 'MANAGER', 'e',
+VALUES (5, TRUE, 'MANAGER', 'e',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 1);
 
 
