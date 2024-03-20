@@ -282,20 +282,25 @@ public class UserController {
 				.setParameter("username", u.getUsername())
 				.getSingleResult();
 
-		// get house by name -> QUERY?
+		// Comprobar existencia de la casa
 
 		House h = entityManager.createNamedQuery("House.byHousename", House.class)
 				.setParameter("name", JhouseName)
 				.getSingleResult();
 
 		// COMPROBAR QUE LA PASSWORD DE LA CASA ES IGUAL QUE LA INTRODUCIDA
-		if (passwordEncoder.matches(JhousePassword, h.getPass()))
+		if (passwordEncoder.matches(JhousePassword, h.getPass())) {
 			user.setHouse(h);
-		else
+
+			System.out.println("User house ........................................");
+		} else {
 			return "TM_home2";
+		}
 
 		entityManager.persist(user);
 		entityManager.flush();
+		session.setAttribute("u", user);
+
 		return "TM_home1";
 	}
 
