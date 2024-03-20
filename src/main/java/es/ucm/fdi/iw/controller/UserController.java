@@ -294,14 +294,14 @@ public class UserController {
 
 			System.out.println("User house ........................................");
 		} else {
-			return "TM_home2";
+			return "redirect:/user/home2";
 		}
 
 		entityManager.persist(user);
 		entityManager.flush();
 		session.setAttribute("u", user);
 
-		return "TM_home1";
+		return "redirect:/user/home1";
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------
