@@ -269,6 +269,36 @@ public class UserController {
 		return "TM_manager";
 	}
 
+	@PostMapping("/joinHouse")
+	@Transactional
+	public String joinHouse(
+			HttpServletResponse response,
+			@RequestParam String JhouseName,
+			@RequestParam String JhousePassword,
+			Model model, HttpSession session) throws IOException {
+
+		User u = (User) session.getAttribute("u");
+		User user = entityManager.createNamedQuery("User.byUsername", User.class)
+				.setParameter("username", u.getUsername())
+				.getSingleResult();
+
+		// get house by name -> QUERY?
+
+		House h = entityManager.createNamedQuery("House.byHousename", House.class)
+				.setParameter("name", JhouseName)
+				.getSingleResult();
+
+		// COMPROBAR QUE LA PASSWORD DE LA CASA ES IGUAL QUE LA INTRODUCIDA
+		if (passwordEncoder.matches(JhousePassword, h.getPass()))
+			user.setHouse(h);
+		else
+			return "TM_home2";
+
+		entityManager.persist(user);
+		entityManager.flush();
+		return "TM_home1";
+	}
+
 	// --------------------------------------------------------------------------------------------------------------------
 
 	/**

@@ -9,10 +9,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
-
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({
+        @NamedQuery(name = "House.byHousename", query = "SELECT h FROM House h "
+                + "WHERE h.name = :name AND h.enabled = TRUE"),
+
+})
 public class House implements Transferable<House.Transfer> {
 
     @Id

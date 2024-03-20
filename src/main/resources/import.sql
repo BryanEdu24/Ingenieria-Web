@@ -31,6 +31,9 @@ VALUES (4, TRUE, 'USER', 'd',
 INSERT INTO IWUser (id, enabled, roles, username, password, house_id)
 VALUES (5, TRUE, 'MANAGER', 'e',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 1);
+INSERT INTO IWUser (id, enabled, roles, username, password, house_id)
+VALUES (6, TRUE, 'USER', 'f',
+    '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', null);
 
 
 -- INSERT INTO Task (id, enabled, title, author, user_id, room_id)
