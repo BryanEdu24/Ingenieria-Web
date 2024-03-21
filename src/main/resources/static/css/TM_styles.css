@@ -18,7 +18,7 @@ body {
 #login:before, #login:after {
     content: "";
     display: block;
-    background: rgba(0,0,0,0.6);
+    background: rgb(248, 244, 234, 0.7);
     position: absolute;
     width: 100px; 
     height: 30px;

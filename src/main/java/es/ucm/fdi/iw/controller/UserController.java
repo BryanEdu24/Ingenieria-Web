@@ -113,7 +113,6 @@ public class UserController {
 	// --------------------------------------------------------------------------------------------------------------------
 
 	// GETS ----------------------------------
-
 	@GetMapping("/home1")
 	public String TM_home1(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
@@ -142,6 +141,17 @@ public class UserController {
 		}
 
 		return "TM_home2";
+	}
+
+	@GetMapping("/register")
+	public String TM_register(Model model, HttpSession session) {
+		User u = (User) session.getAttribute("u");
+		// En caso de no tener casa asignada
+		if (u.getHouse() != null) {
+			return "redirect:/register";
+		}
+
+		return "TM_register";
 	}
 
 	@PostMapping("/register")
@@ -299,6 +309,36 @@ public class UserController {
 		session.setAttribute("u", user);
 
 		return "TM_manager";
+	}
+
+	@PostMapping("/newRoom")
+	@Transactional
+	public String newRoom(
+			HttpServletResponse response,
+			@RequestParam String roomName,
+			Model model, HttpSession session) throws IOException {
+
+		Room roomNew = new Room();
+
+		User u = (User) session.getAttribute("u");
+		User user = entityManager.createNamedQuery("User.byUsername", User.class)
+				.setParameter("username", u.getUsername())
+				.getSingleResult();
+		House h = user.getHouse();
+
+		// Room r = entityManager.createNamedQuery("Room.byroomname", Room.class)
+		// .setParameter("roomName", roomName)
+		// .getSingleResult();
+
+		// if (r == null || r.getHouse() != h) {
+		roomNew.setName(roomName);
+		roomNew.setHouse(h);
+		roomNew.setEnabled(true);
+		entityManager.persist(roomNew);
+		entityManager.flush();
+		// }
+
+		return "redirect:/user/manager";
 	}
 
 	@PostMapping("/joinHouse")

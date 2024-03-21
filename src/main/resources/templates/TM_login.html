@@ -21,18 +21,18 @@
             <div class="card-body">
                 <form method="post" th:action="@{/login}">
                     <p th:if="${#request.getQueryString() == 'error'}" class="error bg-danger p-1 rounded">
-                        <b>Error en nombre de usuario o contraseña</b>
+                        <b>⚠️ Error en nombre de usuario o contraseña ⚠️</b>
                     </p>
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
-                            <input type="text" name="username" class="form-control" id="username" placeholder="Nombre de usuario">
+                            <input type="text" name="username" class="form-control" id="username" placeholder="Nombre de usuario" required>
                         </div>
                     </div>
                     <div class="mb-5">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                            <input type="password" name="password" class="form-control" id="password" placeholder="Contraseña">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Contraseña" required>
                             <button class="btn btn-light" type="button" id="togglePassword" style="border: solid 1px;"><i class="bi bi-eye-fill"></i></button>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="text-center mt-3">
-                        ¿No tienes una cuenta? <a href="TM_register.html">Haz click aquí</a>
+                        ¿No tienes una cuenta? <a href="/register">Haz click aquí</a>
                     </div>
                 </form>
 

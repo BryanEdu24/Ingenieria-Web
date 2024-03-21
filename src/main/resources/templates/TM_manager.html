@@ -28,13 +28,23 @@
 		<div class="row d-flex mb-4">
 			<div class="col card-list">
 				<div class="Habitaciones">
+					<div class="habitacionesTitlebox">
 					<div class="titleStyle">Habitaciones</div>
+					<div class="">
+						<button type="button" class="btn rounded">
+							<span class="image-container">
+								<img th:src="@{/img/agregar.png}" id="addRoomImg" src="/img/agregar.png" alt="Imagen" width="50" height="50" data-bs-toggle="modal" data-bs-target="#newRoomModal">
+							</span>
+						</button>
+					</div>
+				</div>
 					<div  class="p-3">
 						<div class="card my-2">
 							<div th:each="room : ${rooms}" class="card-content d-flex p-2 align-items-center">
 								<img th:src="${room.image}"
 								   width="20" height="20" style="margin-right: 3%;">
 								 <p th:text="${room.name}">Habitacion</p>	
+								 
 							</div>
 						</div>
 						
@@ -54,16 +64,40 @@
 							<p th:text="${user.name}">Lucas</p>
 					</div>
 				</div>
-				<div class="d-flex justify-content-end">
-					<button class="btn rounded"> <img th:src="@{/img/agregar.png}" src="/img/agregar.png" alt="Imagen"
-							width="50" height="50">
-					</button>
-				</div>
+				
 			</div>
 		</div>
 	</div>
 	</div>
 	</div>
+
+	<!-- Modal CREAR HABITACION -->
+    <div class="modal fade" id="newRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><u>Nueva Habitacion</u> 📝</h4>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <form method="POST" th:action="@{/user/newRoom}" id="form-newRoom">
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la habitacion:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="roomName" name="roomName" placeholder="Nombre de la habitacion" required>
+                            </div>
+                        </div>
+                       
+                        <div class="modal-footer text-center d-flex justify-content-between align-items-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="buttonNewTaskCreation" data-bs-dismiss="modal" class="btn btn-primary btnCreateTask" onclick="newTask(event)">Crear Tarea</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
