@@ -326,11 +326,12 @@ public class UserController {
 				.getSingleResult();
 		House h = user.getHouse();
 
-		// Room r = entityManager.createNamedQuery("Room.byroomname", Room.class)
+		// Room existingRoom = entityManager.createNamedQuery("Room.byroomname",
+		// Room.class)
 		// .setParameter("roomName", roomName)
 		// .getSingleResult();
 
-		// if (r == null || r.getHouse() != h) {
+		// if (existingRoom == null || existingRoom.getHouse() != h) {
 		roomNew.setName(roomName);
 		roomNew.setHouse(h);
 		roomNew.setEnabled(true);
@@ -338,6 +339,7 @@ public class UserController {
 		entityManager.flush();
 		// }
 
+		// return "{\"name\": \"" + roomNew.getName() + "\"}";
 		return "redirect:/user/manager";
 	}
 
