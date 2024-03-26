@@ -143,49 +143,6 @@ public class UserController {
 		return "TM_home2";
 	}
 
-	@GetMapping("/register")
-	public String TM_register(Model model, HttpSession session) {
-		User u = (User) session.getAttribute("u");
-		// En caso de no tener casa asignada
-		if (u.getHouse() != null) {
-			return "redirect:/register";
-		}
-
-		return "TM_register";
-	}
-
-	@PostMapping("/register")
-	@Transactional
-	public String register(
-			HttpServletResponse response,
-			@RequestParam String useremail,
-			@RequestBody String username,
-			@RequestParam String userPassword,
-			Model model, HttpSession session) throws IOException {
-
-		User user = entityManager.createNamedQuery("User.byuseremail", User.class)
-				.setParameter("useremail", useremail)
-				.getSingleResult();
-
-		if (user == null) {
-
-			User usernew = new User();
-			usernew.setUsername(username);
-			usernew.setEmail(useremail);
-			usernew.setPassword(encodePassword(userPassword));
-			usernew.setRoles(Role.USER.name());
-			usernew.setHouse(null);
-
-			entityManager.persist(usernew);
-			entityManager.flush();
-
-			session.setAttribute("u", usernew);
-		} else {
-			return "redirect:/register";
-		}
-		return "redirect:/user/home1";
-	}
-
 	@GetMapping("/task")
 	@Transactional
 	public String TM_tareas(Model model, HttpSession session) {

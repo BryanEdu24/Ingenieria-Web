@@ -21,17 +21,17 @@
             </div>
 
             <div class="card-body">
-                <form method="post" th:action="@{/register}">
+                <form method="post" th:action="@{/newuser}">
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
-                            <input type="text" class="form-control" id="username" placeholder="Nombre de usuario">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Nombre de usuario" required>
                         </div>
                     </div>
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                            <input type="password" class="form-control" id="password" placeholder="Contraseña">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña">
                             <button class="btn btn-light" type="button" id="togglePassword" style="border: solid 1px;"><i class="bi bi-eye-fill"></i></button>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                            <input type="password" class="form-control" id="password2" placeholder="Contraseña">
+                            <input type="password" class="form-control" name="password2" id="password2" placeholder="Contraseña">
                             <button class="btn btn-light" type="button" id="togglePassword2" style="border: solid 1px;"><i class="bi bi-eye-fill"></i></button>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-                            <input type="email" class="form-control" id="email" placeholder="Correo electrónico">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico">
                         </div>
                     </div>
             
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="text-center mt-3">
-                        ¿Ya estás registrado? <a href="/login">Haz click aquí</a>
+                        ¿Ya estás registrado? <a th:href="@{/login}">Haz click aquí</a>
                     </div>
                 </form>
             </div>
