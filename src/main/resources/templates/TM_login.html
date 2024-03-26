@@ -3,11 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <th:block th:replace="fragments/head :: header" />
-        <title>LOGIN</title>
+        <title>Iniciar Sesión</title>
     </head>
 
-    <body>
-        <div class="card p-4" id="login">
+    <body class="bodyLoginReg">
+        <div class="card p-3" id="login">
             <div class="text-center mb-3">
                 <img th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" height="100" width="100" class="roundedImg p-1" alt="Logo TaskMate" style="cursor: default;">
             </div>
@@ -29,7 +29,7 @@
                             <input type="text" name="username" class="form-control" id="username" placeholder="Nombre de usuario" required>
                         </div>
                     </div>
-                    <div class="mb-5">
+                    <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
                             <input type="password" name="password" class="form-control" id="password" placeholder="Contraseña" required>

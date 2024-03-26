@@ -3,12 +3,19 @@ body {
     background-color: #02B9D8;
 }
 
+.bodyLoginReg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    height: 100vh;
+}
+
 /* --- LOGIN --- */
 #login {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
     color: #202024;
     box-shadow: 0px 0px 15px rgba(0,0,0,0.6);
     background-color:#faedcd;
@@ -40,6 +47,38 @@ body {
     background-color: white;
     border: 3px solid black;
     border-radius: 50%;
+}
+
+/* -- REGISTER --- */
+#register {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    color: #202024;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.6);
+    background-color:#faedcd;
+    border-radius: 10px;
+}
+
+#register:before, #register:after {
+    content: "";
+    display: block;
+    background: rgb(248, 244, 234, 0.7);
+    position: absolute;
+    width: 100px; 
+    height: 30px;
+}
+
+#register:before {
+    top: -1px;
+    left: -9%;
+    transform: rotate(-35deg);
+}
+
+#register:after {
+    top: 3px; 
+    right: -8%;
+    transform: rotate(45deg);
 }
 
 /* --- NAV --- */

@@ -3,25 +3,32 @@
     <head>
         <meta charset="UTF-8">
         <th:block th:replace="fragments/head :: header"/>
-        <title>REGISTER</title>
+        <title>Registro</title>
     </head>
 
-    <body>
-        <div class="card p-4" id="register">
-            <div class="text-center overlayImg">
-                <img class="rounded-circle roundedImg" src="/image/hombre.png" alt="" height="100" width="100" style="cursor: default;">
-            </div>
-            <div class="titleLogIn text-center mb-3">
-                <span>—— </span>TaskMate<span> ——</span>
-                <div class="mt-2"><h3>Crea tu cuenta</h3></div>
+    <body class="bodyLoginReg">
+        <div class="card p-3" id="register">
+            <div class="text-center mb-3">
+                <img th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" height="100" width="100" class="roundedImg p-1" alt="Logo TaskMate" style="cursor: default;">
             </div>
             <div class="titleStyle text-center mb-3">
+                <span>—— </span>
                 <img th:src="@{/img/NombreTM.png}" src="/img/NombreTM.png" alt="Nombre TaskMate" height="50">
+                <span> ——</span>
                 <div class="mt-2"><h3>Registro</h3></div>
+            </div>
+            <div class="alert alert-danger d-none text-center text-danger" id="passwordMatchError" role="alert">
+                ⚠️ Las contraseñas deben coincidir. ⚠️
             </div>
 
             <div class="card-body">
-                <form method="post" th:action="@{/newuser}">
+                <form method="post" th:action="@{/newuser}" id="registrationForm">
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico" required>
+                        </div>
+                    </div>
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
@@ -31,7 +38,7 @@
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" required>
                             <button class="btn btn-light" type="button" id="togglePassword" style="border: solid 1px;"><i class="bi bi-eye-fill"></i></button>
                         </div>
                     </div>
@@ -39,22 +46,13 @@
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                            <input type="password" class="form-control" name="password2" id="password2" placeholder="Contraseña">
+                            <input type="password" class="form-control" name="password2" id="password2" placeholder="Repetir contraseña" required>
                             <button class="btn btn-light" type="button" id="togglePassword2" style="border: solid 1px;"><i class="bi bi-eye-fill"></i></button>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Correo electrónico">
                         </div>
                     </div>
             
                     <div class="mb-4">
-                        
-                        <div class="mb-1"><b>Foto de perfil:</b></div>
-                        
+                        <!--<div class="mb-1"><b>Foto de perfil:</b></div>--> 
                         <div class="input-group">
                             <span class="input-group-text mr-1"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
                                 <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
@@ -81,6 +79,8 @@
         const passwordInput = document.getElementById('password');
         const togglePasswordButton2 = document.getElementById('togglePassword2');
         const passwordInput2 = document.getElementById('password2');
+        const registrationForm = document.getElementById('registrationForm');
+        const passwordMatchError = document.getElementById('passwordMatchError');
 
         togglePasswordButton.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -94,6 +94,15 @@
             passwordInput2.setAttribute('type', type);
             this.querySelector('i').classList.toggle('bi-eye');
             this.querySelector('i').classList.toggle('bi-eye-slash');
+        });
+
+        registrationForm.addEventListener('submit', function(event) {
+            if (passwordInput.value !== passwordInput2.value) {
+                passwordMatchError.classList.remove('d-none');
+                event.preventDefault();
+            } else {
+                passwordMatchError.classList.add('d-none');
+            }
         });
     </script>
 
