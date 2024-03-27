@@ -81,10 +81,11 @@
                                         <h5 th:text="${task.room.name}"></h5>
                                     </div>
                                 </div>
-                                <button class="btn">
+                                <button class="btn" type="button" onclick="viewInfo(event)">
+                                    <div class="d-none" id="taskPersonalID" th:text="${task.id}"></div>
                                     <span class="image-container">
                                         <img th:src="@{/img/vista.png}" src="/img/vista.png"  alt="Imagen" width="50"
-                                        height="50" style="margin-right: 5%; ">
+                                        height="50" style="margin-right: 5%;" >
                                     </span>
                                 </button>
                             </div>
@@ -98,11 +99,11 @@
                 <div class="d-flex flex-column p-1 tareas justify-content-center align-items-center">
                     <div class="titleStyle mt-2">Información de tarea seleccionada</div>
                     <div class="p-3 text-center">
-                        <div class="letraInfo"> Cocina </div>
-                        <div class="letraInfo"> Lucas </div>
+                        <div id="TitleTaskInfo"> Cocina </div>
+                        <div id="UserTaskInfo"> Lucas </div>
                         <div>
-                            <span class="letraInfo"> 10/02/2024 </span>
-                            <span class="letraInfo"> Administrador </span>
+                            <span id="DateTaskInfo"> 10/02/2024 </span>
+                            <span id="AuthorTaskInfo"> Administrador </span>
                         </div>
                     </div>
                 </div>

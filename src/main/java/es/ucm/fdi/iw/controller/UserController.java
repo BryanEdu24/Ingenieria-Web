@@ -112,7 +112,21 @@ public class UserController {
 
 	// --------------------------------------------------------------------------------------------------------------------
 
-	// GETS ----------------------------------
+	// GETTERS ----------------------------------
+	@GetMapping("/getTaskInfo/{id}")
+	@ResponseBody
+	public String getInfoTask(@PathVariable long id, HttpServletResponse response) {		
+		Task target = entityManager.createNamedQuery("Task.byId", Task.class)
+				.setParameter("taskId", id)
+				.getSingleResult();
+
+		return "{\"title\": \"" + target.getTitle() + "\"," +
+				"\"author\": \"" + target.getAuthor() + "\"," +
+				"\"creationDate\": \"" + target.getCreationDate() + "\"," +
+				"\"user\": \"" + target.getUser().getUsername() + "\"," +
+				"\"room\": \"" + target.getRoom().getName() + "\"}";
+	}
+
 	@GetMapping("/home1")
 	public String TM_home1(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");

@@ -46,3 +46,31 @@ function newTask(event) {
             console.log(e);
         });
 }
+
+function viewInfo(event) {
+    event.preventDefault();
+
+    const idTask = event.target.parentElement.parentElement.querySelector('#taskPersonalID').textContent;
+    
+    // let params = {
+    //     taskID: event.target.parentElement.parentElement.querySelector('#taskPersonalID').textContent,
+    // };
+
+    go("/user/getTaskInfo/" + idTask, 'GET')
+    .then(d => {
+        console.log("Success");
+        console.log(d);
+
+        // $("#TitleTaskInfo").val(d.title)
+        // $("#UserTaskInfo").val(d.nose)
+        // $("#DateTaskInfo").val(d.creationDate)
+        // $("#AuthorTaskInfo").val(d.author)
+
+    })
+    .catch(e => {
+        console.log("Fail");
+        console.log(e);
+    });
+}
+
+
