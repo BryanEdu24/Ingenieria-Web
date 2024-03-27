@@ -20,7 +20,7 @@
                 <div class="tareas">
                     <div class="titleStyle mb-2">TAREAS</div>
                     <div class="d-flex justify-content-between mx-4">
-                        <div class="d-flex ">
+                        <div class="d-flex">
                             <div class="dropdown m-2">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
@@ -62,28 +62,30 @@
                 <!--Tareas-->
                 <div class="card-list tareas p-3 mt-2 justify-content-center">
                     <div class="divCardsTasks" id="divCardsTasks">
-
-                        <div id="noTasks" th:if="${#lists.size(tasks) == 0}">
-                            NO HAY TAREAS PARA ESTA CASA
+                        <div id="noTasks" th:if="${#lists.size(tasks) == 0}"  class="titleStyle">
+                            <h4>No se encuentran tareas para la casa</h4>
+                            <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
                         </div>
 
                         <div th:each="task: ${tasks}"  class="card my-2">
                             <div class="card-content d-flex p-1 bg align-items-center taskCard">
                                 <div class="col">
-                                    <h3 th:text="${task.title}">Hacer la comida</h3>
-                                    <h5 th:text="${task.author}">Lucas</h5>
+                                    <h3 th:text="${task.title}"></h3>
+                                    <h5 th:text="${task.author}"></h5>
                                 </div>
                                 <div class="col">
                                     <div>
-                                        <h5 th:text="${#dates.format(task.creationDate, 'dd-MM-yyyy')}">10/02/2024<h5>
+                                        <h5 th:text="${#dates.format(task.creationDate, 'dd-MM-yyyy')}"></h5>
                                     </div>
                                     <div>
-                                        <h5 th:text="${task.room.name}">Cocina</h5>
+                                        <h5 th:text="${task.room.name}"></h5>
                                     </div>
                                 </div>
                                 <button class="btn">
-                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
-                                        height="50" style="margin-right: 5%;">
+                                    <span class="image-container">
+                                        <img th:src="@{/img/vista.png}" src="/img/vista.png"  alt="Imagen" width="50"
+                                        height="50" style="margin-right: 5%; ">
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -95,11 +97,13 @@
             <div class="col p-1">
                 <div class="d-flex flex-column p-1 tareas justify-content-center align-items-center">
                     <div class="titleStyle mt-2">Información de tarea seleccionada</div>
-                    <div class="letraInfo"> Cocina </div>
-                    <div class="letraInfo"> Lucas </div>
-                    <div>
-                        <span class="letraInfo"> 10/02/2024 </span>
-                        <span class="letraInfo"> Administrador </span>
+                    <div class="p-3 text-center">
+                        <div class="letraInfo"> Cocina </div>
+                        <div class="letraInfo"> Lucas </div>
+                        <div>
+                            <span class="letraInfo"> 10/02/2024 </span>
+                            <span class="letraInfo"> Administrador </span>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-2 tareas justify-content-center align-items-center p-2">

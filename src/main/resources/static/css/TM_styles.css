@@ -86,6 +86,21 @@ body {
     background-color: #F8F4EA !important;
 }
 
+.Notificaciones {
+    cursor: pointer;
+}
+
+#notificacion-bell:hover {
+    transform: scale(1.4);
+    filter: drop-shadow(0 2px 5px #B6ADAA); 
+}
+
+#buttonTasks:hover,  #buttonExpenses:hover {
+    transform: scale(1.3);
+    text-shadow: #B6ADAA 0.1em 0.1em 0.2em;
+}
+
+
 /* --- HOME 1 --- */
 
 

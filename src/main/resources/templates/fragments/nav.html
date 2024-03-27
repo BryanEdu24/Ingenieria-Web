@@ -27,23 +27,23 @@
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav">
                         <!--Tareas-->
-                        <li class="nav-item">
-                            <a class="nav-link" id="buttonTasks" href="/user/task"><h5>Tareas</h5></a>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" id="buttonTasks"href="/user/task" title="Página de tareas"><h5>Tareas</h5></a>
                         </li>
                         <!--Gastos-->
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" id="buttonExpenses" href="/user/expenses"><h5>Gastos</h5></a>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" id="buttonExpenses" href="/user/expenses" title="Página de gastos"><h5>Gastos</h5></a>
                         </li>
                     </ul>
                 </div>
 
                 <!--Notificaciones-->
                 <div class="Notificaciones mx-4">
-                    <img th:src="@{/img/bell-fill.png}" src="/img/bell-fill.png" alt="Foto notificaciones" height="25" width="25">
-                </div>
+                    <img th:src="@{/img/bell-fill.png}" src="/img/bell-fill.png" alt="Notificaciones" height="40" width="40" id="notificacion-bell" title="Tus notificaciones">
+                </div>                
                 <!--Usuario-->
                 <div class="Perfil mx-4">
-                    <img th:src="@{/img/User.png}" src="/img/User.png" alt="Foto de perfil" height="70">
+                    <img th:src="@{/img/User.png}" src="/img/User.png" alt="Foto de perfil" height="70" title="Perfil">
                 </div>
             </div>
         </nav>
