@@ -34,7 +34,8 @@ function newTask(event) {
                                 <h5>${d.room}</h5>
                             </div>
                         </div>
-                        <button class="btn">
+                        <button class="btn" onclick="viewInfo(event)">
+                            <div class="d-none" id="taskPersonalID">${d.id}</div>
                             <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
                                 height="50" style="margin-right: 5%;">
                         </button>
@@ -61,16 +62,16 @@ function viewInfo(event) {
         console.log("Success");
         console.log(d);
 
-        // $("#TitleTaskInfo").val(d.title)
-        // $("#UserTaskInfo").val(d.nose)
-        // $("#DateTaskInfo").val(d.creationDate)
-        // $("#AuthorTaskInfo").val(d.author)
+        $("#noTaskSelected").hide();
 
+        $("#TitleTaskInfo").text(d.title)
+        $("#UserTaskInfo").text(d.user)
+        $("#DateTaskInfo").text(d.creationDate)
+        $("#AuthorTaskInfo").text(d.author)
+        
     })
     .catch(e => {
         console.log("Fail");
         console.log(e);
     });
 }
-
-

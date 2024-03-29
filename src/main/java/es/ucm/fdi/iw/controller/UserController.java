@@ -240,11 +240,12 @@ public class UserController {
 
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
-
+		
 		return "{\"title\": \"" + target.getTitle() + "\"," +
 				"\"author\": \"" + target.getAuthor() + "\"," +
 				"\"creationDate\": \"" + target.getCreationDate() + "\"," +
 				"\"user\": \"" + target.getUser() + "\"," +
+				"\"id\": \"" + target.getId() + "\"," +
 				"\"room\": \"" + target.getRoom().getName() + "\"}";
 	}
 
