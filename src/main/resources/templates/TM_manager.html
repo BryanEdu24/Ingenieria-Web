@@ -4,6 +4,9 @@
 <head>
 	<th:block th:replace="fragments/head :: header" />
 	<title>Manager</title>
+	<script th:src="@{/js/stomp.js}" src="/js/stomp.js"></script>
+    <script th:src="@{/js/iw.js}" src="/js/iw.js"></script>
+    <script th:src="@{/js/room.js}" src="/js/room.js"></script>
 </head>
 
 <body>
@@ -17,9 +20,7 @@
 					<div class="titleStyle">Datos de casa </div>
 					<div class="p-3">
 						<div class="card my-2">
-							<div  th:each="history : ${historical}" class="card-content p-2">
-								<p th:text="${history.message}">Habitacion</p>	
-							</div>
+							<p>Habitacion</p>
 						</div>
 					</div>
 				</div>
@@ -29,8 +30,7 @@
 			<div class="col card-list">
 				<div class="Habitaciones">
 					<div class="habitacionesTitlebox">
-					<div class="titleStyle">Habitaciones</div>
-					<div class="">
+						<div class="titleStyle">Habitaciones</div>
 						<button type="button" class="btn rounded">
 							<span class="image-container">
 								<img th:src="@{/img/agregar.png}" id="addRoomImg" src="/img/agregar.png" alt="Imagen" width="50" height="50" data-bs-toggle="modal" data-bs-target="#newRoomModal">
@@ -38,33 +38,28 @@
 						</button>
 					</div>
 				</div>
-					<div  class="p-3" id="divCardsRoom">
-						<div class="card my-2">
-							<div th:each="room : ${rooms}" class="card-content d-flex p-2 align-items-center">
-								<img th:src="${room.image}"
-								   width="20" height="20" style="margin-right: 3%;">
-								 <p th:text="${room.name}">Habitacion</p>	
-								 
+					<div class="p-3" id="divCardsRoom">
+						<div class="card my-2" th:each="room : ${rooms}">
+							<div class="card-content d-flex p-2 align-items-center">
+								<img th:src="@{/img/JefeCasa.PNG}" width="20" height="20" style="margin-right: 3%;">
+								<p th:text="${room.name}">Habitacion</p>	 
 							</div>
 						</div>
-						
 					</div>
 				</div>
 			</div>
 		
-			<div class="col card-list">
+		<div class="col card-list">
 		<div class="Miembros">
 			<div class="titleStyle">Miembros</div>
 
 			<div class="p-3">
-				<div class="card my-2">
-					<div th:each="user : ${users}" class="card-content d-flex p-2 bg align-items-center">
-						<img th:src="${user.image}" width="20"
-							height="20" style="margin-right: 3%;">
-							<p th:text="${user.name}">Lucas</p>
+				<div class="card my-2" th:each="user : ${membersHouse}">
+					<div class="card-content d-flex p-2 bg align-items-center">
+						<img th:src="@{/img/history.svg}" width="20" height="20" style="margin-right: 3%;">
+						<p th:text="${user.username}">Lucas</p>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>
@@ -81,7 +76,7 @@
                 </div>
                 
                 <div class="modal-body">
-                    <form method="POST" th:action="@{/user/newRoom}" id="form-newRoom">
+                    <form id="form-newRoom">
                         <div class="row mb-3">
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la habitacion:</label>
                             <div class="col-7">
@@ -91,7 +86,7 @@
                        
                         <div class="modal-footer text-center d-flex justify-content-between align-items-center">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" id="buttonNewTaskCreation" data-bs-dismiss="modal" class="btn btn-primary btnCreateTask" onclick="newTask(event)">Crear Tarea</button>
+                            <button type="submit" id="buttonNewRoomCreation" data-bs-dismiss="modal" class="btn btn-primary" onclick="newRoom(event)">Nueva Habitación</button>
                         </div>
                     </form>
                 </div>

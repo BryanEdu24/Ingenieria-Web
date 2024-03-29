@@ -36,7 +36,7 @@ function newTask(event) {
                         </div>
                         <button class="btn" onclick="viewInfo(event)">
                             <div class="d-none" id="taskPersonalID">${d.id}</div>
-                            <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
+                            <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50"
                                 height="50" style="margin-right: 5%;">
                         </button>
                     </div>

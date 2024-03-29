@@ -1,6 +1,7 @@
 /* --- GENERAL --- */
 body {
-    background-color: #02B9D8;
+    background-color: #B6ADAA
+    /*background-color: #02B9D8;*/
 }
 
 .bodyLoginReg {
@@ -83,7 +84,7 @@ body {
 
 /* --- NAV --- */
 .bg-light, .navbar-light {
-    background-color: #F8F4EA !important;
+    background-color: #202024 !important;
 }
 
 .Notificaciones {
@@ -95,7 +96,15 @@ body {
     filter: drop-shadow(0 2px 5px #B6ADAA); 
 }
 
-#buttonTasks:hover,  #buttonExpenses:hover {
+#buttonTasks,  #buttonExpenses {
+    color: #F8F4EA;
+}
+
+#buttonManager {
+    color: #FFB919;
+}
+
+#buttonTasks:hover,  #buttonExpenses:hover, #buttonManager:hover {
     transform: scale(1.3);
     text-shadow: #B6ADAA 0.1em 0.1em 0.2em;
 }
@@ -179,7 +188,7 @@ body {
 .Datos, .Habitaciones, .Miembros, .tareas, .notas, .gastos { 
     border-radius: 35px;
     box-shadow: 10px 5px 12px rgba(0,0,0,.2);
-    background-color:#fefae0;
+    background-color:#F8F4EA;
 }
 
 .ListaHabitaciones {

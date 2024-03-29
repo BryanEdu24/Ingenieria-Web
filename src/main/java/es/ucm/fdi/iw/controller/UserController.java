@@ -184,18 +184,26 @@ public class UserController {
 	}
 
 	@GetMapping("/manager")
+	@Transactional
 	public String TM_jefe(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
-
+		
 		// En caso de no tener casa asignada
 		if (u.getHouse() == null) {
 			return "redirect:/user/home2";
 		}
-
+		
 		// En caso de no ser manager
 		if (!u.hasRole(Role.MANAGER)) {
 			return "redirect:/user/home1";
 		}
+		
+		House h = u.getHouse();
+		House target = entityManager.find(House.class, h.getId());
+
+		model.addAttribute("membersHouse", target.getUsers());
+		model.addAttribute("rooms", target.getRooms());
+		
 
 		return "TM_manager";
 	}
@@ -280,14 +288,15 @@ public class UserController {
 
 		session.setAttribute("u", user);
 
-		return "TM_manager";
+		return "redirect:/user/manager";
 	}
 
 	@PostMapping("/newRoom")
 	@Transactional
+	@ResponseBody
 	public String newRoom(
 			HttpServletResponse response,
-			@RequestParam String roomName,
+			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
 
 		Room roomNew = new Room();
@@ -304,6 +313,8 @@ public class UserController {
 		// .getSingleResult();
 
 		// if (existingRoom == null || existingRoom.getHouse() != h) {
+		String roomName = data.get("roomName").asText();
+
 		roomNew.setName(roomName);
 		roomNew.setHouse(h);
 		roomNew.setEnabled(true);
@@ -311,8 +322,8 @@ public class UserController {
 		entityManager.flush();
 		// }
 
-		// return "{\"name\": \"" + roomNew.getName() + "\"}";
-		return "redirect:/user/manager";
+		return "{\"name\": \"" + roomNew.getName() + "\"}";
+		//return "redirect:/user/manager";
 	}
 
 	@PostMapping("/joinHouse")
