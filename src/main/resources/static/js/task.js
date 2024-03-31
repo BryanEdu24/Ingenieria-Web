@@ -75,3 +75,36 @@ function viewInfo(event) {
         console.log(e);
     });
 }
+
+function filterUpdate(event) {
+
+    let params = {
+        selectRooms: $("#selectUpdateByRoom").val(),
+        selectUsers: $("#selectUpdateByUser").val(),
+        selectDates: $("#selectUpdateByDate").val()
+    };
+
+
+    if (params.selectRooms) {
+        go("/user/filterRoom/" + params.selectRooms, 'GET')
+        .then(d => {
+            console.log("Success");
+            console.log(d);
+
+            $('#divCardsTasks').empty();
+        })
+        .catch(e => {
+            console.log("Fail Room");
+            console.log(e);
+        });
+
+        console.log("Entró ");
+    }
+    else if (params.selectUsers) {
+
+    }
+    else { // selectDates
+
+    }
+
+}

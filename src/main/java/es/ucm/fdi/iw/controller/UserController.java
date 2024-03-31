@@ -7,6 +7,7 @@ import es.ucm.fdi.iw.model.Task;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
+import lombok.experimental.var;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,10 +35,12 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import javax.xml.crypto.Data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.*;
@@ -113,6 +116,34 @@ public class UserController {
 	// --------------------------------------------------------------------------------------------------------------------
 
 	// GETTERS ----------------------------------
+	@GetMapping("/filterRoom/{id}")
+	@ResponseBody
+	public String filterRoom(@PathVariable long id, HttpServletResponse response) {		
+		List<Task> tasks = entityManager
+				.createNamedQuery("Task.byRoom", Task.class)
+				.setParameter("roomId", id)
+				.getResultList();
+
+				StringBuilder jsonResult = new StringBuilder("{");
+
+				for (int i = 0; i < tasks.size(); i++) {
+					Task task = tasks.get(i);
+					jsonResult.append("\"").append(task.getId()).append("\": {");
+					jsonResult.append("\"title\": \"").append(task.getTitle()).append("\",");
+					jsonResult.append("\"author\": \"").append(task.getAuthor()).append("\",");
+					jsonResult.append("\"creationDate\": \"").append(task.getCreationDate()).append("\",");
+					jsonResult.append("\"user\": \"").append(task.getUser().getUsername()).append("\",");
+					jsonResult.append("\"room\": \"").append(task.getRoom().getName()).append("\"}");
+			
+					if (i < tasks.size() - 1) {
+						jsonResult.append(", ");
+					}
+				}
+			
+				jsonResult.append("}");
+				return jsonResult.toString();
+	}
+	
 	@GetMapping("/getTaskInfo/{id}")
 	@ResponseBody
 	public String getInfoTask(@PathVariable long id, HttpServletResponse response) {		

@@ -5,6 +5,7 @@ body {
 }
 
 .bodyLoginReg {
+    background-color: #02B9D8;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,21 +13,31 @@ body {
     height: 100vh;
 }
 
+#singButton {
+    background-color: #F8F4EA !important;
+    color: #202024;
+}
+
+#singButton:hover {
+    background-color: #FFB919 !important;
+    color: #202024;
+}
+
 /* --- LOGIN --- */
 #login {
     margin: auto;
     display: flex;
     flex-direction: column;
-    color: #202024;
+    color: white;
     box-shadow: 0px 0px 15px rgba(0,0,0,0.6);
-    background-color:#faedcd;
+    background-color:#202024;
     border-radius: 10px;
 }
 
 #login:before, #login:after {
     content: "";
     display: block;
-    background: rgb(248, 244, 234, 0.7);
+    background: #f8f4eab3;
     position: absolute;
     width: 100px; 
     height: 30px;
@@ -45,8 +56,8 @@ body {
 }
 
 .roundedImg {
-    background-color: white;
-    border: 3px solid black;
+    background-color: #F8F4EA;
+    border: 3px solid #02B9D8;
     border-radius: 50%;
 }
 
@@ -108,7 +119,6 @@ body {
     transform: scale(1.3);
     text-shadow: #B6ADAA 0.1em 0.1em 0.2em;
 }
-
 
 /* --- HOME 1 --- */
 

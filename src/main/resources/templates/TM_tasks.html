@@ -21,7 +21,26 @@
                     <div class="titleStyle mb-2">TAREAS</div>
                     <div class="d-flex justify-content-between mx-4">
                         <div class="d-flex">
-                            <div class="dropdown m-2">
+                            <div class="mx-2">
+                                <select class="form-select form-select-sm" id="selectUpdateByRoom" aria-label=".form-select-sm example" onchange="filterUpdate(event)">
+                                    <option selected disabled hidden value="none">Filtrar por habitación</option>
+                                    <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}">ROOM</option>
+                                </select>
+                            </div>
+                            <div class="mx-2">
+                                <select class="form-select form-select-sm" id="selectUpdateByUser" aria-label=".form-select-sm example" onchange="filterUpdate(event)">
+                                    <option selected disabled hidden value="none">Filtrar por miembros</option>
+                                    <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}" th:text="${houseUser.username}">USER</option>
+                                </select>
+                            </div>
+                            <div class="mx-2">
+                                <select class="form-select form-select-sm" id="selectUpdateByDate" aria-label=".form-select-sm example" onchange="filterUpdate(event)">
+                                    <option selected disabled hidden value="none">Ordenar por</option>
+                                    <option value="moreNew">Fecha más reciente</option>
+                                    <option value="moreOld">Fecha más antigua</option>
+                                </select>
+                            </div>
+                            <!-- <div class="dropdown m-2">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Filtro habitación
@@ -29,8 +48,8 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li th:each="room: ${rooms}"><a class="dropdown-item" href="#" th:text="${room.name}"> ROOM </a></li>
                                 </ul>
-                            </div>
-                            <div class="dropdown m-2">
+                            </div> -->
+                            <!-- <div class="dropdown m-2">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Filtro persona
@@ -38,16 +57,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li th:each="houseUser: ${houseUsers}"><a class="dropdown-item" href="#" th:text="${houseUser.username}"> USER </a></li>
                                 </ul>
-                            </div>
-                            <div class="dropdown m-2">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Ordenar por
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li th:each="houseUser: ${houseUsers}"><a class="dropdown-item" href="#" th:text="${houseUser.username}"> USER </a></li>
-                                </ul>
-                            </div>
+                            </div> -->
                         </div>
     
                         <div class="">
