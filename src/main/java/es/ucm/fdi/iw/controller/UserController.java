@@ -7,7 +7,6 @@ import es.ucm.fdi.iw.model.Task;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
-import lombok.experimental.var;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -118,35 +117,67 @@ public class UserController {
 	// GETTERS ----------------------------------
 	@GetMapping("/filterRoom/{id}")
 	@ResponseBody
-	public String filterRoom(@PathVariable long id, HttpServletResponse response) {		
+	public String filterRoom(@PathVariable long id, HttpServletResponse response) {
 		List<Task> tasks = entityManager
 				.createNamedQuery("Task.byRoom", Task.class)
 				.setParameter("roomId", id)
 				.getResultList();
 
-				StringBuilder jsonResult = new StringBuilder("{");
+		StringBuilder jsonResult = new StringBuilder("{");
 
-				for (int i = 0; i < tasks.size(); i++) {
-					Task task = tasks.get(i);
-					jsonResult.append("\"").append(task.getId()).append("\": {");
-					jsonResult.append("\"title\": \"").append(task.getTitle()).append("\",");
-					jsonResult.append("\"author\": \"").append(task.getAuthor()).append("\",");
-					jsonResult.append("\"creationDate\": \"").append(task.getCreationDate()).append("\",");
-					jsonResult.append("\"user\": \"").append(task.getUser().getUsername()).append("\",");
-					jsonResult.append("\"room\": \"").append(task.getRoom().getName()).append("\"}");
-			
-					if (i < tasks.size() - 1) {
-						jsonResult.append(", ");
-					}
-				}
-			
-				jsonResult.append("}");
-				return jsonResult.toString();
+		for (int i = 0; i < tasks.size(); i++) {
+			Task task = tasks.get(i);
+			jsonResult.append("\"").append(task.getId()).append("\": {");
+			jsonResult.append("\"title\": \"").append(task.getTitle()).append("\",");
+			jsonResult.append("\"author\": \"").append(task.getAuthor()).append("\",");
+			jsonResult.append("\"creationDate\": \"").append(task.getCreationDate()).append("\",");
+			jsonResult.append("\"user\": \"").append(task.getUser().getUsername()).append("\",");
+			jsonResult.append("\"id\": \"").append(task.getId()).append("\",");
+			jsonResult.append("\"room\": \"").append(task.getRoom().getName()).append("\"}");
+
+			if (i < tasks.size() - 1) {
+				jsonResult.append(", ");
+			}
+		}
+
+		jsonResult.append("}");
+		return jsonResult.toString();
 	}
-	
+
+	@GetMapping("/filterUser/{id}")
+	@ResponseBody
+	public String filterUser(@PathVariable long id, HttpServletResponse response) {
+
+		User aux = entityManager.find(User.class, id);
+		List<Task> tasks = entityManager
+				.createNamedQuery("Task.byUser", Task.class)
+				.setParameter("userId", aux)
+				.getResultList();
+
+		StringBuilder jsonResult = new StringBuilder("{");
+
+		for (int i = 0; i < tasks.size(); i++) {
+			Task task = tasks.get(i);
+			jsonResult.append("\"").append(task.getId()).append("\": {");
+			jsonResult.append("\"title\": \"").append(task.getTitle()).append("\",");
+			jsonResult.append("\"author\": \"").append(task.getAuthor()).append("\",");
+			jsonResult.append("\"creationDate\": \"").append(task.getCreationDate()).append("\",");
+			jsonResult.append("\"user\": \"").append(task.getUser().getUsername()).append("\",");
+			jsonResult.append("\"id\": \"").append(task.getId()).append("\",");
+			jsonResult.append("\"room\": \"").append(task.getRoom().getName()).append("\"}");
+
+			if (i < tasks.size() - 1) {
+				jsonResult.append(", ");
+			}
+		}
+
+		jsonResult.append("}");
+		return jsonResult.toString();
+	}
+
 	@GetMapping("/getTaskInfo/{id}")
 	@ResponseBody
-	public String getInfoTask(@PathVariable long id, HttpServletResponse response) {		
+	public String getInfoTask(@PathVariable long id, HttpServletResponse response) {
 		Task target = entityManager.createNamedQuery("Task.byId", Task.class)
 				.setParameter("taskId", id)
 				.getSingleResult();
@@ -218,23 +249,22 @@ public class UserController {
 	@Transactional
 	public String TM_jefe(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
-		
+
 		// En caso de no tener casa asignada
 		if (u.getHouse() == null) {
 			return "redirect:/user/home2";
 		}
-		
+
 		// En caso de no ser manager
 		if (!u.hasRole(Role.MANAGER)) {
 			return "redirect:/user/home1";
 		}
-		
+
 		House h = u.getHouse();
 		House target = entityManager.find(House.class, h.getId());
 
 		model.addAttribute("membersHouse", target.getUsers());
 		model.addAttribute("rooms", target.getRooms());
-		
 
 		return "TM_manager";
 	}
@@ -279,7 +309,7 @@ public class UserController {
 
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
-		
+
 		return "{\"title\": \"" + target.getTitle() + "\"," +
 				"\"author\": \"" + target.getAuthor() + "\"," +
 				"\"creationDate\": \"" + target.getCreationDate() + "\"," +
@@ -354,7 +384,7 @@ public class UserController {
 		// }
 
 		return "{\"name\": \"" + roomNew.getName() + "\"}";
-		//return "redirect:/user/manager";
+		// return "redirect:/user/manager";
 	}
 
 	@PostMapping("/joinHouse")

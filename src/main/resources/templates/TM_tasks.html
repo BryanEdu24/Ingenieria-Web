@@ -22,19 +22,19 @@
                     <div class="d-flex justify-content-between mx-4">
                         <div class="d-flex">
                             <div class="mx-2">
-                                <select class="form-select form-select-sm" id="selectUpdateByRoom" aria-label=".form-select-sm example" onchange="filterUpdate(event)">
+                                <select class="form-select form-select-sm" id="selectUpdateByRoom" aria-label=".form-select-sm example" onchange="filterUpdate(event, 1)">
                                     <option selected disabled hidden value="none">Filtrar por habitación</option>
                                     <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}">ROOM</option>
                                 </select>
                             </div>
                             <div class="mx-2">
-                                <select class="form-select form-select-sm" id="selectUpdateByUser" aria-label=".form-select-sm example" onchange="filterUpdate(event)">
+                                <select class="form-select form-select-sm" id="selectUpdateByUser" aria-label=".form-select-sm example" onchange="filterUpdate(event, 2)">
                                     <option selected disabled hidden value="none">Filtrar por miembros</option>
                                     <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}" th:text="${houseUser.username}">USER</option>
                                 </select>
                             </div>
                             <div class="mx-2">
-                                <select class="form-select form-select-sm" id="selectUpdateByDate" aria-label=".form-select-sm example" onchange="filterUpdate(event)">
+                                <select class="form-select form-select-sm" id="selectUpdateByDate" aria-label=".form-select-sm example" onchange="filterUpdate(event, 3)">
                                     <option selected disabled hidden value="none">Ordenar por</option>
                                     <option value="moreNew">Fecha más reciente</option>
                                     <option value="moreOld">Fecha más antigua</option>
