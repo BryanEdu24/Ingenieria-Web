@@ -93,6 +93,9 @@ function filterUpdate(event, x) {
 
                 $('#divCardsTasks').empty();
 
+                $("#selectUpdateByUser").prop('selectedIndex', 0);
+                $("#selectUpdateByDate").prop('selectedIndex', 0);
+
                 if (Object.keys(d).length > 0) {
                     Object.keys(d).forEach(taskKey => {
                         $('#divCardsTasks').append(
@@ -139,6 +142,9 @@ function filterUpdate(event, x) {
 
                 $('#divCardsTasks').empty();
 
+                $("#selectUpdateByRoom").prop('selectedIndex', 0);
+                $("#selectUpdateByDate").prop('selectedIndex', 0);
+
                 if (Object.keys(d).length > 0) {
                     Object.keys(d).forEach(taskKey => {
                         $('#divCardsTasks').append(
@@ -178,6 +184,12 @@ function filterUpdate(event, x) {
             });
     }
     else { // selectDates
+
+        $('#divCardsTasks').empty();
+
+        $("#selectUpdateByRoom").prop('selectedIndex', 0);
+        $("#selectUpdateByUser").prop('selectedIndex', 0);
+
         switch (params.selectDates) {
             case "moreNew":
                 //TODO
