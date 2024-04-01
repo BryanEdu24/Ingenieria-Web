@@ -17,6 +17,7 @@
                 <div class="">
 
                     <div th:each="house: ${houses}" class="card my-2">
+                        <div th:text="${house.id}" hidden> </div>
                         <div class="card-content d-flex p-1 bg align-items-center">
                             <div class="col">
                                 <h5 th:text="${house.name}"> NOMBRE CASA </h5>
