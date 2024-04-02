@@ -204,6 +204,7 @@ public class UserController {
 				.getResultList();
 
 		model.addAttribute("tasks", tasks);
+		model.addAttribute("u", u);
 
 		return "TM_home1";
 	}
@@ -215,6 +216,8 @@ public class UserController {
 		if (u.getHouse() != null) {
 			return "redirect:/user/home1";
 		}
+
+		model.addAttribute("u", u);
 
 		return "TM_home2";
 	}
@@ -241,6 +244,7 @@ public class UserController {
 		model.addAttribute("authorName", u.getUsername());
 
 		model.addAttribute("tasks", tasks);
+		model.addAttribute("u", u);
 
 		return "TM_tasks";
 	}
@@ -265,6 +269,7 @@ public class UserController {
 
 		model.addAttribute("membersHouse", target.getUsers());
 		model.addAttribute("rooms", target.getRooms());
+		model.addAttribute("u", u);
 
 		return "TM_manager";
 	}
@@ -277,6 +282,8 @@ public class UserController {
 		if (u.getHouse() == null) {
 			return "redirect:/user/home2";
 		}
+
+		model.addAttribute("u", u);
 
 		return "TM_expenses";
 	}

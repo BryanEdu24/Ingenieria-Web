@@ -19,38 +19,62 @@
                             <img th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" alt="Logo TaskMate" height="70">
                         </div>
                         <div>
-                            <img th:src="@{/img/NombreTM.png}" src="/img/NombreTM.png" alt="Nombre TaskMate" height="50">
+                            <img th:src="@{/img/NombreTM.png}" src="/img/NombreTM.png" alt="Nombre TaskMate"
+                                height="50">
                         </div>
                     </div>
                 </a>
                 <!--Menu-->
                 <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav" th:unless="${u.house == null}">
                         <!--Tareas-->
                         <li class="nav-item mx-3">
-                            <a class="nav-link" id="buttonTasks"href="/user/task" title="Página de tareas"><h5>Tareas</h5></a>
+                            <a class="nav-link" id="buttonTasks" href="/user/task" title="Página de tareas">
+                                <h5>Tareas</h5>
+                            </a>
                         </li>
                         <!--Gastos-->
                         <li class="nav-item mx-3">
-                            <a class="nav-link" id="buttonExpenses" href="/user/expenses" title="Página de gastos"><h5>Gastos</h5></a>
+                            <a class="nav-link" id="buttonExpenses" href="/user/expenses" title="Página de gastos">
+                                <h5>Gastos</h5>
+                            </a>
                         </li>
                         <!--Manager-->
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" id="buttonManager" href="/user/manager" title="Página de Admin"><h5>Manager</h5></a>
+                        <li class="nav-item mx-3" th:if="${#strings.equals(u.roles, 'MANAGER')}">
+                            <a class="nav-link" id="buttonManager" href="/user/manager" title="Página de Admin">
+                                <h5>Manager</h5>
+                            </a>
                         </li>
                     </ul>
                 </div>
-
                 <!--Notificaciones-->
-                <div class="Notificaciones mx-4">
-                    <img th:src="@{/img/bell-fill.png}" src="/img/bell-fill.png" alt="Notificaciones" height="40" width="40" id="notificacion-bell" title="Tus notificaciones">
-                </div>                
+                <button class="Notificaciones mx-4 btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    <img th:src="@{/img/bell-fill.png}" src="/img/bell-fill.png" alt="Notificaciones" height="40"
+                        width="40" id="notificacion-bell" title="Tus notificaciones">
+                </button>
                 <!--Usuario-->
                 <div class="Perfil mx-4">
-                    <img th:src="@{/img/User.png}" src="/img/User.png" alt="Foto de perfil" height="70" title="Perfil">
+                    <img th:if="${#strings.equals(u.roles, 'MANAGER')}" th:src="@{/img/JefeCasa.png}"
+                        src="/img/JefeCasa.png" alt="Foto de perfil" height="70" title="Perfil">
+                    <img th:unless="${#strings.equals(u.roles, 'MANAGER')}" th:src="@{/img/User.png}"
+                        src="/img/User.png" alt="Foto de perfil" height="70" title="Perfil">
                 </div>
             </div>
+
+            
         </nav>
+        <!-- Offcanvas de notifications -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+            aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                ...
+            </div>
+        </div>
     </header>
 </body>
 
