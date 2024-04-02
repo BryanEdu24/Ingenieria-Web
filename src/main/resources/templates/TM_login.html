@@ -8,21 +8,22 @@
 
     <body class="bodyLoginReg">
         <div class="card p-3" id="login">
-            <div class="text-center mb-3">
+            <!-- <div class="text-center mb-3">
                 <img th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" height="100" width="100" class="roundedImg p-1" alt="Logo TaskMate" style="cursor: default;">
-            </div>
-            <div class="titleStyle text-center mb-3">
+            </div> -->
+            <div class="titleStyle text-center mb-3 mt-3">
                 <span>—— </span>
                 <img th:src="@{/img/NombreTM.png}" src="/img/NombreTM.png" alt="Nombre TaskMate" height="50">
                 <span> ——</span>
-                <div class="mt-2"><h3>Iniciar Sesión</h3></div>
+                <div class="mt-4 mb-2"><h3>Iniciar Sesión</h3></div>
             </div>
 
+            <div th:if="${#request.getQueryString() == 'error'}" class="error alert alert-danger text-center text-danger" role="alert">
+                <b>⚠️ Error en nombre de usuario o contraseña ⚠️</b>
+            </div>
+            
             <div class="card-body">
                 <form method="post" th:action="@{/login}">
-                    <p th:if="${#request.getQueryString() == 'error'}" class="error bg-danger p-1 rounded">
-                        <b>⚠️ Error en nombre de usuario o contraseña ⚠️</b>
-                    </p>
                     <div class="mb-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
@@ -37,16 +38,16 @@
                         </div>
                     </div>
 
-                    <div class="text-center">
+                    <div class="text-center mt-4">
                         <button type="submit" id="singButton" class="btn btn-primary">Iniciar Sesión</button>
                     </div>
 
-                    <div class="text-center mt-3">
+                    <div class="text-center mt-4">
                         ¿No tienes una cuenta? <a th:href="@{/register}">Haz click aquí</a>
                     </div>
                 </form>
 
-                <div class="justify-content-between d-flex mt-3 bg-dark rounded p-2">
+                <!-- <div class="justify-content-between d-flex mt-3 bg-dark rounded p-2">
                     <div class="nav-item debug align-self-center" th:if="${application.debug}">
                         <form th:action="@{/login}" method="post">
                             <input type="hidden" name="username" value="a">
@@ -61,7 +62,7 @@
                             <button type="submit" class="btn btn-outline-info">Home 1</button>
                         </form>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </body>

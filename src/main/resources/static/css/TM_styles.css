@@ -13,24 +13,14 @@ body {
     height: 100vh;
 }
 
-#singButton {
-    background-color: #F8F4EA !important;
-    color: #202024;
-}
-
-#singButton:hover {
-    background-color: #FFB919 !important;
-    color: #202024;
-}
-
 /* --- LOGIN --- */
 #login {
     margin: auto;
     display: flex;
     flex-direction: column;
-    color: white;
+    color: black;
     box-shadow: 0px 0px 15px rgba(0,0,0,0.6);
-    background-color:#202024;
+    background-color:#faedcd;
     border-radius: 10px;
 }
 
@@ -109,10 +99,6 @@ body {
 
 #buttonTasks,  #buttonExpenses {
     color: #F8F4EA;
-}
-
-#buttonManager {
-    color: #FFB919;
 }
 
 #buttonTasks:hover,  #buttonExpenses:hover, #buttonManager:hover {
@@ -305,16 +291,11 @@ body {
 }
 
 /* Estilos Randoms */
-
-.btn-primary {
-    background-color: #02B9D8;
-}
-
 .titleStyle {
     text-align: center;
     font-family: Arial Black; 
     font-size: 35px; 
-    background: #202024; 
+    background: black; 
     background-clip: text; 
     color: transparent; 
     text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3); 
