@@ -51,10 +51,10 @@
                         <div class="p-3">
                             <div th:if="${#lists.size(tasks) == 0}" class="titleStyle">
                                 <h4>No hay notas registradas</h4>
-                                <img th:src="@{/img/noHayNotas.png}" src="/img/noHayTareas.png" height="50" width="50">
+                                <img th:src="@{/img/noHayNotas.png}" height="50" width="50">
                             </div>
                             <div class="carousel slide p-3" id="taskCarousel" data-ride="carousel">
-                                <div class="carousel-inner  p-3">
+                                <div class="carousel-inner">
                                     <div th:each="note : ${noteslist}"> 
                                         <span th:if="${note.task.usuario.username == user.username}">
                                             <div class="carousel-item active">
@@ -93,7 +93,7 @@
                         <div class="p-3">
                             <div th:if="${#lists.size(tasks) == 0}" class="titleStyle">
                                 <h4>No hay gastos registrados</h4>
-                                <img th:src="@{/img/noHayGastos.png}" src="/img/noHayTareas.png" height="50" width="50">
+                                <img th:src="@{/img/noHayGastos.png}" height="50" width="50">
                             </div>
                             <div class="Gastos_actuales">
                                 <h1 th:text="${expenses?.total}">&euro;</h1> <!--Comprueba campo nulable--> 
