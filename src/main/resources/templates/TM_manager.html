@@ -13,57 +13,98 @@
 	<!--Navbar-->
 	<header th:replace="fragments/nav.html :: nav"></header>
 
-	<div class="container-fluid contenedor">
-		<div class="row d-flex mb-4">
-			<div class="col align-items-center d-flex justify-content-center ">
-				<div class="Datos">
-					<div class="titleStyle">Datos de casa </div>
-					<div class="p-3">
-						<div class="card my-2">
-							<p>Habitacion</p>
+	<div class="container-fluid p-4">
+		<div class="d-flex align-items-center justify-content-center">	
+			<div class="manager p-3">
+				<div class="titleStyle">Datos de la casa</div>
+				<hr>
+				<div class="row">
+					<div class="titleStyle d-flex justify-content-center">
+						<div class="d-flex justify-content-center align-items-center mx-5">
+							<h4>Nombre:&ensp;</h4>
+							<h3>Casita IW</h3>
+						</div>
+						<div class="d-flex justify-content-center align-items-center mx-5">
+							<h4>Contraseña:&ensp;</h4>
+							<h3>***********</h3>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row d-flex mb-4">
+
+		<div class="row mt-3">
 			<div class="col card-list">
-				<div class="Habitaciones">
-					<div class="habitacionesTitlebox">
-						<div class="titleStyle">Habitaciones</div>
-						<button type="button" class="btn rounded">
-							<span class="image-container">
-								<img th:src="@{/img/agregar.png}" id="addRoomImg" src="/img/agregar.png" alt="Imagen" width="50" height="50" data-bs-toggle="modal" data-bs-target="#newRoomModal">
-							</span>
-						</button>
+				<div class="Habitaciones p-3">
+					<div class="row d-flex justify-content-center">
+						<div class="col">
+						</div>
+						<div class="titleStyle col d-flex align-items-center justify-content-center">Habitaciones</div>
+						<div class="col d-flex justify-content-end align-items-end">
+							<button type="button" class="btn rounded">
+								<span class="image-container">
+									<img th:src="@{/img/agregar.png}" id="addRoomImg" src="/img/agregar.png" alt="Imagen" width="50" height="50" data-bs-toggle="modal" data-bs-target="#newRoomModal">
+								</span>
+							</button>
+						</div>
 					</div>
-				</div>
-					<div class="p-3" id="divCardsRoom">
+					
+					<div id="divCardsRoom">
 						<div class="card my-2" th:each="room : ${rooms}">
-							<div class="card-content d-flex p-2 align-items-center">
-								<img th:src="@{/img/JefeCasa.PNG}" width="20" height="20" style="margin-right: 3%;">
-								<p th:text="${room.name}">Habitacion</p>	 
+							<div class="card-content d-flex justify-content-between ms-2 p-1">
+								<div class="d-flex">
+									<div class="mx-3">
+										<img th:src="@{/img/JefeCasa.PNG}" width="50" height="60">
+									</div>
+									<div th:text="${room.name}" class="titleStyle textCardManager"></div>
+								</div>
+								<div class="mx-4 text-center">
+									<b><u>Acciones</u></b>
+									<div class="d-flex mt-1">
+										<div class="mx-3 imgActionsEdit">
+											<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+										</div>
+										<div class="mx-3 imgActionsDelete"> 
+											<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		
-		<div class="col card-list">
-		<div class="Miembros">
-			<div class="titleStyle">Miembros</div>
 
-			<div class="p-3">
-				<div class="card my-2" th:each="user : ${membersHouse}">
-					<div class="card-content d-flex p-2 bg align-items-center">
-						<img th:src="@{/img/history.svg}" width="20" height="20" style="margin-right: 3%;">
-						<p th:text="${user.username}">Lucas</p>
+			<div class="col card-list">
+				<div class="Miembros p-3">
+					<div class="titleStyle">Miembros</div>
+					
+					<div id="divCardsMembers">
+						<div class="card my-2" th:each="user : ${membersHouse}">
+							<div class="card-content d-flex justify-content-between ms-2 p-1">
+								<div class="d-flex">
+									<div class="mx-3">
+										<img th:src="@{/img/history.svg}" width="50" height="60">
+									</div>
+									<div th:text="${user.username}" class="titleStyle textCardManage"></div>
+								</div>
+								<div class="mx-4 text-center">
+									<b><u>Acciones</u></b>
+									<div class="d-flex mt-1">
+										<div class="mx-3 imgActionsEdit">
+											<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+										</div>
+										<div class="mx-3 imgActionsDelete"> 
+											<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	</div>
 	</div>
 
 	<!-- Modal CREAR HABITACION -->

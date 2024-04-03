@@ -53,9 +53,9 @@
                         width="40" id="notificacion-bell" title="Tus notificaciones">
                 </button>
                 <!--Usuario-->
-                <div class="Perfil mx-4">
+                <div class="Perfil mx-2">
                     <img th:if="${#strings.equals(u.roles, 'MANAGER')}" th:src="@{/img/JefeCasa.png}"
-                        src="/img/JefeCasa.png" alt="Foto de perfil" height="70" title="Perfil">
+                        src="/img/JefeCasa.png" alt="Foto de perfil" height="60" title="Perfil">
                     <img th:unless="${#strings.equals(u.roles, 'MANAGER')}" th:src="@{/img/User.png}"
                         src="/img/User.png" alt="Foto de perfil" height="70" title="Perfil">
                 </div>
