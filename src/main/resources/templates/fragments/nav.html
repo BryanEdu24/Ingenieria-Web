@@ -48,31 +48,65 @@
                     </ul>
                 </div>
                 <!--Notificaciones-->
-                <button class="Notificaciones mx-4 btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <button th:unless="${u.house == null}" class="Notificaciones mx-4 btn position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <img th:src="@{/img/bell-fill.png}" src="/img/bell-fill.png" alt="Notificaciones" height="40"
                         width="40" id="notificacion-bell" title="Tus notificaciones">
+                        <!-- Se puede hacer con contador, lo dejo genérico por ahora. Revisar reacción al mouse. -->
+                    <span hidden id="newNotificacionAdvice" class="position-absolute top-50 start-80 p-2 bg-danger border border-light rounded-circle">
+                        <span class="visually-hidden"> New Notification </span>
+                    </span>
                 </button>
                 <!--Usuario-->
                 <div class="Perfil mx-2">
                     <img th:if="${#strings.equals(u.roles, 'MANAGER')}" th:src="@{/img/JefeCasa.png}"
                         src="/img/JefeCasa.png" alt="Foto de perfil" height="60" title="Perfil">
-                    <img th:unless="${#strings.equals(u.roles, 'MANAGER')}" th:src="@{/img/User.png}"
+                    <img th:if="${#strings.equals(u.roles, 'USER')}" th:src="@{/img/User.png}"
                         src="/img/User.png" alt="Foto de perfil" height="70" title="Perfil">
+                        <img th:if="${#strings.equals(u.roles, 'ADMIN')}" th:src="@{/img/LogoTM.png}"
+                        src="/img/LogoTM.png" alt="Foto de perfil" height="70" title="Perfil">
                 </div>
             </div>
 
-            
         </nav>
+
         <!-- Offcanvas de notifications -->
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+        <div class="offcanvas offcanvas-end canvasNot" tabindex="-1" id="offcanvasRight"
             aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
-                <h5 id="offcanvasRightLabel">Offcanvas right</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
+                <h5 id="offcanvasRightLabel"> Notificaciones </h5>
+                <!-- <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button> -->
             </div>
             <div class="offcanvas-body">
-                ...
+                <div class="card-list p-1">
+                    <div class="card p-3 mt-2">
+                        <div class="card-content d-flex align-items-center">
+                            <div class="col d-flex d-flex justify-content-between align-middle textColor">
+                                <div class="d-flex align-middle">
+                                    <h6> NOTIFICATION TEXT 1 </h6>
+                                </div>
+                                <div class="d-flex align-middle">
+                                    <div hidden> id </div>
+                                    <img class="imgActionsDelete" th:src="@{/img/close.svg}"
+                                    src="/img/close.svg" alt="Botón de cerrar" width="20" height="20" title="Cerrar">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="card p-3 mt-2" th:each="notification : ${notificactions}">
+                        <div class="card-content d-flex align-items-center">
+                            <div class="col d-flex d-flex justify-content-between textColor">
+                                <div class="d-flex align-middle">
+                                    <h6 th:text="${notification.message}"> NOTIFICATION TEXT </h6>
+                                </div>
+                                <div class="d-flex align-middle">
+                                    <div th:text="${notification.id}" hidden> id </div>
+                                    <button type="button" class="btn-close" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
             </div>
         </div>
     </header>

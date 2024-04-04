@@ -103,6 +103,16 @@ input, select {
     text-shadow: #B6ADAA 0.1em 0.1em 0.2em;
 }
 
+/* --- NAV - NOTIFICATIONS --- */
+.canvasNot{
+    background-color: #202024;
+    color: #F8F4EA;
+}
+
+.textColor{
+    color:#202024
+}
+
 /* --- HOME 1 --- */
 .HomePrincipal {
     padding: 2%;

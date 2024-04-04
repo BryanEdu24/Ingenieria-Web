@@ -3,6 +3,7 @@ package es.ucm.fdi.iw.controller;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import es.ucm.fdi.iw.model.House;
 import es.ucm.fdi.iw.model.Task;
+import es.ucm.fdi.iw.model.User;
 
 /**
  *  Site administration.
@@ -30,14 +32,16 @@ public class AdminController {
 	private EntityManager entityManager;
 
 	@GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
+        User u = (User) session.getAttribute("u");
 
         List<House> houses = entityManager
 			.createNamedQuery("House.allHouses", House.class)
 			.setParameter("status", true)
 			.getResultList();
-        
-            model.addAttribute("houses", houses);
+
+        model.addAttribute("houses", houses);
+        model.addAttribute("u", u);
 
         return "TM_admin";
     }
