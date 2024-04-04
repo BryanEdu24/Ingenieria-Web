@@ -154,7 +154,8 @@ input, select {
 }
 
 .imgActionsDelete, .imgActionsEdit {
-    cursor: pointer;
+    border: 0;
+    background-color: transparent;
 }
 
 .imgActionsEdit:hover {

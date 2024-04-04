@@ -55,17 +55,21 @@
 								<div class="d-flex">
 									<div class="mx-3">
 										<img th:src="@{/img/JefeCasa.PNG}" width="50" height="60">
-									</div>
+									</div>									
 									<div th:text="${room.name}" class="titleStyle textCardManager"></div>
 								</div>
 								<div class="mx-4 text-center">
 									<b><u>Acciones</u></b>
 									<div class="d-flex mt-1">
-										<div class="mx-3 imgActionsEdit">
-											<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+										<div class="mx-3">
+											<button type="button" class="imgActionsEdit">
+												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+											</button>
 										</div>
-										<div class="mx-3 imgActionsDelete"> 
-											<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+										<div class="mx-3">
+											<button type="button" class="imgActionsDelete">
+												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+											</button>
 										</div>
 									</div>
 								</div>
@@ -91,11 +95,13 @@
 								<div class="mx-4 text-center">
 									<b><u>Acciones</u></b>
 									<div class="d-flex mt-1">
-										<div class="mx-3 imgActionsEdit">
+										<!-- <div class="mx-3 imgActionsEdit">
 											<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
-										</div>
-										<div class="mx-3 imgActionsDelete"> 
-											<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+										</div> -->
+										<div class="mx-3">
+											<button type="button" class="imgActionsDelete">
+												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+											</button>
 										</div>
 									</div>
 								</div>
@@ -119,9 +125,68 @@
                 <div class="modal-body">
                     <form id="form-newRoom">
                         <div class="row mb-3">
-                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la habitacion:</label>
+                            <label class="col-5 align-self-center">·&nbsp;Nombre de habitacion:</label>
                             <div class="col-7">
                                 <input type="text" class="form-control" id="roomName" name="roomName" placeholder="Nombre de la habitacion" required>
+                            </div>
+                        </div>
+
+						<div class="row mb-3">
+                            <label class="col-5 align-self-center">·&nbsp;Foto de habitación:</label>
+                            <div class="d-flex justify-content-center">
+								<div class="p-2">
+									<input type="radio" id="photokitchen" name="photoSelect" value="cocina">
+									<label for="photokitchen">
+										<img th:src="@{/img/cocina.png}" src="/img/cocina.png" id="kitchen" width="50" height="50">
+										<b>Cocina</b>
+									</label><br>
+									
+									<input type="radio" id="photoBathroom" name="photoSelect" value="banio">
+									<label for="photoBathroom">
+										<img th:src="@{/img/cuarto-de-bano.png}" src="/img/cuarto-de-bano.png" id="bathroom" width="50" height="50">
+										<b>Baño</b>
+									</label><br>
+									
+									<input type="radio" id="photoLivingRoom" name="photoSelect" value="salon">
+									<label for="photoLivingRoom">
+										<img th:src="@{/img/livingroom.png}" src="/img/livingroom.png" id="livingroom" width="50" height="50">
+										<b>Salón</b>
+									</label><br>
+									
+									<input type="radio" id="photoRoom" name="photoSelect" value="habitacion">
+									<label for="photoRoom">
+										<img th:src="@{/img/room.png}" src="/img/room.png" id="bedroom" width="50" height="50">
+										<b>Habitación</b>
+									</label><br>
+								</div>
+								
+								<div class="p-2">
+									<input type="radio" id="photoCorridor" name="photoSelect" value="pasillo">
+									<label for="photoCorridor">
+										<img th:src="@{/img/pasillo.png}" src="/img/pasillo.png" id="corridor" width="50" height="50">
+										<b>Pasillo</b>
+									</label><br>
+
+									<input type="radio" id="photoTerrace" name="photoSelect" value="terraza">
+									<label for="photoCorridor">
+										<img th:src="@{/img/terraza.png}" src="/img/terraza.png" id="terrace" width="50" height="50">
+										<b>Terraza</b>
+									</label><br>
+
+									<input type="radio" id="photoStorage" name="photoSelect" value="trastero">
+									<label for="photoCorridor">
+										<img th:src="@{/img/trastero.png}" src="/img/trastero.png" id="storage" width="50" height="50">
+										<b>Trastero</b>
+									</label><br>
+
+									<input type="radio" id="photoGarage" name="photoSelect" value="garaje">
+									<label for="photoCorridor">
+										<img th:src="@{/img/garaje.png}" src="/img/garaje.png" id="garage" width="50" height="50">
+										<b>Garaje</b>
+									</label><br>
+								</div>
+
+                                <!-- <input type="text" class="form-control" id="roomName" name="roomName" placeholder="Nombre de la habitacion" required> -->
                             </div>
                         </div>
                        
