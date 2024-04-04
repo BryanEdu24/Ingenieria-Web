@@ -50,30 +50,48 @@ function newTask(event) {
 
 function viewInfo(event) {
     event.preventDefault();
-
+  
     const idTask = event.target.parentElement.parentElement.querySelector('#taskPersonalID').textContent;
-
-    // let params = {
-    //     taskID: event.target.parentElement.parentElement.querySelector('#taskPersonalID').textContent,
-    // };
-
+  
     go("/user/getTaskInfo/" + idTask, 'GET')
-        .then(d => {
-            console.log("Success");
-            console.log(d);
+      .then(d => {
+        console.log("Success");
+        console.log(d);
 
-            $("#noTaskSelected").hide();
-
-            $("#TitleTaskInfo").text(d.title)
-            $("#UserTaskInfo").text(d.user)
-            $("#DateTaskInfo").text(d.creationDate)
-            $("#AuthorTaskInfo").text(d.author)
-
-        })
-        .catch(e => {
-            console.log("Fail");
-            console.log(e);
-        });
+        $("#noTaskSelected").hide();
+  
+        // Update the form using Thymeleaf context
+        $('#divInfoCard form').html(`
+            <div class="row mb-3">
+                <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la Tarea:</label>
+                <div class="col-7">
+                    <input type="text" class="form-control" value="${d.title}" readonly>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-5 align-self-center"><b>·&nbsp;</b> Autor de la tarea:</label>
+                <div class="col-7">
+                    <input type="text" class="form-control" value="${d.author}" readonly>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-5 align-self-center"><b>·&nbsp;</b> Fecha de creación:</label>
+                <div class="col-7">
+                    <input type="text" class="form-control" value="${d.creationDate}" readonly>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-5 align-self-center"><b>·&nbsp;</b> Habitación:</label>
+                <div class="col-7">
+                    <input type="text" class="form-control" value="${d.room}" readonly>
+                </div>
+            </div>
+        `);
+      })
+      .catch(e => {
+        console.log("Fail");
+        console.log(e);
+      });
 }
 
 function filterUpdate(event, x) {
