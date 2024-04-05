@@ -64,7 +64,7 @@ function viewInfo(event) {
         $('#divInfoCard form').html(`
             <div class="d-flex mt-1">
                 <div class="mx-3">
-                    <button id="imgActionsEdit" class="btn" type="button" onclick="updateInfo(event, '${idTask}')" >
+                    <button type="button" class="btn imgActionsEdit" onclick="updateInfo(event, '${idTask}')" >
                         <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
                     </button>
                 </div>
