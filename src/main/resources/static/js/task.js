@@ -62,6 +62,18 @@ function viewInfo(event) {
   
         // Update the form using Thymeleaf context
         $('#divInfoCard form').html(`
+            <div class="d-flex mt-1">
+                <div class="mx-3">
+                    <button id="imgActionsEdit" class="btn" type="button" onclick="updateInfo(event, '${idTask}')" >
+                        <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+                    </button>
+                </div>
+                <div class="mx-3">
+                    <button type="button" class="imgActionsDelete">
+                        <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+                    </button>
+                </div>
+            </div>    
             <div class="row mb-3">
                 <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la Tarea:</label>
                 <div class="col-7">
@@ -93,6 +105,57 @@ function viewInfo(event) {
         console.log(e);
       });
 }
+
+
+function updateInfo(event, idTask) {
+    event.preventDefault();
+
+    go("/user/getTaskInfo/" + idTask, 'GET')
+      .then(d => {
+        console.log("Success");
+        console.log(d);
+
+        $("#noTaskSelected").hide();
+  
+        // Update the form using Thymeleaf context
+        $('#divInfoCard form').html(`
+            <div class="row mb-3">
+                <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la Tarea:</label>
+                <div class="col-7">
+                    <input type="text" class="form-control taskTitle" value="${d.title}" >
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-5 align-self-center"><b>·&nbsp;</b> Autor de la tarea:</label>
+                <div class="col-7">
+                    <input type="text" class="form-control taskAuthor" value="${d.author}" >
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-5 align-self-center"><b>·&nbsp;</b> Fecha de creación:</label>
+                <div class="col-7">
+                    <input type="text" class="form-control taskCreationDate readonly" value="${d.creationDate}" readonly>
+                 </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-5 align-self-center"><b>·&nbsp;</b> Habitación:</label>
+                <div class="col-7">
+                    <input type="text" class="form-control taskRoom" value="${d.room}" >
+                </div>
+            </div>
+        `);
+
+        // Remove 'readonly' attribute from editable fields
+         $('.form-control').removeAttr('readonly');
+         $('.readonly').attr('readonly', true);
+      })
+      .catch(e => {
+        console.log("Fail");
+        console.log(e);
+      });
+}
+
 
 function filterUpdate(event, x) {
 
