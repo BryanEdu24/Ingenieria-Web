@@ -63,12 +63,12 @@
 									<div class="d-flex mt-1">
 										<div class="mx-3">
 											<button type="button" class="imgActionsEdit">
-												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" data-bs-toggle="modal" data-bs-target="#editRoomModal">
 											</button>
 										</div>
 										<div class="mx-3">
 											<button type="button" class="imgActionsDelete">
-												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" data-bs-toggle="modal" data-bs-target="#deleteRoomModal">
 											</button>
 										</div>
 									</div>
@@ -87,8 +87,11 @@
 						<div class="card my-2" th:each="user : ${membersHouse}">
 							<div class="card-content d-flex justify-content-between ms-2 p-1">
 								<div class="d-flex">
+									<!-- AQUI -->
 									<div class="mx-3">
-										<img th:src="@{/img/history.svg}" width="50" height="60">
+										<img th:if="${#strings.equals(u.roles, 'MANAGER')}" th:src="@{/img/JefeCasa.png}" src="/img/JefeCasa.png" width="50" height="60">
+										<img th:if="${#strings.equals(u.roles, 'ADMIN')}" th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" width="50" height="60">
+										<img th:if="${#strings.equals(u.roles, 'USER')}" th:src="@{/img/User.png}" src="/img/User.png" width="50" height="60">
 									</div>
 									<div th:text="${user.username}" class="titleStyle textCardManage"></div>
 								</div>
@@ -100,7 +103,7 @@
 										</div> -->
 										<div class="mx-3">
 											<button type="button" class="imgActionsDelete">
-												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" data-bs-toggle="modal" data-bs-target="#deleteMemberModal">
 											</button>
 										</div>
 									</div>
@@ -118,7 +121,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title"><u>Nueva Habitacion</u> 📝</h4>
+                    <h4 class="modal-title">🛏️ <u>Nueva Habitacion</u></h4>
                     <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 
@@ -168,19 +171,19 @@
 									</label><br>
 
 									<input type="radio" id="photoTerrace" name="photoSelect" value="terraza">
-									<label for="photoCorridor">
+									<label for="photoTerrace">
 										<img th:src="@{/img/terraza.png}" src="/img/terraza.png" id="terrace" width="50" height="50">
 										<b>Terraza</b>
 									</label><br>
 
 									<input type="radio" id="photoStorage" name="photoSelect" value="trastero">
-									<label for="photoCorridor">
+									<label for="photoStorage">
 										<img th:src="@{/img/trastero.png}" src="/img/trastero.png" id="storage" width="50" height="50">
 										<b>Trastero</b>
 									</label><br>
 
 									<input type="radio" id="photoGarage" name="photoSelect" value="garaje">
-									<label for="photoCorridor">
+									<label for="photoGarage">
 										<img th:src="@{/img/garaje.png}" src="/img/garaje.png" id="garage" width="50" height="50">
 										<b>Garaje</b>
 									</label><br>
@@ -192,13 +195,86 @@
                        
                         <div class="modal-footer text-center d-flex justify-content-between align-items-center">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" id="buttonNewRoomCreation" data-bs-dismiss="modal" class="btn btn-primary" onclick="newRoom(event)">Nueva Habitación</button>
+                            <button type="submit" data-bs-dismiss="modal" class="btn btn-primary" onclick="newRoom(event)">Nueva Habitación</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+	<!-- Modal EDITAR HABITACION -->
+	<div class="modal fade" id="editRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+                    <h4 class="modal-title">✒️ <u>Editar Habitación</u></h4>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+				<div class="modal-body">
+					<div class="row mb-3">
+						<label class="col-5 align-self-center">·&nbsp;Nombre de habitacion:</label>
+						<div class="col-7">
+							<input type="text" class="form-control" id="roomName" name="roomName" placeholder="Nombre de la habitacion" required>
+						</div>
+					</div>
+
+					<div class="modal-footer text-center d-flex justify-content-between align-items-center">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+						<button type="submit" data-bs-dismiss="modal" class="btn btn-primary" onclick="editRoom(event)">Confirmar cambios</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal BORRAR HABITACION -->
+	<div class="modal fade" id="deleteRoomModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+                    <h4 class="modal-title">⚠️ <u>Borrar Habitación</u></h4>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+				<div class="modal-body">
+					<div class="row mb-3">
+						
+					</div>
+					
+					<div class="modal-footer text-center d-flex justify-content-between align-items-center">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+						<button type="submit" data-bs-dismiss="modal" class="btn btn-primary" onclick="deleteRoom(event)">Confirmar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal BORRAR MIEMBROS -->
+	<div class="modal fade" id="deleteMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+                    <h4 class="modal-title">💀 <u>Eliminar Miembro</u></h4>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+				<div class="modal-body">
+					<div class="row mb-3">
+						
+					</div>
+					
+					<div class="modal-footer text-center d-flex justify-content-between align-items-center">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+						<button type="submit" data-bs-dismiss="modal" class="btn btn-primary" onclick="deleteMember(event)">Confirmar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

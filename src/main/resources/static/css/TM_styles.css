@@ -12,6 +12,11 @@ body {
     box-shadow: #202024 0.1em 0.1em 0.1em;
 }
 
+.btn-secondary:hover {
+    transform: scale(1.1);
+    box-shadow: #202024 0.1em 0.1em 0.1em;
+}
+
 input, select {
     background-color: #faedcd !important;
 }
