@@ -48,6 +48,54 @@ function newTask(event) {
         });
 }
 
+function updateTask(event, idTask) {
+    event.preventDefault();
+
+    let params = {
+        id: idTask,
+        title: $("#taskTitle").val(),
+        user_id: $("#addTaskSelectUser").val(),
+        room_id: $("#addTaskSelectRoom").val()
+    };
+    console.log(`PARAMS: id:${params.id}, title:${params.title}, user_id:${params.user_id}, room_id:${params.room_id}`);
+    go("/user/updateTask", 'POST', params)
+        .then(d => {
+            console.log("Success");
+            console.log(d);
+
+            $("#noTasks").hide()
+
+            // $("#form-newTask")[0].reset()
+
+            //TODO Fecha y habitación
+            $('#divCardsTasks').prepend(
+                `<div class="card my-2">
+                    <div class="card-content d-flex p-1 bg align-items-center taskCard">
+                        <div class="col">
+                            <h3>${d.title}</h3>
+                            <h5>${d.author}</h5>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <h5>${d.creationDate}<h5>
+                            </div>
+                            <div>
+                                <h5>${d.room}</h5>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="viewInfo(event)">
+                            <div class="d-none" id="taskPersonalID">${d.id}</div>
+                            <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50"
+                                height="50" style="margin-right: 5%;">
+                        </button>
+                    </div>
+            </div>`)
+        })
+        .catch(e => {
+            console.log("Fail");
+            console.log(e);
+        });
+}
 function viewInfo(event) {
     event.preventDefault();
   
@@ -143,6 +191,11 @@ function updateInfo(event, idTask) {
                 <div class="col-7">
                     <input type="text" class="form-control taskRoom" value="${d.room}" >
                 </div>
+            </div>
+
+            <div class=" text-center d-flex justify-content-between align-items-center">
+                <button type="button" class="btn btn-secondary" >Cancelar</button>
+                <button type="button" id="buttonUpdateTask" class="btn btn-primary btnUpdateTask" onclick="updateTask(event)">Modificar Tarea</button>
             </div>
         `);
 
