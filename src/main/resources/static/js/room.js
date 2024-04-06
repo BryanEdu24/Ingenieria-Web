@@ -14,10 +14,28 @@ function newRoom(event){
             
             $("#form-newRoom")[0].reset()
             $('#divCardsRoom').prepend(
-                `<div class="card my-2>
-                    <div class="card-content d-flex p-2 bg alingn-items-center roomCard>
-                        <div class="col">
-                            <h3>${d.name}</h3>
+                `<div class="card my-2">
+                    <div class="card-content d-flex justify-content-between ms-2 p-1">
+                        <div class="d-flex">
+                            <div class="mx-3">
+                                <img th:src="@{/img/JefeCasa.png}" src="/img/JefeCasa.png" width="50" height="60">
+                            </div>	
+                            <div class="titleStyle textCardManager">${d.name}</div>
+                        </div>
+                        <div class="mx-4 text-center">
+                            <b><u>Acciones</u></b>
+                            <div class="d-flex mt-1">
+                                <div class="mx-3">
+                                    <button type="button" class="imgActionsEdit">
+                                        <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+                                    </button>
+                                </div>
+                                <div class="mx-3">
+                                    <button type="button" class="imgActionsDelete">
+                                        <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>`
