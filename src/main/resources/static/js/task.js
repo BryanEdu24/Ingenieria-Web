@@ -18,17 +18,20 @@ function newTask(event) {
 
             $("#form-newTask")[0].reset()
 
-            //TODO Fecha y habitación
+            const formattedDate = formatDate(d.creationDate);
+
+            //TODO habitación
             $('#divCardsTasks').prepend(
                 `<div class="card my-2">
-                    <div class="card-content d-flex p-1 bg align-items-center taskCard">
-                        <div class="col">
+                    <div class="card-content d-flex p-1 align-items-center taskCard">
+                        <div class="col ms-2 my-1">
                             <h3>${d.title}</h3>
                             <h5>${d.author}</h5>
                         </div>
-                        <div class="col">
+                        
+                        <div class="col-4">
                             <div>
-                                <h5>${d.creationDate}<h5>
+                                <h5>${formattedDate}</h5>
                             </div>
                             <div>
                                 <h5>${d.room}</h5>
@@ -36,7 +39,9 @@ function newTask(event) {
                         </div>
                         <button class="btn" onclick="viewInfo(event)">
                             <div class="d-none" id="taskPersonalID">${d.id}</div>
-                            <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50" height="50" style="margin-right: 5%;">
+                            <span class="image-container">
+                                <img th:src="@{/img/vista.svg}" src="/img/vista.svg" width="50" height="50" style="margin-right: 5%;" >
+                            </span>
                         </button>
                     </div>
             </div>`)
@@ -45,6 +50,25 @@ function newTask(event) {
             console.log("Fail");
             console.log(e);
         });
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+function formatDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    return `${day}/${month}/${year} a las ${hours}:${minutes}:${seconds}`;
 }
 
 function updateTask(event, idTask) {
@@ -66,7 +90,7 @@ function updateTask(event, idTask) {
 
             // $("#form-newTask")[0].reset()
 
-            //TODO Fecha y habitación
+            //TODO habitación
             $('#divCardsTasks').prepend(
                 `<div class="card my-2">
                     <div class="card-content d-flex p-1 bg align-items-center taskCard">
@@ -84,8 +108,7 @@ function updateTask(event, idTask) {
                         </div>
                         <button class="btn" onclick="viewInfo(event)">
                             <div class="d-none" id="taskPersonalID">${d.id}</div>
-                            <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50"
-                                height="50" style="margin-right: 5%;">
+                            <img th:src="@{/img/vista.svg}" src="/img/vista.svg" width="50" height="50" style="margin-right: 5%;">
                         </button>
                     </div>
             </div>`)
@@ -107,46 +130,46 @@ function viewInfo(event) {
 
             $("#noTaskSelected").hide();
 
-            // Update the form using Thymeleaf context
-            $('#divInfoCard form').html(`
-            <div class="mb-2 d-flex">
-                <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
-                <div class="col">
-                    <input type="text" id="selectedTaskTitle" class="form-control" value="${d.title}" readonly>
+            const formattedDate = formatDateTime(d.creationDate);
+            
+            $('#divInfoCard form').html(` 
+                <div class="mb-2 d-flex">
+                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
+                    <div class="col">
+                        <input type="text" id="selectedTaskTitle" class="form-control inputInfo" value="${d.title}" readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-2 d-flex">
-                <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
-                <div class="col">
-                    <input type="text" id="selectedTaskAuthor" class="form-control" value="${d.author}" readonly>
+                <div class="mb-2 d-flex">
+                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
+                    <div class="col">
+                        <input type="text" id="selectedTaskAuthor" class="form-control inputInfo" value="${d.author}" readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-2 d-flex">
-                <div class="col-7 titleStyleInfo text-left">·&nbsp; Fecha de creación:</div>
-                <div class="col">
-                    <input type="text" class="form-control" value="${d.creationDate}" readonly>
+                <div class="mb-2 d-flex">
+                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Fecha de creación:</div>
+                    <div class="col">
+                        <input type="text" class="form-control inputInfo" value="${formattedDate}" readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-2 d-flex">
-                <div class="col-7 titleStyleInfo text-left">·&nbsp; Habitación:</div>
-                <div class="col">
-                    <input type="text" id="selectedTaskRoom" class="form-control" value="${d.room}" readonly>
+                <div class="mb-2 d-flex">
+                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Habitación:</div>
+                    <div class="col">
+                        <input type="text" id="selectedTaskRoom" class="form-control inputInfo" value="${d.room}" readonly>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <div class="d-flex justify-content-end">
-                <div class="mx-3">
-                    <button type="button" class="btn imgActionsEdit" onclick="updateInfo(event, '${idTask}')" >
-                        <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
-                    </button>
-                </div>
-                <div class="mx-3">
-                    <button type="button" class="imgActionsDelete">
-                        <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
-                    </button>
-                </div>
-            </div>  
-        `);
+                <div class="d-flex justify-content-end">
+                    <div class="mx-2">
+                        <button type="button" class="btn imgActionsEdit" onclick="updateInfo(event, '${idTask}')" >
+                            <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+                        </button>
+                    </div>
+                    <div class="mx-2">
+                        <button type="button" class="imgActionsDelete">
+                            <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+                        </button>
+                    </div>
+                </div> 
+            `);
         })
         .catch(e => {
             console.log("Fail");

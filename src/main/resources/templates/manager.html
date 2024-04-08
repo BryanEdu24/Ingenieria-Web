@@ -43,7 +43,7 @@
 						<div class="col d-flex justify-content-end align-items-end">
 							<button type="button" class="btn rounded">
 								<span class="image-container">
-									<img th:src="@{/img/agregar.png}" id="addRoomImg" src="/img/agregar.png" alt="Imagen" width="35" height="35" data-bs-toggle="modal" data-bs-target="#newRoomModal">
+									<img th:src="@{/img/agregar.png}" id="addRoomImg" src="/img/agregar.png" alt="Imagen" width="45" height="45" data-bs-toggle="modal" data-bs-target="#newRoomModal">
 								</span>
 							</button>
 						</div>
@@ -93,7 +93,7 @@
 										<img th:if="${#strings.equals(u.roles, 'ADMIN')}" th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" width="50" height="60">
 										<img th:if="${#strings.equals(u.roles, 'USER')}" th:src="@{/img/User.png}" src="/img/User.png" width="50" height="60">
 									</div>
-									<div th:text="${user.username}" class="titleStyle textCardManage"></div>
+									<div th:text="${user.username}" class="titleStyle textCardManager"></div>
 								</div>
 								<div class="mx-4 text-center">
 									<b><u>Acciones</u></b>
@@ -121,14 +121,14 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">🛏️ <u>Nueva Habitacion</u></h4>
+                    <h4 class="modal-title">🛏️ <u>Nueva Habitación</u></h4>
                     <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 
                 <div class="modal-body">
                     <form id="form-newRoom">
                         <div class="row mb-3">
-                            <label class="col-5 align-self-center">·&nbsp;Nombre de habitacion:</label>
+                            <label class="col-5 align-self-center">·&nbsp;Nombre de habitación:</label>
                             <div class="col-7">
                                 <input type="text" class="form-control" id="roomName" name="roomName" placeholder="Nombre de la habitacion" required>
                             </div>
@@ -216,7 +216,7 @@
 					<div class="row mb-3">
 						<label class="col-5 align-self-center">·&nbsp;Nombre de habitacion:</label>
 						<div class="col-7">
-							<input type="text" class="form-control" id="roomName" name="roomName" placeholder="Nombre de la habitacion" required>
+							<input type="text" class="form-control" id="roomName" name="roomName" placeholder="" required>
 						</div>
 					</div>
 
@@ -240,11 +240,13 @@
                 </div>
 
 				<div class="modal-body">
-					<div class="row mb-3">
-						
+					<div class="p-3 text-center">
+						<h5>¿Estás segur@ que desea eliminar <span style="color: #02B9D8;">Cocina</span>?</h5>
 					</div>
+					<div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>
 					
-					<div class="modal-footer text-center d-flex justify-content-between align-items-center">
+					
+					<div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 						<button type="submit" data-bs-dismiss="modal" class="btn btn-primary" onclick="deleteRoom(event)">Confirmar</button>
 					</div>
@@ -263,11 +265,12 @@
                 </div>
 
 				<div class="modal-body">
-					<div class="row mb-3">
-						
+					<div class="p-3 text-center">
+						<h5>¿Estás segur@ que desea eliminar a <span style="color: #FFB919;">Lucas</span>?</h5>
 					</div>
+					<div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>
 					
-					<div class="modal-footer text-center d-flex justify-content-between align-items-center">
+					<div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 						<button type="submit" data-bs-dismiss="modal" class="btn btn-primary" onclick="deleteMember(event)">Confirmar</button>
 					</div>

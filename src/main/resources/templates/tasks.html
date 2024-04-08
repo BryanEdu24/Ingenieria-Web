@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="col-4">
                                     <div>
-                                        <h5 th:text="${#dates.format(task.creationDate, 'dd-MM-yyyy')}"></h5>
+                                        <h5 th:text="${#dates.format(task.creationDate, 'dd/MM/yyyy')}"></h5>
                                     </div>
                                     <div>
                                         <h5 th:text="${task.room.name}"></h5>
@@ -101,7 +101,6 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
 
@@ -111,7 +110,7 @@
                     <div class="p-3 text-center" id="noTaskSelected">
                         <div class="titleStyle"><h4>No hay tarea seleccionada</h4></div>
                     </div>
-                    <div class="p-3 text-center" id="divInfoCard"  style="width: 90%;">
+                    <div class="p-3 text-center" id="divInfoCard" style="width: 90%;">
                         <form>
                         </form>
                     </div>
@@ -169,14 +168,14 @@
                         <div class="row mb-3">
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Autor de la tarea:</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" id="taskAuthor" name="author" th:value="${authorName}" disabled readonly>
+                                <input type="text" class="form-control inputInfo" id="taskAuthor" name="author" th:value="${authorName}" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Asignada a:</label>
                             <div class="col-7">
                                 <select name="user_id" id="addTaskSelectUser" class="form-select" required>
-                                    <option disabled selected>Seleccione uno...</option>
+                                    <option disabled hidden selected>Seleccione uno...</option>
                                     <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}" th:text="${houseUser.username}"></option>
                                 </select>
                             </div>
@@ -185,7 +184,7 @@
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Habitación:</label>
                             <div class="col-7">
                                 <select name="room_id" id="addTaskSelectRoom" class="form-select">
-                                    <option disabled selected>Seleccione uno...</option>
+                                    <option disabled hidden selected>Seleccione uno...</option>
                                     <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
                                 </select>
                             </div>

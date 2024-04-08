@@ -17,19 +17,19 @@
             <div>🏠📝</div>
         </h1>
 
-        <div class="Botones p-5" id="btnsCasas">
+        <div class="buttonsDiv p-5">
             <div>
-                <button class="botonCrear">
+                <button class="welcomeButtons">
                     <img th:src="@{/img/nuevaCasapng.png}" src="/img/nuevaCasapng.png" alt="Imagen" height="75" width="75" data-bs-toggle="modal" data-bs-target="#newHouseModal">
                 </button>
-                <div class="botonTexto my-2"><b>Crear Casa</b></div>
+                <div class="titleStyle my-2"><h4>Crear Casa</h4></div>
             </div>
 
             <div>
-                <button class="botonUnirse">
+                <button class="welcomeButtons">
                     <img th:src="@{/img/buscarCasa.png}" src="/img/buscarCasa.png" alt="Imagen" height="75" width="75" data-bs-toggle="modal" data-bs-target="#newTaskModal">
                 </button>
-                <div class="botonTexto my-2"><b>Unirse a Casa</b></div>
+                <div class="titleStyle my-2"><h4>Unirse a Casa</h4></div>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">🏠 <u>Nueva Casa</u></h4>
+                    <h4 class="modal-title">🏠 <u>Nueva casa</u></h4>
                     <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 
@@ -112,7 +112,7 @@
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Clave de acceso:</label>
                             <div class="col-7 d-flex">
                                 <input type="password" id="JhousePassword" name="JhousePassword" class="form-control" placeholder="Contraseña de la casa">
-                                <button class="btn btn-dark" type="button" id="btnPassword" style="border: solid 1px;"><i class="bi bi-eye-fill"></i></button>
+                                <button class="btn btn-light" type="button" id="btnPassword" style="border: solid 1px;"><i class="bi bi-eye-fill"></i></button>
                             </div>
                         </div>
                         <div class="modal-footer text-center d-flex justify-content-between align-items-center">
