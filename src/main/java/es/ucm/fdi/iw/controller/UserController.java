@@ -115,7 +115,7 @@ public class UserController {
 	// --------------------------------------------------------------------------------------------------------------------
 
 	// GETTERS ----------------------------------
-@GetMapping("/filterRoom/{id}")
+	@GetMapping("/filterRoom/{id}")
 	@ResponseBody
 	public String filterRoom(@PathVariable long id, HttpServletResponse response) {
 		List<Task> tasks = entityManager
@@ -368,6 +368,35 @@ public class UserController {
 				"\"room\": \"" + target.getRoom().getName() + "\"}";
 	}
 
+	@PostMapping("/updateTask")
+	@Transactional
+	@ResponseBody
+	public String updateTask(
+			HttpServletResponse response,
+			@RequestBody JsonNode data,
+			Model model, HttpSession session) throws IOException {
+
+		long task_id = data.get("id").asLong();
+		String title = data.get("title").asText();
+		long room_id = data.get("room_id").asLong();
+		long user_id = data.get("user_id").asLong();
+
+		Task target = new Task();
+		target = entityManager.find(Task.class, task_id);
+		target.setTitle(title);
+		target.setRoom(entityManager.find(Room.class, room_id));
+		target.setEnabled(true);
+
+
+		entityManager.flush(); // forces DB to add user & assign valid id
+
+		return "{\"title\": \"" + target.getTitle() + "\"," +
+				"\"author\": \"" + target.getAuthor() + "\"," +
+				"\"creationDate\": \"" + target.getCreationDate() + "\"}" ;
+		
+
+	}			
+
 	@PostMapping("/newHouse")
 	@Transactional
 	public String newHouse(
@@ -404,7 +433,7 @@ public class UserController {
 
 	@PostMapping("/newRoom")
 	@Transactional
-@ResponseBody
+	@ResponseBody
 	public String newRoom(
 			HttpServletResponse response,
 			@RequestBody JsonNode data,

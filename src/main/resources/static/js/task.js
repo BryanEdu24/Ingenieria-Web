@@ -195,7 +195,7 @@ function updateInfo(event, idTask) {
 
             <div class=" text-center d-flex justify-content-between align-items-center">
                 <button type="button" class="btn btn-secondary" >Cancelar</button>
-                <button type="button" id="buttonUpdateTask" class="btn btn-primary btnUpdateTask" onclick="updateTask(event)">Modificar Tarea</button>
+                <button type="submit" id="buttonUpdateTask" class="btn btn-primary btnUpdateTask" onclick="updateTask(event)">Modificar Tarea</button>
             </div>
         `);
 
