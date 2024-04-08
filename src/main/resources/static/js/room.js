@@ -27,12 +27,12 @@ function newRoom(event){
                             <div class="d-flex mt-1">
                                 <div class="mx-3">
                                     <button type="button" class="imgActionsEdit">
-                                        <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+                                        <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" data-bs-toggle="modal" data-bs-target="#editRoomModal">
                                     </button>
                                 </div>
                                 <div class="mx-3">
                                     <button type="button" class="imgActionsDelete">
-                                        <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+                                        <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" data-bs-toggle="modal" data-bs-target="#deleteRoomModal">
                                     </button>
                                 </div>
                             </div>

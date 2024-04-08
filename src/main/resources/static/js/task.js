@@ -36,8 +36,7 @@ function newTask(event) {
                         </div>
                         <button class="btn" onclick="viewInfo(event)">
                             <div class="d-none" id="taskPersonalID">${d.id}</div>
-                            <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50"
-                                height="50" style="margin-right: 5%;">
+                            <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50" height="50" style="margin-right: 5%;">
                         </button>
                     </div>
             </div>`)
@@ -110,7 +109,33 @@ function viewInfo(event) {
   
         // Update the form using Thymeleaf context
         $('#divInfoCard form').html(`
-            <div class="d-flex mt-1">
+              
+            <div class="mb-2 d-flex">
+                <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
+                <div class="col">
+                    <input type="text" class="form-control" value="${d.title}" readonly>
+                </div>
+            </div>
+            <div class="mb-2 d-flex">
+                <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
+                <div class="col">
+                    <input type="text" class="form-control" value="${d.author}" readonly>
+                </div>
+            </div>
+            <div class="mb-2 d-flex">
+                <div class="col-7 titleStyleInfo text-left">·&nbsp; Fecha de creación:</div>
+                <div class="col">
+                    <input type="text" class="form-control" value="${d.creationDate}" readonly>
+                </div>
+            </div>
+            <div class="mb-2 d-flex">
+                <div class="col-7 titleStyleInfo text-left">·&nbsp; Habitación:</div>
+                <div class="col">
+                    <input type="text" class="form-control" value="${d.room}" readonly>
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-end">
                 <div class="mx-3">
                     <button type="button" class="btn imgActionsEdit" onclick="updateInfo(event, '${idTask}')" >
                         <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
@@ -121,31 +146,7 @@ function viewInfo(event) {
                         <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
                     </button>
                 </div>
-            </div>    
-            <div class="row mb-3">
-                <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la Tarea:</label>
-                <div class="col-7">
-                    <input type="text" class="form-control" value="${d.title}" readonly>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-5 align-self-center"><b>·&nbsp;</b> Autor de la tarea:</label>
-                <div class="col-7">
-                    <input type="text" class="form-control" value="${d.author}" readonly>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-5 align-self-center"><b>·&nbsp;</b> Fecha de creación:</label>
-                <div class="col-7">
-                    <input type="text" class="form-control" value="${d.creationDate}" readonly>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-5 align-self-center"><b>·&nbsp;</b> Habitación:</label>
-                <div class="col-7">
-                    <input type="text" class="form-control" value="${d.room}" readonly>
-                </div>
-            </div>
+            </div>  
         `);
       })
       .catch(e => {
