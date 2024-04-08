@@ -85,7 +85,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		session.setAttribute("ws", ws);
 
 		// redirects to 'admin' or 'user/{id}', depending on the user
-		String nextUrl = u.hasRole(User.Role.ADMIN) ? "admin/" : "user/home1";
+		String nextUrl = u.hasRole(User.Role.ADMIN) ? "admin/" : "user/home";
 
 		log.info("LOG IN: {} (id {}) -- session is {}, websocket is {} -- redirected to {}",
 				u.getUsername(), u.getId(), session.getId(), ws, nextUrl);
@@ -116,7 +116,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	}
 
 	/*
-	 * Comprobar si user loggeado tiene casa --SI--> home1
-	 * --NO--> home2
+	 * Comprobar si user loggeado tiene casa --SI--> home
+	 * --NO--> welcome
 	 */
 }

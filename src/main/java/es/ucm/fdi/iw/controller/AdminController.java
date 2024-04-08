@@ -36,13 +36,13 @@ public class AdminController {
         User u = (User) session.getAttribute("u");
 
         List<House> houses = entityManager
-			.createNamedQuery("House.allHouses", House.class)
+			.createNamedQuery("House.allActiveHouses", House.class)
 			.setParameter("status", true)
 			.getResultList();
 
         model.addAttribute("houses", houses);
         model.addAttribute("u", u);
 
-        return "TM_admin";
+        return "admin";
     }
 }

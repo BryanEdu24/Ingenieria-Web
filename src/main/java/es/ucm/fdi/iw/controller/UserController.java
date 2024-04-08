@@ -189,13 +189,13 @@ public class UserController {
 				"\"room\": \"" + target.getRoom().getName() + "\"}";
 	}
 
-	@GetMapping("/home1")
-	public String TM_home1(Model model, HttpSession session) {
+	@GetMapping("/home")
+	public String home(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 
 		// En caso de no tener casa asignada
 		if (u.getHouse() == null) {
-			return "redirect:/user/home2";
+			return "redirect:/user/welcome";
 		}
 
 		List<Task> tasks = entityManager
@@ -206,20 +206,20 @@ public class UserController {
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("u", u);
 
-		return "TM_home1";
+		return "home";
 	}
 
-	@GetMapping("/home2")
-	public String TM_home2(Model model, HttpSession session) {
+	@GetMapping("/welcome")
+	public String welcome(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 		// En caso de no tener casa asignada
 		if (u.getHouse() != null) {
-			return "redirect:/user/home1";
+			return "redirect:/user/home";
 		}
 
 		model.addAttribute("u", u);
 
-		return "TM_home2";
+		return "welcome";
 	}
 
 	@GetMapping("/task")
@@ -230,7 +230,7 @@ public class UserController {
 
 		// En caso de no tener casa asignada
 		if (h == null) {
-			return "redirect:/user/home2";
+			return "redirect:/user/welcome";
 		}
 
 		House target = entityManager.find(House.class, h.getId());
@@ -246,7 +246,7 @@ public class UserController {
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("u", u);
 
-		return "TM_tasks";
+		return "tasks";
 	}
 
 	@GetMapping("/manager")
@@ -256,22 +256,24 @@ public class UserController {
 
 		// En caso de no tener casa asignada
 		if (u.getHouse() == null) {
-			return "redirect:/user/home2";
+			return "redirect:/user/welcome";
 		}
 
 		// En caso de no ser manager
 		if (!u.hasRole(Role.MANAGER)) {
-			return "redirect:/user/home1";
+			return "redirect:/user/home";
 		}
 
 		House h = u.getHouse();
 		House target = entityManager.find(House.class, h.getId());
 
+		List<Room> rooms = target.getRooms();
+
 		model.addAttribute("membersHouse", target.getUsers());
-		model.addAttribute("rooms", target.getRooms());
+		model.addAttribute("rooms", rooms);
 		model.addAttribute("u", u);
 
-		return "TM_manager";
+		return "manager";
 	}
 
 	@GetMapping("/expenses")
@@ -280,12 +282,12 @@ public class UserController {
 
 		// En caso de no tener casa asignada
 		if (u.getHouse() == null) {
-			return "redirect:/user/home2";
+			return "redirect:/user/welcome";
 		}
 
 		model.addAttribute("u", u);
 
-		return "TM_expenses";
+		return "expenses";
 	}
 
 	// POSTS ----------------------------------
@@ -293,7 +295,7 @@ public class UserController {
 	@PostMapping("/newTask")
 	@Transactional
 	@ResponseBody
-	public String newTask(
+	public Task.Transfer newTask(
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
@@ -317,12 +319,14 @@ public class UserController {
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
 
-		return "{\"title\": \"" + target.getTitle() + "\"," +
-				"\"author\": \"" + target.getAuthor() + "\"," +
-				"\"creationDate\": \"" + target.getCreationDate() + "\"," +
-				"\"user\": \"" + target.getUser() + "\"," +
-				"\"id\": \"" + target.getId() + "\"," +
-				"\"room\": \"" + target.getRoom().getName() + "\"}";
+		// return "{\"title\": \"" + target.getTitle() + "\"," +
+		// 		"\"author\": \"" + target.getAuthor() + "\"," +
+		// 		"\"creationDate\": \"" + target.getCreationDate() + "\"," +
+		// 		"\"user\": \"" + target.getUser() + "\"," +
+		// 		"\"id\": \"" + target.getId() + "\"," +
+		// 		"\"room\": \"" + target.getRoom().getName() + "\"}";
+
+		return target.toTransfer();
 	}
 
 	@PostMapping("/updateTask")
@@ -447,14 +451,14 @@ public class UserController {
 			user.setHouse(h);
 
 		} else {
-			return "redirect:/user/home2";
+			return "redirect:/user/welcome";
 		}
 
 		entityManager.persist(user);
 		entityManager.flush();
 		session.setAttribute("u", user);
 
-		return "redirect:/user/home1";
+		return "redirect:/user/home";
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------

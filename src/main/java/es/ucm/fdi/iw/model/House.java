@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "House.byHousename", query = "SELECT h FROM House h "
                 + "WHERE h.name = :name AND h.enabled = TRUE"),
-        @NamedQuery(name = "House.allHouses", query = "SELECT h FROM House h "
+        @NamedQuery(name = "House.allActiveHouses", query = "SELECT h FROM House h "
                 + "WHERE h.enabled = :status")
 
 })

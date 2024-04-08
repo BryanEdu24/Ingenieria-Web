@@ -13,7 +13,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
             <div class="container-fluid">
                 <!--Logo-->
-                <a class="navbar-brand" href="/user/home1">
+                <a class="navbar-brand" href="/user/home">
                     <div class="Logo d-flex align-items-center">
                         <div class="me-4">
                             <img th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" alt="Logo TaskMate" height="70">
@@ -41,7 +41,7 @@
                         </li>
                         <!--Manager-->
                         <li class="nav-item mx-3" th:if="${#strings.equals(u.roles, 'MANAGER')}">
-                            <a class="nav-link" id="buttonManager" href="/user/manager" title="Página de Admin">
+                            <a class="nav-link" id="buttonManager" href="/user/manager" title="Página de Manager">
                                 <h5>Manager</h5>
                             </a>
                         </li>

@@ -42,17 +42,17 @@ public class RootController {
 
     @GetMapping("/login")
     public String login(Model model) {
-        return "TM_login";
+        return "login";
     }
 
     @GetMapping("/")
     public String index(Model model) {
-        return "TM_login";
+        return "login";
     }
 
     @GetMapping("/register")
-	public String TM_register(Model model) {
-		return "TM_register";
+	public String register(Model model) {
+		return "register";
 	}
 
 	@PostMapping("/newuser")

@@ -57,13 +57,16 @@ public class Task implements Transferable<Task.Transfer> {
     public static class Transfer {
         private long id;
         private String title;
+        private String author;
+        private Boolean enabled;
         private long userId;
         private long roomId;
+        private Date creationDate;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, title, user.getId(), room.getId());
+        return new Transfer(id, title, author, enabled, user.getId(), room.getId(), creationDate);
     }
 
     @Override

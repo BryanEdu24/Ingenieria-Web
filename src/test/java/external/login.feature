@@ -24,7 +24,7 @@ Feature: login en servidor
     And input('#username', 'b')
     And input('#password', 'aa')
     When submit().click("#singButton")
-    Then waitForUrl(baseUrl + '/user/home1')
+    Then waitForUrl(baseUrl + '/user/home')
 
   @login_a
   Scenario: login correcto como a

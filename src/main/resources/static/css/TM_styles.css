@@ -127,7 +127,7 @@ input, select {
     color:#202024
 }
 
-/* --- HOME 1 --- */
+/* --- HOME --- */
 .HomePrincipal {
     padding: 2%;
 }
@@ -136,7 +136,7 @@ input, select {
     width: 90%;
 }
 
-/* --- HOME 2 --- */
+/* --- WELCOME --- */
 .TituloBienvenida {
     text-align: center;
     font-family: Arial Black; 

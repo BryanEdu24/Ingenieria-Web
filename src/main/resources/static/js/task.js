@@ -52,9 +52,9 @@ function updateTask(event, idTask) {
 
     let params = {
         id: idTask,
-        title: $("#taskTitle").val(),
-        user_id: $("#addTaskSelectUser").val(),
-        room_id: $("#addTaskSelectRoom").val()
+        title: $("#selectedTaskTitle").val(),
+        user_id: $("#selectedTaskAuthor").val(),
+        room_id: $("#selectedTaskRoom").val()
     };
     console.log(`PARAMS: id:${params.id}, title:${params.title}, user_id:${params.user_id}, room_id:${params.room_id}`);
     go("/user/updateTask", 'POST', params)
@@ -97,29 +97,28 @@ function updateTask(event, idTask) {
 }
 function viewInfo(event) {
     event.preventDefault();
-  
-    const idTask = event.target.parentElement.parentElement.querySelector('#taskPersonalID').textContent;
-  
-    go("/user/getTaskInfo/" + idTask, 'GET')
-      .then(d => {
-        console.log("Success");
-        console.log(d);
 
-        $("#noTaskSelected").hide();
-  
-        // Update the form using Thymeleaf context
-        $('#divInfoCard form').html(`
-              
+    const idTask = event.target.parentElement.parentElement.querySelector('#taskPersonalID').textContent;
+
+    go("/user/getTaskInfo/" + idTask, 'GET')
+        .then(d => {
+            console.log("Success");
+            console.log(d);
+
+            $("#noTaskSelected").hide();
+
+            // Update the form using Thymeleaf context
+            $('#divInfoCard form').html(`
             <div class="mb-2 d-flex">
                 <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
                 <div class="col">
-                    <input type="text" class="form-control" value="${d.title}" readonly>
+                    <input type="text" id="selectedTaskTitle" class="form-control" value="${d.title}" readonly>
                 </div>
             </div>
             <div class="mb-2 d-flex">
                 <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
                 <div class="col">
-                    <input type="text" class="form-control" value="${d.author}" readonly>
+                    <input type="text" id="selectedTaskAuthor" class="form-control" value="${d.author}" readonly>
                 </div>
             </div>
             <div class="mb-2 d-flex">
@@ -131,7 +130,7 @@ function viewInfo(event) {
             <div class="mb-2 d-flex">
                 <div class="col-7 titleStyleInfo text-left">·&nbsp; Habitación:</div>
                 <div class="col">
-                    <input type="text" class="form-control" value="${d.room}" readonly>
+                    <input type="text" id="selectedTaskRoom" class="form-control" value="${d.room}" readonly>
                 </div>
             </div>
             <hr>
@@ -148,11 +147,11 @@ function viewInfo(event) {
                 </div>
             </div>  
         `);
-      })
-      .catch(e => {
-        console.log("Fail");
-        console.log(e);
-      });
+        })
+        .catch(e => {
+            console.log("Fail");
+            console.log(e);
+        });
 }
 
 
@@ -160,37 +159,36 @@ function updateInfo(event, idTask) {
     event.preventDefault();
 
     go("/user/getTaskInfo/" + idTask, 'GET')
-      .then(d => {
-        console.log("Success");
-        console.log(d);
+        .then(d => {
+            console.log("Success");
+            console.log(d);
 
-        $("#noTaskSelected").hide();
-  
-        // Update the form using Thymeleaf context
-        $('#divInfoCard form').html(`
-            <div class="row mb-3">
-                <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la Tarea:</label>
-                <div class="col-7">
-                    <input type="text" class="form-control taskTitle" value="${d.title}" >
+            $("#noTaskSelected").hide();
+
+            // Update the form using Thymeleaf context
+            $('#divInfoCard form').html(`
+            <div class="mb-2 d-flex">
+            <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
+            <div class="col">
+                <input type="text" id="selectedTaskTitle" class="form-control" value="${d.title}" >
+            </div>
+            </div>
+            <div class="mb-2 d-flex">
+                <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
+                <div class="col">
+                    <input type="text" id="selectedTaskAuthor" class="form-control" value="${d.author}" >
                 </div>
             </div>
-            <div class="row mb-3">
-                <label class="col-5 align-self-center"><b>·&nbsp;</b> Autor de la tarea:</label>
-                <div class="col-7">
-                    <input type="text" class="form-control taskAuthor" value="${d.author}" >
+            <div class="mb-2 d-flex">
+                <div class="col-7 titleStyleInfo text-left">·&nbsp; Fecha de creación:</div>
+                <div class="col">
+                    <input type="text" class="form-control" value="${d.creationDate}" readonly>
                 </div>
             </div>
-            <div class="row mb-3">
-                <label class="col-5 align-self-center"><b>·&nbsp;</b> Fecha de creación:</label>
-                <div class="col-7">
-                    <input type="text" class="form-control taskCreationDate readonly" value="${d.creationDate}" readonly>
-                 </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-5 align-self-center"><b>·&nbsp;</b> Habitación:</label>
-                <div class="col-7">
-                    <input type="text" class="form-control taskRoom" value="${d.room}" >
+            <div class="mb-2 d-flex">
+                <div class="col-7 titleStyleInfo text-left">·&nbsp; Habitación:</div>
+                <div class="col">
+                    <input type="text" id="selectedTaskRoom" class="form-control" value="${d.room}" >
                 </div>
             </div>
 
@@ -200,14 +198,14 @@ function updateInfo(event, idTask) {
             </div>
         `);
 
-        // Remove 'readonly' attribute from editable fields
-         $('.form-control').removeAttr('readonly');
-         $('.readonly').attr('readonly', true);
-      })
-      .catch(e => {
-        console.log("Fail");
-        console.log(e);
-      });
+            // Remove 'readonly' attribute from editable fields
+            $('.form-control').removeAttr('readonly');
+            $('.readonly').attr('readonly', true);
+        })
+        .catch(e => {
+            console.log("Fail");
+            console.log(e);
+        });
 }
 
 
