@@ -13,8 +13,8 @@
     <div class="container-fluid p-4">
         <div class="row">
             <!--Casas-->
-            <div class="col card-list tareas p-4 mt-2 justify-content-center">
-                <div class="">
+            <div class="col card-list allhouses p-4 mt-2 justify-content-center">
+                <div class="col card-list">
 
                     <div th:each="house: ${houses}" class="card my-2">
                         <div th:text="${house.id}" hidden> </div>
@@ -30,8 +30,25 @@
                                 <img th:src="@{/img/basura.png}" src="/img/basura.png" alt="Imagen" width="25"
                                     height="25" style="margin-right: 5%;">
                             </button>
+                            <button class="btn" type="button" onclick="viewUser(event)">
+                                <div class="d-none" id="housePersonalID" th:text="${house.id}"></div>
+                                <span class="image-container">
+                                    <img th:src="@{/img/vista.svg}" src="/img/vista.svg"  alt="Imagen" width="50"
+                                    height="50" style="margin-right: 5%;" >
+                                </span>
+                            </button>
                         </div>
                     </div>
+
+                </div>
+                <div class="col card-list allhouseUsers p-4 mt-2 justify-content-center">
+                    <div class="col card-list">
+                        <div class="Miembros p-3">
+                            <div class="titleStyle">Miembros</div>
+                            
+                        </div>
+                    </div>
+                </div>
 
                 </div>
             </div>
