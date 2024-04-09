@@ -6,8 +6,7 @@ function newTask(event) {
     let params = {
         title: $("#taskTitle").val(),
         user_id: $("#addTaskSelectUser").val(),
-        room_id: $("#addTaskSelectRoom").val(),
-        room_name:$("#addTaskSelectRoom").textContent()
+	    room_id: $("#addTaskSelectRoom").val(),
     };
     console.log(`PARAMS: title:${params.title}, user_id:${params.user_id}, room_id:${params.room_id}`);
     go("/user/newTask", 'POST', params)
@@ -22,8 +21,8 @@ function newTask(event) {
             const formattedDate = formatDate(d.creationDate);
 
             //TODO habitación
-            $('#divCardsTasks').prepend(
-                `<div class="card my-2">
+            $('#divCardsTasks').prepend(`
+                <div class="card my-2">
                     <div class="card-content d-flex p-1 align-items-center taskCard">
                         <div class="col ms-2 my-1">
                             <h3>${d.title}</h3>
@@ -35,7 +34,7 @@ function newTask(event) {
                                 <h5>${formattedDate}</h5>
                             </div>
                             <div>
-                                <h5>${d.room_name}</h5>
+                                <h5>${d.room}</h5>
                             </div>
                         </div>
                         <button class="btn" onclick="viewInfo(event)">
@@ -45,7 +44,8 @@ function newTask(event) {
                             </span>
                         </button>
                     </div>
-            </div>`)
+                </div>
+            `)
         })
         .catch(e => {
             console.log("Fail");
@@ -68,8 +68,7 @@ function formatDateTime(dateTimeString) {
     const year = date.getFullYear();
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    return `${day}/${month}/${year} a las ${hours}:${minutes}:${seconds}`;
+    return `${day}/${month}/${year} a las ${hours}:${minutes}`;
 }
 
 function updateTask(event, idTask) {
@@ -80,7 +79,6 @@ function updateTask(event, idTask) {
         title: $("#selectedTaskTitle").val(),
         user_id: $("#selectedTaskAuthor").val(),
         room_id: $("#selectedTaskRoom").val()
-        
     };
     console.log(`PARAMS: id:${params.id}, title:${params.title}, user_id:${params.user_id}, room_id:${params.room_id}`);
     go("/user/updateTask", 'POST', params)
@@ -93,16 +91,16 @@ function updateTask(event, idTask) {
             // $("#form-newTask")[0].reset()
 
             //TODO habitación
-            $('#divCardsTasks').prepend(
-                `<div class="card my-2">
-                    <div class="card-content d-flex p-1 bg align-items-center taskCard">
-                        <div class="col">
+            $('#divCardsTasks').prepend(`
+                <div class="card my-2">
+                    <div class="card-content d-flex p-1 align-items-center taskCard">
+                        <div class="col ms-2 my-1">
                             <h3>${d.title}</h3>
                             <h5>${d.author}</h5>
                         </div>
-                        <div class="col">
+                        <div class="col-4">
                             <div>
-                                <h5>${d.creationDate}<h5>
+                                <h5>${formatDate(d.creationDate)}<h5>
                             </div>
                             <div>
                                 <h5>${d.room}</h5>
@@ -113,7 +111,8 @@ function updateTask(event, idTask) {
                             <img th:src="@{/img/vista.svg}" src="/img/vista.svg" width="50" height="50" style="margin-right: 5%;">
                         </button>
                     </div>
-            </div>`)
+                </div>
+            `)
         })
         .catch(e => {
             console.log("Fail");
@@ -193,10 +192,10 @@ function updateInfo(event, idTask) {
             // Update the form using Thymeleaf context
             $('#divInfoCard form').html(`
             <div class="mb-2 d-flex">
-            <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
-            <div class="col">
-                <input type="text" id="selectedTaskTitle" class="form-control" value="${d.title}" >
-            </div>
+                <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
+                <div class="col">
+                    <input type="text" id="selectedTaskTitle" class="form-control" value="${d.title}" >
+                </div>
             </div>
             <div class="mb-2 d-flex">
                 <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
@@ -207,7 +206,7 @@ function updateInfo(event, idTask) {
             <div class="mb-2 d-flex">
                 <div class="col-7 titleStyleInfo text-left">·&nbsp; Fecha de creación:</div>
                 <div class="col">
-                    <input type="text" class="form-control" value="${d.creationDate}" readonly>
+                    <input type="text" class="form-control" value="${formatDateTime(d.creationDate)}" readonly>
                 </div>
             </div>
             <div class="mb-2 d-flex">
@@ -217,8 +216,8 @@ function updateInfo(event, idTask) {
                 </div>
             </div>
 
-            <div class=" text-center d-flex justify-content-between align-items-center">
-                <button type="button" class="btn btn-secondary" >Cancelar</button>
+            <div class="d-flex justify-content-between mt-4">
+                <button type="button" class="btn btn-secondary">Cancelar</button>
                 <button type="submit" id="buttonUpdateTask" class="btn btn-primary btnUpdateTask" onclick="updateTask(event, '${idTask}')">Modificar Tarea</button>
             </div>
         `);
