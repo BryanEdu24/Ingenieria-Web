@@ -6,7 +6,8 @@ function newTask(event) {
     let params = {
         title: $("#taskTitle").val(),
         user_id: $("#addTaskSelectUser").val(),
-        room_id: $("#addTaskSelectRoom").val()
+        room_id: $("#addTaskSelectRoom").val(),
+        room_name:$("#addTaskSelectRoom").textContent()
     };
     console.log(`PARAMS: title:${params.title}, user_id:${params.user_id}, room_id:${params.room_id}`);
     go("/user/newTask", 'POST', params)
@@ -34,7 +35,7 @@ function newTask(event) {
                                 <h5>${formattedDate}</h5>
                             </div>
                             <div>
-                                <h5>${d.room}</h5>
+                                <h5>${d.room_name}</h5>
                             </div>
                         </div>
                         <button class="btn" onclick="viewInfo(event)">
@@ -79,6 +80,7 @@ function updateTask(event, idTask) {
         title: $("#selectedTaskTitle").val(),
         user_id: $("#selectedTaskAuthor").val(),
         room_id: $("#selectedTaskRoom").val()
+        
     };
     console.log(`PARAMS: id:${params.id}, title:${params.title}, user_id:${params.user_id}, room_id:${params.room_id}`);
     go("/user/updateTask", 'POST', params)
