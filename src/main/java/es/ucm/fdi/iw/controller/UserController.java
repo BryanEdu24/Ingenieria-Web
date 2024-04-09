@@ -376,7 +376,7 @@ public class UserController {
 	@PostMapping("/newRoom")
 	@Transactional
 	@ResponseBody
-	public String newRoom(
+	public Room.Transfer newRoom(
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
@@ -407,9 +407,27 @@ public class UserController {
 		entityManager.flush();
 		// }
 
-		return "{\"name\": \"" + roomNew.getName() + "\"," +
-				"\"img\": \"" + roomNew.getImg() + "\"}";
+		return roomNew.toTransfer();
 		// return "redirect:/user/manager";
+	}
+
+	@PostMapping("/updateRoom")
+	@Transactional
+	@ResponseBody
+	public Room.Transfer updateRoom(
+			HttpServletResponse response,
+			@RequestBody JsonNode data,
+			Model model, HttpSession session) throws IOException {
+
+		String roomName = data.get("name").asText(); // Obtén el nuevo nombre de la habitación
+		long roomId = data.get("id").asLong(); // Obtén el ID de la habitación
+		Room roomToUpdate = entityManager.find(Room.class, roomId); // Encuentra la habitación en la base de datos
+		roomToUpdate.setName(roomName); // Actualiza el nombre de la habitación
+
+		entityManager.persist(roomToUpdate); // Persiste los cambios en la base de datos
+		entityManager.flush();
+
+		return roomToUpdate.toTransfer(); // Devuelve los datos actualizados de la habitación
 	}
 
 	@PostMapping("/joinHouse")

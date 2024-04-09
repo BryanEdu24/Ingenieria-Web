@@ -50,3 +50,29 @@ function newRoom(event){
         });
 
 }
+
+function editRoom(event, idRoom){
+    event.preventDefault();
+
+    const roomId = event.target.parentElement.parentElement.querySelector('#roomPersonalID').textContent; // Cambia idRoom a roomId para evitar conflicto de nombres
+    const newName = $("#roomNameEdit").val(); // Obtén el nuevo nombre de la habitación
+
+    let params = {
+        id: roomId,
+        name: newName
+    };
+
+    console.log(`PARAMS: id:${params.id}, name:${params.name}`);
+
+    go("/user/updateRoom", 'POST', params)
+        .then(d => {
+            console.log("Success");
+            console.log(d);
+
+            
+        })
+        .catch(e => {
+            console.log("Fail");
+            console.log(e);
+        });
+}
