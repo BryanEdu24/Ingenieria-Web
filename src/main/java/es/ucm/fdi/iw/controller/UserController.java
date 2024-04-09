@@ -345,6 +345,8 @@ public class UserController {
 	}
 
 	@PostMapping("/deleteTask")
+	@Transactional
+	@ResponseBody
 	public Task.Transfer deleteTask(
 			HttpServletResponse response,
 			@RequestBody JsonNode data,

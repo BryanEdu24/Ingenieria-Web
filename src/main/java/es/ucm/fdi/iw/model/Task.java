@@ -14,7 +14,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "Task.forHouse", query = "SELECT t "
                 + "FROM Task t "
-                + "WHERE t.room.house = :house"
+                + "WHERE t.room.house = :house AND t.enabled= true"
                 + " order by t.creationDate"),
         @NamedQuery(name = "Task.byUser", query = "SELECT t "
                 + "FROM Task t "

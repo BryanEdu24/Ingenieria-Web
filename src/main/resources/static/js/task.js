@@ -146,6 +146,7 @@ function viewInfo(event) {
             $("#viewTaskSelectUser").val(d.userT.id);
             $("#viewTaskSelectRoom").val(d.room.id);
             $("#editTaskButton").attr("onclick", `updateInfo(event, ${idTask})`);
+            $("#deleteTaskButton").attr("onclick", `deleteTask(event, ${idTask})`);
         })
         .catch(e => {
             console.log("Fail");
