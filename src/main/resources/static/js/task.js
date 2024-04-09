@@ -165,7 +165,7 @@ function viewInfo(event) {
                         </button>
                     </div>
                     <div class="mx-2">
-                        <button type="button" class="imgActionsDelete">
+                        <button type="button" class="btn imgActionsDelete" onclick="deleteTask(event, '${idTask}')" >
                             <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
                         </button>
                     </div>
@@ -176,6 +176,29 @@ function viewInfo(event) {
             console.log("Fail");
             console.log(e);
         });
+}
+
+function deleteTask(event, idTask){
+    event.preventDefault();
+
+    let params = {
+        id: idTask,
+    };
+
+    go("/user/deleteTask", 'POST', params)
+         .then(d => {
+            console.log("Success");
+            console.log(d);
+
+            $("#noTaskSelected").html(`
+            <div> TAREA BORRADA </div>
+            `)
+
+         })
+         .catch(e => {
+             console.log("Fail");
+             console.log(e);
+         });
 }
 
 

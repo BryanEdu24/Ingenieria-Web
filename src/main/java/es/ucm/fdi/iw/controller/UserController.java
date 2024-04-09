@@ -320,11 +320,11 @@ public class UserController {
 		entityManager.flush(); // forces DB to add user & assign valid id
 
 		// return "{\"title\": \"" + target.getTitle() + "\"," +
-		// 		"\"author\": \"" + target.getAuthor() + "\"," +
-		// 		"\"creationDate\": \"" + target.getCreationDate() + "\"," +
-		// 		"\"user\": \"" + target.getUser() + "\"," +
-		// 		"\"id\": \"" + target.getId() + "\"," +
-		// 		"\"room\": \"" + target.getRoom().getName() + "\"}";
+		// "\"author\": \"" + target.getAuthor() + "\"," +
+		// "\"creationDate\": \"" + target.getCreationDate() + "\"," +
+		// "\"user\": \"" + target.getUser() + "\"," +
+		// "\"id\": \"" + target.getId() + "\"," +
+		// "\"room\": \"" + target.getRoom().getName() + "\"}";
 
 		return target.toTransfer();
 	}
@@ -348,15 +348,31 @@ public class UserController {
 		target.setRoom(entityManager.find(Room.class, room_id));
 		target.setEnabled(true);
 
-
+		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
 
 		return "{\"title\": \"" + target.getTitle() + "\"," +
 				"\"author\": \"" + target.getAuthor() + "\"," +
-				"\"creationDate\": \"" + target.getCreationDate() + "\"}" ;
-		
+				"\"creationDate\": \"" + target.getCreationDate() + "\"}";
 
-	}			
+	}
+
+	@PostMapping("/deleteTask")
+	public Task.Transfer deleteTask(
+			HttpServletResponse response,
+			@RequestBody JsonNode data,
+			Model model, HttpSession session) {
+		// TODO: process POST request
+		long task_id = data.get("id").asLong();
+		Task target = new Task();
+		target = entityManager.find(Task.class, task_id);
+
+		target.setEnabled(false);
+		entityManager.persist(target);
+		entityManager.flush();
+
+		return target.toTransfer();
+	}
 
 	@PostMapping("/newHouse")
 	@Transactional
