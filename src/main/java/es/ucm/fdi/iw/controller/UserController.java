@@ -117,36 +117,24 @@ public class UserController {
 	// GETTERS ----------------------------------
 	@GetMapping("/filterRoom/{id}")
 	@ResponseBody
-	public String filterRoom(@PathVariable long id, HttpServletResponse response) {
+	public List<Task.Transfer> filterRoom(@PathVariable long id, HttpServletResponse response) {
 		List<Task> tasks = entityManager
 				.createNamedQuery("Task.byRoom", Task.class)
 				.setParameter("roomId", id)
 				.getResultList();
 
-		StringBuilder jsonResult = new StringBuilder("{");
+		List<Task.Transfer> filterByRoomList = new ArrayList<Task.Transfer>();
 
-		for (int i = 0; i < tasks.size(); i++) {
-			Task task = tasks.get(i);
-			jsonResult.append("\"").append(task.getId()).append("\": {");
-			jsonResult.append("\"title\": \"").append(task.getTitle()).append("\",");
-			jsonResult.append("\"author\": \"").append(task.getAuthor()).append("\",");
-			jsonResult.append("\"creationDate\": \"").append(task.getCreationDate()).append("\",");
-			jsonResult.append("\"user\": \"").append(task.getUser().getUsername()).append("\",");
-			jsonResult.append("\"id\": \"").append(task.getId()).append("\",");
-			jsonResult.append("\"room\": \"").append(task.getRoom().getName()).append("\"}");
-
-			if (i < tasks.size() - 1) {
-				jsonResult.append(", ");
-			}
+		for (Task t : tasks) {
+			filterByRoomList.add(t.toTransfer());
 		}
 
-		jsonResult.append("}");
-		return jsonResult.toString();
+		return filterByRoomList;
 	}
 
 	@GetMapping("/filterUser/{id}")
 	@ResponseBody
-	public String filterUser(@PathVariable long id, HttpServletResponse response) {
+	public List<Task.Transfer> filterUser(@PathVariable long id, HttpServletResponse response) {
 
 		User aux = entityManager.find(User.class, id);
 		List<Task> tasks = entityManager
@@ -154,25 +142,13 @@ public class UserController {
 				.setParameter("userId", aux)
 				.getResultList();
 
-		StringBuilder jsonResult = new StringBuilder("{");
+		List<Task.Transfer> filterByUserList = new ArrayList<Task.Transfer>();
 
-		for (int i = 0; i < tasks.size(); i++) {
-			Task task = tasks.get(i);
-			jsonResult.append("\"").append(task.getId()).append("\": {");
-			jsonResult.append("\"title\": \"").append(task.getTitle()).append("\",");
-			jsonResult.append("\"author\": \"").append(task.getAuthor()).append("\",");
-			jsonResult.append("\"creationDate\": \"").append(task.getCreationDate()).append("\",");
-			jsonResult.append("\"user\": \"").append(task.getUser().getUsername()).append("\",");
-			jsonResult.append("\"id\": \"").append(task.getId()).append("\",");
-			jsonResult.append("\"room\": \"").append(task.getRoom().getName()).append("\"}");
-
-			if (i < tasks.size() - 1) {
-				jsonResult.append(", ");
-			}
+		for (Task t : tasks) {
+			filterByUserList.add(t.toTransfer());
 		}
 
-		jsonResult.append("}");
-		return jsonResult.toString();
+		return filterByUserList;
 	}
 
 	@GetMapping("/getTaskInfo/{id}")
