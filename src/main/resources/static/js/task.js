@@ -224,25 +224,26 @@ function filterUpdate(event, x) {
                 $("#selectUpdateByUser").prop('selectedIndex', 0);
                 $("#selectUpdateByDate").prop('selectedIndex', 0);
 
-                if (Object.keys(d).length > 0) {
-                    Object.keys(d).forEach(taskKey => {
+                if (d.length > 0) {
+                    d.forEach(taskT => {
+                        const formattedDate = formatDate(taskT.creationDate);
                         $('#divCardsTasks').append(
                             `<div class="card my-2">
                         <div class="card-content d-flex p-1 bg align-items-center taskCard">
                             <div class="col">
-                                <h3>${d[Number(taskKey)].title}</h3>
-                                <h5>${d[Number(taskKey)].author}</h5>
+                                <h3>${taskT.title}</h3>
+                                <h5>${taskT.author}</h5>
                             </div>
                             <div class="col">
                                 <div>
-                                    <h5>${d[Number(taskKey)].creationDate}<h5>
+                                    <h5>${formattedDate}<h5>
                                 </div>
                                 <div>
-                                    <h5>${d[Number(taskKey)].room}</h5>
+                                    <h5>${taskT.room.name}</h5>
                                 </div>
                             </div>
                             <button class="btn" onclick="viewInfo(event)">
-                                <div class="d-none" id="taskPersonalID">${d[Number(taskKey)].id}</div>
+                                <div class="d-none" id="taskPersonalID">${taskT.id}</div>
                                 <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50"
                                     height="50" style="margin-right: 5%;">
                             </button>
@@ -273,25 +274,26 @@ function filterUpdate(event, x) {
                 $("#selectUpdateByRoom").prop('selectedIndex', 0);
                 $("#selectUpdateByDate").prop('selectedIndex', 0);
 
-                if (Object.keys(d).length > 0) {
-                    Object.keys(d).forEach(taskKey => {
+                if (d.length > 0) {
+                    d.forEach(taskT => {
+                        const formattedDate = formatDate(taskT.creationDate);
                         $('#divCardsTasks').append(
                             `<div class="card my-2">
                         <div class="card-content d-flex p-1 bg align-items-center taskCard">
                             <div class="col">
-                                <h3>${d[Number(taskKey)].title}</h3>
-                                <h5>${d[Number(taskKey)].author}</h5>
+                                <h3>${taskT.title}</h3>
+                                <h5>${taskT.author}</h5>
                             </div>
                             <div class="col">
                                 <div>
-                                    <h5>${d[Number(taskKey)].creationDate}<h5>
+                                    <h5>${formattedDate}<h5>
                                 </div>
                                 <div>
-                                    <h5>${d[Number(taskKey)].room}</h5>
+                                    <h5>${taskT.room.name}</h5>
                                 </div>
                             </div>
                             <button class="btn" onclick="viewInfo(event)">
-                                <div class="d-none" id="taskPersonalID">${d[Number(taskKey)].id}</div>
+                                <div class="d-none" id="taskPersonalID">${taskT.id}</div>
                                 <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50"
                                     height="50" style="margin-right: 5%;">
                             </button>
@@ -326,6 +328,12 @@ function filterUpdate(event, x) {
                 //TODO
                 break;
         }
+
+        $('#divCardsTasks').append(
+            `<div id="noTasks" class="titleStyle">
+        <h4>No se encuentran tareas con ese filtro</h4>
+        <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
+        </div>`)
 
     }
 
