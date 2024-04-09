@@ -77,9 +77,10 @@ function updateTask(event, idTask) {
     let params = {
         id: idTask,
         title: $("#selectedTaskTitle").val(),
-        user_id: $("#selectedTaskAuthor").val(),
-        room_id: $("#selectedTaskRoom").val()
+        user_id: $("#viewTaskSelectUser").val(),
+        room_id: $("#viewTaskSelectRoom").val()
     };
+
     console.log(`PARAMS: id:${params.id}, title:${params.title}, user_id:${params.user_id}, room_id:${params.room_id}`);
     go("/user/updateTask", 'POST', params)
         .then(d => {
@@ -88,31 +89,36 @@ function updateTask(event, idTask) {
 
             $("#noTasks").hide()
 
-            // $("#form-newTask")[0].reset()
+            $("#selectedTaskTitle").attr("readonly", true);
+            $("#viewTaskSelectUser").attr("disabled", true);
+            $("#viewTaskSelectRoom").attr("disabled", true);
+
+            $("#containerButtonEditDelete").show();
+            $("#containerButtonSendCancel").hide();
 
             //TODO habitación
-            $('#divCardsTasks').prepend(`
-                <div class="card my-2">
-                    <div class="card-content d-flex p-1 align-items-center taskCard">
-                        <div class="col ms-2 my-1">
-                            <h3>${d.title}</h3>
-                            <h5>${d.author}</h5>
-                        </div>
-                        <div class="col-4">
-                            <div>
-                                <h5>${formatDate(d.creationDate)}<h5>
-                            </div>
-                            <div>
-                                <h5>${d.room}</h5>
-                            </div>
-                        </div>
-                        <button class="btn" onclick="viewInfo(event)">
-                            <div class="d-none" id="taskPersonalID">${d.id}</div>
-                            <img th:src="@{/img/vista.svg}" src="/img/vista.svg" width="50" height="50" style="margin-right: 5%;">
-                        </button>
-                    </div>
-                </div>
-            `)
+            // $('#divCardsTasks').prepend(`
+            //     <div class="card my-2">
+            //         <div class="card-content d-flex p-1 align-items-center taskCard">
+            //             <div class="col ms-2 my-1">
+            //                 <h3>${d.title}</h3>
+            //                 <h5>${d.author}</h5>
+            //             </div>
+            //             <div class="col-4">
+            //                 <div>
+            //                     <h5>${formatDate(d.creationDate)}<h5>
+            //                 </div>
+            //                 <div>
+            //                     <h5>${d.room}</h5>
+            //                 </div>
+            //             </div>
+            //             <button class="btn" onclick="viewInfo(event)">
+            //                 <div class="d-none" id="taskPersonalID">${d.id}</div>
+            //                 <img th:src="@{/img/vista.svg}" src="/img/vista.svg" width="50" height="50" style="margin-right: 5%;">
+            //             </button>
+            //         </div>
+            //     </div>
+            // `)
         })
         .catch(e => {
             console.log("Fail");
@@ -133,15 +139,13 @@ function viewInfo(event) {
 
             const formattedDate = formatDateTime(d.creationDate);
 
-            $("#viewFormTask").removeAttr("hidden");
+            $("#viewFormTask").show();
             $("#selectedTaskTitle").val(d.title);
             $("#selectedTaskAuthor").val(d.author);
             $("#selectedTaskDate").val(formattedDate);
             $("#viewTaskSelectUser").val(d.userT.id);
             $("#viewTaskSelectRoom").val(d.room.id);
             $("#editTaskButton").attr("onclick", `updateInfo(event, ${idTask})`);
-            // $("#containerDeleteButtonTask").removeAttr("hidden");
-            // $("#containerButtonSendCancel").hide();
         })
         .catch(e => {
             console.log("Fail");
@@ -191,7 +195,7 @@ function updateInfo(event, idTask) {
             $("#buttonUpdateTask").attr("onclick", `updateTask(event, ${idTask})`);
 
             $("#containerButtonEditDelete").hide();
-            $("#containerButtonSendCancel").removeAttr("hidden");
+            $("#containerButtonSendCancel").show();
 
         })
         .catch(e => {
