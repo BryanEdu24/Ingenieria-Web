@@ -43,7 +43,7 @@
 						<div class="col d-flex justify-content-end align-items-end">
 							<button type="button" class="btn rounded">
 								<span class="image-container">
-									<img th:src="@{/img/agregar.png}" id="addRoomImg" src="/img/agregar.png" alt="Imagen" width="45" height="45" data-bs-toggle="modal" data-bs-target="#newRoomModal">
+									<img th:src="@{/img/agregar.png}" id="addRoomImg" src="/img/agregar.png" alt="Imagen" width="35" height="35" data-bs-toggle="modal" data-bs-target="#newRoomModal">
 								</span>
 							</button>
 						</div>
@@ -54,7 +54,7 @@
 							<div class="card-content d-flex justify-content-between ms-2 p-1">
 								<div class="d-flex">
 									<div class="mx-3">
-										<img th:src="@{/img/JefeCasa.PNG}" width="50" height="60">
+										<img th:src="@{/img/{img}.png(img=${room.img})}" width="50" height="60">
 									</div>									
 									<div th:text="${room.name}" class="titleStyle textCardManager"></div>
 								</div>
@@ -89,9 +89,9 @@
 								<div class="d-flex">
 									<!-- AQUI -->
 									<div class="mx-3">
-										<img th:if="${#strings.equals(u.roles, 'MANAGER')}" th:src="@{/img/JefeCasa.png}" src="/img/JefeCasa.png" width="50" height="60">
-										<img th:if="${#strings.equals(u.roles, 'ADMIN')}" th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" width="50" height="60">
-										<img th:if="${#strings.equals(u.roles, 'USER')}" th:src="@{/img/User.png}" src="/img/User.png" width="50" height="60">
+										<img th:if="${#strings.equals(user.roles, 'MANAGER')}" th:src="@{/img/JefeCasa.png}" src="/img/JefeCasa.png" width="50" height="60">
+										<img th:if="${#strings.equals(user.roles, 'ADMIN')}" th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" width="50" height="60">
+										<img th:if="${#strings.equals(user.roles, 'USER')}" th:src="@{/img/User.png}" src="/img/User.png" width="50" height="60">
 									</div>
 									<div th:text="${user.username}" class="titleStyle textCardManager"></div>
 								</div>

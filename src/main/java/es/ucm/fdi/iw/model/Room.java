@@ -38,11 +38,12 @@ public class Room implements Transferable<Room.Transfer> {
         private long id;
         private String name;
         private long house_id;
+        private String img;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, name, house.getId());
+        return new Transfer(id, name, house.getId(), img);
     }
 
     @Override

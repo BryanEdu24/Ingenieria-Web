@@ -28,10 +28,10 @@ public class House implements Transferable<House.Transfer> {
 
     private boolean enabled;
 
-    @Column(nullable = false)
-    private String pass;
     @Column(nullable = false, unique = true)
     private String name;
+    @Column(nullable = false)
+    private String pass;
 
     @OneToMany
     @JoinColumn(name = "house_id")

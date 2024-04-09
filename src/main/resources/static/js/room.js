@@ -3,10 +3,13 @@
 function newRoom(event){
     event.preventDefault();
 
+    let photo = document.querySelector('input[name="photoSelect"]:checked').value;
+
     let params = {
         roomName: $("#roomName").val(),
+        roomPhoto: photo,
     };
-    console.log(`PARAMS: name:${params.roomName}`);
+    console.log(`PARAMS: name:${params.roomName} Photo:${params.roomPhoto}`);
     go("/user/newRoom", 'POST', params)
         .then(d => {
             console.log("Success");
@@ -18,7 +21,7 @@ function newRoom(event){
                     <div class="card-content d-flex justify-content-between ms-2 p-1">
                         <div class="d-flex">
                             <div class="mx-3">
-                                <img th:src="@{/img/JefeCasa.png}" src="/img/JefeCasa.png" width="50" height="60">
+                                <img th:src="@{/img/${d.img}.png}" src="/img/${d.img}.png" width="50" height="60">
                             </div>	
                             <div class="titleStyle textCardManager">${d.name}</div>
                         </div>

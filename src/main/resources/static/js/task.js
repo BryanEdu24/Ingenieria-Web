@@ -6,7 +6,7 @@ function newTask(event) {
     let params = {
         title: $("#taskTitle").val(),
         user_id: $("#addTaskSelectUser").val(),
-	    room_id: $("#addTaskSelectRoom").val(),
+        room_id: $("#addTaskSelectRoom").val(),
     };
     console.log(`PARAMS: title:${params.title}, user_id:${params.user_id}, room_id:${params.room_id}`);
     go("/user/newTask", 'POST', params)
@@ -26,7 +26,7 @@ function newTask(event) {
                     <div class="card-content d-flex p-1 align-items-center taskCard">
                         <div class="col ms-2 my-1">
                             <h3>${d.title}</h3>
-                            <h5>${d.author}</h5>
+                            <h5>${d.userT.username}</h5>
                         </div>
                         
                         <div class="col-4">
@@ -34,7 +34,7 @@ function newTask(event) {
                                 <h5>${formattedDate}</h5>
                             </div>
                             <div>
-                                <h5>${d.room}</h5>
+                                <h5>${d.room.name}</h5>
                             </div>
                         </div>
                         <button class="btn" onclick="viewInfo(event)">
@@ -132,45 +132,16 @@ function viewInfo(event) {
             $("#noTaskSelected").hide();
 
             const formattedDate = formatDateTime(d.creationDate);
-            
-            $('#divInfoCard form').html(` 
-                <div class="mb-2 d-flex">
-                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
-                    <div class="col">
-                        <input type="text" id="selectedTaskTitle" class="form-control inputInfo" value="${d.title}" readonly>
-                    </div>
-                </div>
-                <div class="mb-2 d-flex">
-                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
-                    <div class="col">
-                        <input type="text" id="selectedTaskAuthor" class="form-control inputInfo" value="${d.author}" readonly>
-                    </div>
-                </div>
-                <div class="mb-2 d-flex">
-                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Fecha de creación:</div>
-                    <div class="col">
-                        <input type="text" class="form-control inputInfo" value="${formattedDate}" readonly>
-                    </div>
-                </div>
-                <div class="mb-2 d-flex">
-                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Habitación:</div>
-                    <div class="col">
-                        <input type="text" id="selectedTaskRoom" class="form-control inputInfo" value="${d.room}" readonly>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <div class="mx-2">
-                        <button type="button" class="btn imgActionsEdit" onclick="updateInfo(event, '${idTask}')" >
-                            <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
-                        </button>
-                    </div>
-                    <div class="mx-2">
-                        <button type="button" class="btn imgActionsDelete" onclick="deleteTask(event, '${idTask}')" >
-                            <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
-                        </button>
-                    </div>
-                </div> 
-            `);
+
+            $("#viewFormTask").removeAttr("hidden");
+            $("#selectedTaskTitle").val(d.title);
+            $("#selectedTaskAuthor").val(d.author);
+            $("#selectedTaskDate").val(formattedDate);
+            $("#viewTaskSelectUser").val(d.userT.id);
+            $("#viewTaskSelectRoom").val(d.room.id);
+            $("#editTaskButton").attr("onclick", `updateInfo(event, ${idTask})`);
+            // $("#containerDeleteButtonTask").removeAttr("hidden");
+            // $("#containerButtonSendCancel").hide();
         })
         .catch(e => {
             console.log("Fail");
@@ -178,7 +149,7 @@ function viewInfo(event) {
         });
 }
 
-function deleteTask(event, idTask){
+function deleteTask(event, idTask) {
     event.preventDefault();
 
     let params = {
@@ -186,7 +157,7 @@ function deleteTask(event, idTask){
     };
 
     go("/user/deleteTask", 'POST', params)
-         .then(d => {
+        .then(d => {
             console.log("Success");
             console.log(d);
 
@@ -194,16 +165,17 @@ function deleteTask(event, idTask){
             <div> TAREA BORRADA </div>
             `)
 
-         })
-         .catch(e => {
-             console.log("Fail");
-             console.log(e);
-         });
+        })
+        .catch(e => {
+            console.log("Fail");
+            console.log(e);
+        });
 }
 
 
 function updateInfo(event, idTask) {
     event.preventDefault();
+
 
     go("/user/getTaskInfo/" + idTask, 'GET')
         .then(d => {
@@ -212,49 +184,21 @@ function updateInfo(event, idTask) {
 
             $("#noTaskSelected").hide();
 
-            // Update the form using Thymeleaf context
-            $('#divInfoCard form').html(`
-            <div class="mb-2 d-flex">
-                <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
-                <div class="col">
-                    <input type="text" id="selectedTaskTitle" class="form-control" value="${d.title}" >
-                </div>
-            </div>
-            <div class="mb-2 d-flex">
-                <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
-                <div class="col">
-                    <input type="text" id="selectedTaskAuthor" class="form-control" value="${d.author}" >
-                </div>
-            </div>
-            <div class="mb-2 d-flex">
-                <div class="col-7 titleStyleInfo text-left">·&nbsp; Fecha de creación:</div>
-                <div class="col">
-                    <input type="text" class="form-control" value="${formatDateTime(d.creationDate)}" readonly>
-                </div>
-            </div>
-            <div class="mb-2 d-flex">
-                <div class="col-7 titleStyleInfo text-left">·&nbsp; Habitación:</div>
-                <div class="col">
-                    <input type="text" id="selectedTaskRoom" class="form-control" value="${d.room}" >
-                </div>
-            </div>
+            $("#selectedTaskTitle").removeAttr("readonly");
+            $("#viewTaskSelectUser").removeAttr("disabled");
+            $("#viewTaskSelectRoom").removeAttr("disabled");
+            $("#editDeleteButtonTask").hide()
+            $("#buttonUpdateTask").attr("onclick", `updateTask(event, ${idTask})`);
 
-            <div class="d-flex justify-content-between mt-4">
-                <button type="button" class="btn btn-secondary">Cancelar</button>
-                <button type="submit" id="buttonUpdateTask" class="btn btn-primary btnUpdateTask" onclick="updateTask(event, '${idTask}')">Modificar Tarea</button>
-            </div>
-        `);
+            $("#containerButtonEditDelete").hide();
+            $("#containerButtonSendCancel").removeAttr("hidden");
 
-            // Remove 'readonly' attribute from editable fields
-            $('.form-control').removeAttr('readonly');
-            $('.readonly').attr('readonly', true);
         })
         .catch(e => {
             console.log("Fail");
             console.log(e);
         });
 }
-
 
 function filterUpdate(event, x) {
 

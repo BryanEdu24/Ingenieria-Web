@@ -22,19 +22,24 @@
                     <div class="d-flex justify-content-between mx-4">
                         <div class="d-flex align-items-center justify-content-center">
                             <div class="mx-2">
-                                <select class="form-select form-select-sm" id="selectUpdateByRoom" aria-label=".form-select-sm example" onchange="filterUpdate(event, 1)">
+                                <select class="form-select form-select-sm" id="selectUpdateByRoom"
+                                    aria-label=".form-select-sm example" onchange="filterUpdate(event, 1)">
                                     <option selected disabled hidden value="none">Filtrar por habitación</option>
-                                    <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}">ROOM</option>
+                                    <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}">ROOM
+                                    </option>
                                 </select>
                             </div>
                             <div class="mx-2">
-                                <select class="form-select form-select-sm" id="selectUpdateByUser" aria-label=".form-select-sm example" onchange="filterUpdate(event, 2)">
+                                <select class="form-select form-select-sm" id="selectUpdateByUser"
+                                    aria-label=".form-select-sm example" onchange="filterUpdate(event, 2)">
                                     <option selected disabled hidden value="none">Filtrar por miembros</option>
-                                    <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}" th:text="${houseUser.username}">USER</option>
+                                    <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}"
+                                        th:text="${houseUser.username}">USER</option>
                                 </select>
                             </div>
                             <div class="mx-2">
-                                <select class="form-select form-select-sm" id="selectUpdateByDate" aria-label=".form-select-sm example" onchange="filterUpdate(event, 3)">
+                                <select class="form-select form-select-sm" id="selectUpdateByDate"
+                                    aria-label=".form-select-sm example" onchange="filterUpdate(event, 3)">
                                     <option selected disabled hidden value="none">Ordenar por</option>
                                     <option value="moreNew">Fecha más reciente</option>
                                     <option value="moreOld">Fecha más antigua</option>
@@ -59,11 +64,13 @@
                                 </ul>
                             </div> -->
                         </div>
-    
+
                         <div>
                             <button type="button" class="btn rounded">
                                 <span class="image-container">
-                                    <img th:src="@{/img/agregar.png}" id="addTaskImg" src="/img/agregar.png" alt="Imagen" width="50" height="50" data-bs-toggle="modal" data-bs-target="#newTaskModal">
+                                    <img th:src="@{/img/agregar.png}" id="addTaskImg" src="/img/agregar.png"
+                                        alt="Imagen" width="50" height="50" data-bs-toggle="modal"
+                                        data-bs-target="#newTaskModal">
                                 </span>
                             </button>
                         </div>
@@ -72,16 +79,16 @@
                 <!--Tareas-->
                 <div class="card-list tareas p-3 mt-2 justify-content-center">
                     <div class="divCardsTasks" id="divCardsTasks">
-                        <div id="noTasks" th:if="${#lists.size(tasks) == 0}"  class="titleStyle">
+                        <div id="noTasks" th:if="${#lists.size(tasks) == 0}" class="titleStyle">
                             <h4>No se encuentran tareas para la casa</h4>
                             <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
                         </div>
 
-                        <div th:each="task: ${tasks}"  class="card my-2">
+                        <div th:each="task: ${tasks}" class="card my-2">
                             <div class="card-content d-flex p-1 align-items-center taskCard">
                                 <div class="col ms-2 my-1">
                                     <h3 th:text="${task.title}"></h3>
-                                    <h5 th:text="${task.author}"></h5>
+                                    <h5 th:text="${task.user.username}"></h5>
                                 </div>
                                 <div class="col-4">
                                     <div>
@@ -94,8 +101,8 @@
                                 <button class="btn" type="button" onclick="viewInfo(event)">
                                     <div class="d-none" id="taskPersonalID" th:text="${task.id}"></div>
                                     <span class="image-container">
-                                        <img th:src="@{/img/vista.svg}" src="/img/vista.svg"  alt="Imagen" width="50"
-                                        height="50" style="margin-right: 5%;" >
+                                        <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50"
+                                            height="50" style="margin-right: 5%;">
                                     </span>
                                 </button>
                             </div>
@@ -104,17 +111,85 @@
                 </div>
             </div>
 
-           <div class="col p-1">
+            <div class="col p-1">
                 <div class="d-flex flex-column p-1 tareas justify-content-center align-items-center">
                     <div class="titleStyle mt-2">Información de tarea</div>
                     <div class="p-3 text-center" id="noTaskSelected">
-                        <div class="titleStyle"><h4>No hay tarea seleccionada</h4></div>
+                        <div class="titleStyle">
+                            <h4>No hay tarea seleccionada</h4>
+                        </div>
                     </div>
                     <div class="p-3 text-center" id="divInfoCard" style="width: 90%;">
                         <form>
+                            <div id="viewFormTask" hidden>
+                                <div class="mb-2 d-flex">
+                                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
+                                    <div class="col">
+                                        <input type="text" id="selectedTaskTitle" class="form-control inputInfo"
+                                            value="${d.title}" readonly>
+                                    </div>
+                                </div>
+                                <div class="mb-2 d-flex">
+                                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
+                                    <div class="col">
+                                        <input type="text" id="selectedTaskAuthor" class="form-control inputInfo"
+                                            value="${d.author}" readonly>
+                                    </div>
+                                </div>
+                                <div class="updateT mb-2 d-flex">
+                                    <label class="col-7 titleStyleInfo text-left"><b>·&nbsp;</b> Asignada a:</label>
+                                    <div class="col">
+                                        <select name="user_id" id="viewTaskSelectUser" class="form-select inputInfo"
+                                            required disabled>
+                                            <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}"
+                                                th:text="${houseUser.username}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2 d-flex">
+                                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Fecha de creación:</div>
+                                    <div class="col">
+                                        <input type="text" id="selectedTaskDate" class="form-control inputInfo"
+                                            value="${formattedDate}" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="updateT mb-2 d-flex">
+                                    <label class="col-7 titleStyleInfo text-left"><b>·&nbsp;</b> Habitación:</label>
+                                    <div class="col">
+                                        <select name="room_id" id="viewTaskSelectRoom" class="form-select inputInfo"
+                                            disabled>
+                                            <option th:each="room: ${rooms}" th:value="${room.id}"
+                                                th:text="${room.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="containerButtonEditDelete">
+                                    <div class="d-flex justify-content-end" id="editDeleteButtonTask">
+                                        <div class="mx-2">
+                                            <button type="button" id="editTaskButton" class="btn imgActionsEdit">
+                                                <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+                                            </button>
+                                        </div>
+                                        <div class="mx-2">
+                                            <button type="button" class="btn imgActionsDelete">
+                                                <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="containerButtonSendCancel" hidden>
+                                    <div class="d-flex justify-content-between mt-4" id="buttonsEditTask">
+                                        <button type="button" class="btn btn-secondary">Cancelar</button>
+                                        <button type="submit" id="buttonUpdateTask" class="btn btn-primary btnUpdateTask">Modificar Tarea</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </form>
                     </div>
-                 </div>
+                </div>
 
                 <div class="mt-2 tareas justify-content-center align-items-center p-2">
                     <div class="titleStyle mt-2">Notas de la tarea </div>
@@ -147,28 +222,31 @@
         </div>
     </div>
 
-
     <!-- Modal CREAR TAREA -->
-    <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">📒 <u>Nueva Tarea</u></h4>
-                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                
+
                 <div class="modal-body">
                     <form id="form-newTask">
                         <div class="row mb-3">
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la Tarea:</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" id="taskTitle" name="title" placeholder="Nombre de la Tarea" required>
+                                <input type="text" class="form-control" id="taskTitle" name="title"
+                                    placeholder="Nombre de la Tarea" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Autor de la tarea:</label>
                             <div class="col-7">
-                                <input type="text" class="form-control inputInfo" id="taskAuthor" name="author" th:value="${authorName}" disabled readonly>
+                                <input type="text" class="form-control inputInfo" id="taskAuthor" name="author"
+                                    th:value="${authorName}" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -176,7 +254,8 @@
                             <div class="col-7">
                                 <select name="user_id" id="addTaskSelectUser" class="form-select" required>
                                     <option disabled hidden selected>Seleccione uno...</option>
-                                    <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}" th:text="${houseUser.username}"></option>
+                                    <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}"
+                                        th:text="${houseUser.username}"></option>
                                 </select>
                             </div>
                         </div>
@@ -185,13 +264,15 @@
                             <div class="col-7">
                                 <select name="room_id" id="addTaskSelectRoom" class="form-select">
                                     <option disabled hidden selected>Seleccione uno...</option>
-                                    <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                                    <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}">
+                                    </option>
                                 </select>
                             </div>
                         </div>
                         <div class="modal-footer text-center d-flex justify-content-between align-items-center">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" id="buttonNewTaskCreation" data-bs-dismiss="modal" class="btn btn-primary btnCreateTask" onclick="newTask(event)">Crear Tarea</button>
+                            <button type="button" id="buttonNewTaskCreation" data-bs-dismiss="modal"
+                                class="btn btn-primary btnCreateTask" onclick="newTask(event)">Crear Tarea</button>
                         </div>
                     </form>
                 </div>

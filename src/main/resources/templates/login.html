@@ -47,22 +47,29 @@
                     </div>
                 </form>
 
-                <!-- <div class="justify-content-between d-flex mt-3 bg-dark rounded p-2">
+                <div class="justify-content-between d-flex mt-3 bg-dark rounded p-2">
                     <div class="nav-item debug align-self-center" th:if="${application.debug}">
                         <form th:action="@{/login}" method="post">
-                            <input type="hidden" name="username" value="a">
+                            <input type="hidden" name="username" value="Manuel">
                             <input type="hidden" name="password" value="aa">
                             <button type="submit" class="btn btn-outline-info">Admin</button>
                         </form>
                     </div>
                     <div class="nav-item debug align-self-center" th:if="${application.debug}">
                         <form th:action="@{/login}" method="post">
-                            <input type="hidden" name="username" value="b">
+                            <input type="hidden" name="username" value="Lucas">
                             <input type="hidden" name="password" value="aa">
-                            <button type="submit" class="btn btn-outline-info">Home</button>
+                            <button type="submit" class="btn btn-outline-info">Manager</button>
                         </form>
                     </div>
-                </div> -->
+                    <div class="nav-item debug align-self-center" th:if="${application.debug}">
+                        <form th:action="@{/login}" method="post">
+                            <input type="hidden" name="username" value="Clara">
+                            <input type="hidden" name="password" value="aa">
+                            <button type="submit" class="btn btn-outline-info">User</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

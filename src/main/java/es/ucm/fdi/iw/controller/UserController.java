@@ -177,16 +177,12 @@ public class UserController {
 
 	@GetMapping("/getTaskInfo/{id}")
 	@ResponseBody
-	public String getInfoTask(@PathVariable long id, HttpServletResponse response) {
+	public Task.Transfer getInfoTask(@PathVariable long id, HttpServletResponse response) {
 		Task target = entityManager.createNamedQuery("Task.byId", Task.class)
 				.setParameter("taskId", id)
 				.getSingleResult();
 
-		return "{\"title\": \"" + target.getTitle() + "\"," +
-				"\"author\": \"" + target.getAuthor() + "\"," +
-				"\"creationDate\": \"" + target.getCreationDate() + "\"," +
-				"\"user\": \"" + target.getUser().getUsername() + "\"," +
-				"\"room\": \"" + target.getRoom().getName() + "\"}";
+		return target.toTransfer();
 	}
 
 	@GetMapping("/home")
@@ -222,9 +218,9 @@ public class UserController {
 		return "welcome";
 	}
 
-	@GetMapping("/task")
+	@GetMapping("/tasks")
 	@Transactional
-	public String TM_tareas(Model model, HttpSession session) {
+	public String task(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 		House h = u.getHouse();
 
@@ -251,7 +247,7 @@ public class UserController {
 
 	@GetMapping("/manager")
 	@Transactional
-	public String TM_jefe(Model model, HttpSession session) {
+	public String manager(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 
 		// En caso de no tener casa asignada
@@ -277,7 +273,7 @@ public class UserController {
 	}
 
 	@GetMapping("/expenses")
-	public String TM_gastos(Model model, HttpSession session) {
+	public String expenses(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 
 		// En caso de no tener casa asignada
@@ -319,20 +315,13 @@ public class UserController {
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
 
-		// return "{\"title\": \"" + target.getTitle() + "\"," +
-		// "\"author\": \"" + target.getAuthor() + "\"," +
-		// "\"creationDate\": \"" + target.getCreationDate() + "\"," +
-		// "\"user\": \"" + target.getUser() + "\"," +
-		// "\"id\": \"" + target.getId() + "\"," +
-		// "\"room\": \"" + target.getRoom().getName() + "\"}";
-
 		return target.toTransfer();
 	}
 
 	@PostMapping("/updateTask")
 	@Transactional
 	@ResponseBody
-	public String updateTask(
+	public Task.Transfer updateTask(
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
@@ -345,16 +334,14 @@ public class UserController {
 		Task target = new Task();
 		target = entityManager.find(Task.class, task_id);
 		target.setTitle(title);
+		target.setUser(entityManager.find(User.class, user_id));
 		target.setRoom(entityManager.find(Room.class, room_id));
 		target.setEnabled(true);
 
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
 
-		return "{\"title\": \"" + target.getTitle() + "\"," +
-				"\"author\": \"" + target.getAuthor() + "\"," +
-				"\"creationDate\": \"" + target.getCreationDate() + "\"}";
-
+		return target.toTransfer();
 	}
 
 	@PostMapping("/deleteTask")
@@ -431,15 +418,19 @@ public class UserController {
 
 		// if (existingRoom == null || existingRoom.getHouse() != h) {
 		String roomName = data.get("roomName").asText();
+		String roomPhoto = data.get("roomPhoto").asText();
 
 		roomNew.setName(roomName);
+		roomNew.setImg(roomPhoto);
 		roomNew.setHouse(h);
 		roomNew.setEnabled(true);
+
 		entityManager.persist(roomNew);
 		entityManager.flush();
 		// }
 
-		return "{\"name\": \"" + roomNew.getName() + "\"}";
+		return "{\"name\": \"" + roomNew.getName() + "\"," +
+				"\"img\": \"" + roomNew.getImg() + "\"}";
 		// return "redirect:/user/manager";
 	}
 
