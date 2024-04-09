@@ -51,28 +51,64 @@ function newRoom(event){
 
 }
 
-function editRoom(event, idRoom){
-    event.preventDefault();
 
-    const roomId = event.target.parentElement.parentElement.querySelector('#roomPersonalID').textContent; // Cambia idRoom a roomId para evitar conflicto de nombres
-    const newName = $("#roomNameEdit").val(); // Obtén el nuevo nombre de la habitación
+$('#editRoomModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var roomId = button.data('room-id');
+    var roomName = button.data('room-name');
+    $("#roomNameEdit").val(roomName);
+    $("#editRoomModal").data('room-id', roomId);
+});
 
-    let params = {
+function editRoom() {
+    var roomId = $("#editRoomModal").data('room-id');
+    var newName = $("#roomNameEdit").val();
+
+    var params = {
         id: roomId,
         name: newName
     };
 
-    console.log(`PARAMS: id:${params.id}, name:${params.name}`);
+    console.log("PARAMS: ", params);
 
     go("/user/updateRoom", 'POST', params)
         .then(d => {
             console.log("Success");
             console.log(d);
-
-            
         })
         .catch(e => {
             console.log("Fail");
             console.log(e);
         });
 }
+$(document).ready(function() {
+    $('.imgActionsEdit').on('click', function(event) {
+        var button = $(this);
+        var roomId = button.closest('.card').find('.room-info').data('room-id');
+        var roomName = button.closest('.card').find('.room-info').data('room-name');
+        $("#roomNameEdit").val(roomName);
+        $("#editRoomModal").data('room-id', roomId);
+    });
+
+    function editRoom() {
+        var roomId = $("#editRoomModal").data('room-id');
+        var newName = $("#roomNameEdit").val();
+
+        var params = {
+            id: roomId,
+            name: newName
+        };
+
+        console.log("PARAMS: ", params);
+
+        go("/user/updateRoom", 'POST', params)
+            .then(d => {
+                console.log("Success");
+                console.log(d);
+            })
+            .catch(e => {
+                console.log("Fail");
+                console.log(e);
+            });
+    }
+});
