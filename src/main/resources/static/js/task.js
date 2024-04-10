@@ -40,7 +40,7 @@ function newTask(event) {
                         <button class="btn" onclick="viewInfo(event)">
                             <div class="d-none" id="taskPersonalID">${d.id}</div>
                             <span class="image-container">
-                                <img th:src="@{/img/vista.svg}" src="/img/vista.svg" width="50" height="50" style="margin-right: 5%;" >
+                                <img th:src="@{/img/vista.png}" src="/img/vista.png" width="50" height="50" style="margin-right: 5%;" >
                             </span>
                         </button>
                     </div>
@@ -114,7 +114,7 @@ function updateTask(event, idTask) {
             //             </div>
             //             <button class="btn" onclick="viewInfo(event)">
             //                 <div class="d-none" id="taskPersonalID">${d.id}</div>
-            //                 <img th:src="@{/img/vista.svg}" src="/img/vista.svg" width="50" height="50" style="margin-right: 5%;">
+            //                 <img th:src="@{/img/vista.png}" src="/img/vista.png" width="50" height="50" style="margin-right: 5%;">
             //             </button>
             //         </div>
             //     </div>
@@ -233,7 +233,7 @@ function filterUpdate(event, x) {
                         <div class="card-content d-flex p-1 bg align-items-center taskCard">
                             <div class="col">
                                 <h3>${taskT.title}</h3>
-                                <h5>${taskT.author}</h5>
+                                <h5>${taskT.userT.username}</h5>
                             </div>
                             <div class="col">
                                 <div>
@@ -245,7 +245,7 @@ function filterUpdate(event, x) {
                             </div>
                             <button class="btn" onclick="viewInfo(event)">
                                 <div class="d-none" id="taskPersonalID">${taskT.id}</div>
-                                <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50"
+                                <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
                                     height="50" style="margin-right: 5%;">
                             </button>
                         </div>
@@ -283,7 +283,7 @@ function filterUpdate(event, x) {
                         <div class="card-content d-flex p-1 bg align-items-center taskCard">
                             <div class="col">
                                 <h3>${taskT.title}</h3>
-                                <h5>${taskT.author}</h5>
+                                <h5>${taskT.userT.username}</h5>
                             </div>
                             <div class="col">
                                 <div>
@@ -295,7 +295,7 @@ function filterUpdate(event, x) {
                             </div>
                             <button class="btn" onclick="viewInfo(event)">
                                 <div class="d-none" id="taskPersonalID">${taskT.id}</div>
-                                <img th:src="@{/img/vista.svg}" src="/img/vista.svg" alt="Imagen" width="50"
+                                <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
                                     height="50" style="margin-right: 5%;">
                             </button>
                         </div>
