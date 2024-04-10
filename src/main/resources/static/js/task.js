@@ -233,7 +233,7 @@ function filterUpdate(event, x) {
                         <div class="card-content d-flex p-1 bg align-items-center taskCard">
                             <div class="col">
                                 <h3>${taskT.title}</h3>
-                                <h5>${taskT.author}</h5>
+                                <h5>${taskT.userT.username}</h5>
                             </div>
                             <div class="col">
                                 <div>
@@ -283,7 +283,7 @@ function filterUpdate(event, x) {
                         <div class="card-content d-flex p-1 bg align-items-center taskCard">
                             <div class="col">
                                 <h3>${taskT.title}</h3>
-                                <h5>${taskT.author}</h5>
+                                <h5>${taskT.userT.username}</h5>
                             </div>
                             <div class="col">
                                 <div>
