@@ -104,7 +104,7 @@ function deleteRoom(id){
     
     // // Mostrar modal de edición
     $('#deleteRoomModal').modal('show');
-    $('#titleDeleteModal').show(`<h5>¿Estás segur@ que desea eliminar <span style="color: #02B9D8;">${id}</span>?</h5>`)
+    $('#titleDeleteModal').prepend(`<h5>¿Estás segur@ que desea eliminar <span style="color: #02B9D8;">${id}</span>?</h5>`)
     $('#confirmDeleteRoomButton').attr("onclick", `confirmDeleteRoom(${id})`);
 
 }
