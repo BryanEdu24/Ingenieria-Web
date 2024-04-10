@@ -12,7 +12,7 @@ body {
     box-shadow: #202024 0.1em 0.1em 0.1em;
 }
 
-.manager, .Habitaciones, .Miembros, .tareas, .notas, .gastos { 
+.manager, .Habitaciones, .Miembros, .tareas, .notas, .gastos, .admin { 
     border-radius: 35px;
     box-shadow: 10px 5px 12px rgba(0,0,0,.2);
     background-color:#F8F4EA;
@@ -224,6 +224,10 @@ input, select {
     background-color: rgb(182, 173, 170, 0.2) !important;
 }
 
+#selectUpdateByRoom, #selectUpdateByUser, #selectUpdateByDate {
+    background-color: #FFB919 !important;
+    color: #02b9d8 !important;
+}
 /* --- EXPENSES --- */
 
 
@@ -251,35 +255,10 @@ input, select {
 }
 
 /* --- ADMIN --- */
-#div-list {
-    height: 10rem;
-}
-
-#div-list > div {
-    border: 0.3rem solid red;
-}
 
 .balance > p {
     font-size: 2.5em;
     margin: 1.5em;
-}
-
-.div-gastos > div > p {
-    margin: 1em;
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.div-gastos > div {
-    margin: 3em 2em 0em 2em;
-    border-radius: 3em;
-    background-color: #fefae0;
-}
-
-.div-gastos > div > button {
-    border: none;
-    background: none;
-    padding: 0;
 }
 
 /* Estilo Modal */

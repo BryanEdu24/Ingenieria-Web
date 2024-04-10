@@ -13,46 +13,41 @@
     <div class="container-fluid p-4">
         <div class="row">
             <!--Casas-->
-            <div class="col card-list allhouses p-4 mt-2 justify-content-center">
-                <div class="col card-list">
-
+            <div class="card-list p-1">
+                <div class="admin p-3">
+                    <div class="titleStyle">Casas</div>
                     <div th:each="house: ${houses}" class="card my-2">
                         <div th:text="${house.id}" hidden> </div>
                         <div class="card-content d-flex p-1 bg align-items-center">
                             <div class="col">
                                 <h5 th:text="${house.name}"> NOMBRE CASA </h5>
                             </div>
-                            <button class="btn">
-                                <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" alt="Imagen" width="25" height="25"
-                                    style="margin-right: 5%;">
+
+                            <button type="button" class="imgActionsEdit">
+                                <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="50" height="50" style="margin-right: 5%;">
                             </button>
-                            <button class="btn">
-                                <img th:src="@{/img/basura.png}" src="/img/basura.png" alt="Imagen" width="25"
-                                    height="25" style="margin-right: 5%;">
+                            <button type="button" class="imgActionsDelete">
+                                <img th:src="@{/img/basura.png}" src="/img/basura.png" width="50" height="50" style="margin-right: 5%;">
                             </button>
                             <button class="btn" type="button" onclick="viewUser(event)">
                                 <div class="d-none" id="housePersonalID" th:text="${house.id}"></div>
                                 <span class="image-container">
-                                    <img th:src="@{/img/vista.svg}" src="/img/vista.svg"  alt="Imagen" width="50"
-                                    height="50" style="margin-right: 5%;" >
+                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65" style="margin-right: 5%;" >
                                 </span>
                             </button>
                         </div>
                     </div>
-
                 </div>
-                <div class="col card-list allhouseUsers p-4 mt-2 justify-content-center">
-                    <div class="col card-list">
-                        <div class="Miembros p-3">
-                            <div class="titleStyle">Miembros</div>
-                            
-                        </div>
-                    </div>
-                </div>
+            </div>
 
+            <div class="card-list p-1">
+                <div class="admin p-3">
+                    <div class="titleStyle">Miembros</div>
+                    
                 </div>
             </div>
         </div>
+    </div>
 
 </body>
 
