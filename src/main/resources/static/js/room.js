@@ -52,20 +52,35 @@ function newRoom(event){
 }
 
 
-$('#editRoomModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget);
-    var roomId = button.data('room-id');
-    var roomName = button.data('room-name');
-    $("#roomNameEdit").val(roomName);
-    $("#editRoomModal").data('room-id', roomId);
-});
+// $('#editRoomModal').on('show.bs.modal', function (event) {
+//     var button = $(event.relatedTarget);
+//     var roomId = button.data('room-id');
+//     var roomName = button.data('room-name');
+//     $("#roomNameEdit").val(roomName);
+//     $("#editRoomModal").data('room-id', roomId);
+// });
 
-function editRoom() {
-    var roomId = $("#editRoomModal").data('room-id');
+function editRoom(id) {
+    
+    console.log("Botón de editar clickeado");
+    // var id = $(button).data('id');
+    console.log("ID de la tarjeta:", id);
+    
+    // // Mostrar modal de edición
+    $('#editRoomModal').modal('show');
+    $('#buttonTaskUpdate').attr("onclick", `updateRoom(${id})`);
+    
+}
+
+function updateRoom(id){
+
+    console.log("Botón de editar clickeado");
+    // var id = $(button).data('id');
+    console.log("ID de la tarjeta:", id);
     var newName = $("#roomNameEdit").val();
 
     var params = {
-        id: roomId,
+        id: id,
         name: newName
     };
 
@@ -81,34 +96,6 @@ function editRoom() {
             console.log(e);
         });
 }
-$(document).ready(function() {
-    $('.imgActionsEdit').on('click', function(event) {
-        var button = $(this);
-        var roomId = button.closest('.card').find('.room-info').data('room-id');
-        var roomName = button.closest('.card').find('.room-info').data('room-name');
-        $("#roomNameEdit").val(roomName);
-        $("#editRoomModal").data('room-id', roomId);
-    });
 
-    function editRoom() {
-        var roomId = $("#editRoomModal").data('room-id');
-        var newName = $("#roomNameEdit").val();
 
-        var params = {
-            id: roomId,
-            name: newName
-        };
-
-        console.log("PARAMS: ", params);
-
-        go("/user/updateRoom", 'POST', params)
-            .then(d => {
-                console.log("Success");
-                console.log(d);
-            })
-            .catch(e => {
-                console.log("Fail");
-                console.log(e);
-            });
-    }
-});
+    

@@ -64,9 +64,9 @@
 									<b><u>Acciones</u></b>
 									<div class="d-flex mt-1">
 										<div class="mx-3">
-											<button type="button" class="imgActionsEdit">
-												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" data-bs-toggle="modal" data-bs-target="#editRoomModal">
-											</button>
+											<button type="button" class="btn btn-sm btn-primary imgActionsEdit" data-id="${room.id}" th:onclick="editRoom([[${room.id}]])">
+												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" >
+											  </button>
 											
 											
 											
@@ -231,7 +231,7 @@
 
 					<div class="modal-footer text-center d-flex justify-content-between align-items-center">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-						<button type="submit" data-bs-dismiss="modal" class="btn btn-primary"  onclick="editRoom()">
+						<button type="submit" id="buttonTaskUpdate" data-bs-dismiss="modal" class="btn btn-primary"  >
 
 							<div>Confirmar cambios</div>
 						</button>
