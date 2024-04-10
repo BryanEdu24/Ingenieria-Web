@@ -430,6 +430,24 @@ public class UserController {
 		return roomToUpdate.toTransfer(); // Devuelve los datos actualizados de la habitación
 	}
 
+	@PostMapping("/deleteRoom")
+	@Transactional
+	@ResponseBody
+	public Room.Transfer deleteRoom(
+			HttpServletResponse response,
+			@RequestBody JsonNode data,
+			Model model, HttpSession session) throws IOException {
+
+		// Obtén el nuevo nombre de la habitación
+		long roomId = data.get("id").asLong(); // Obtén el ID de la habitación
+		Room roomToDelete = entityManager.find(Room.class, roomId); // Encuentra la habitación en la base de datos
+		roomToDelete.setEnabled(false);
+		entityManager.persist(roomToDelete); // Persiste los cambios en la base de datos
+		entityManager.flush();
+
+		return roomToDelete.toTransfer(); // Devuelve los datos actualizados de la habitación
+	}
+
 	@PostMapping("/joinHouse")
 	@Transactional
 	public String joinHouse(

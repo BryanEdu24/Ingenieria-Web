@@ -66,17 +66,11 @@
 										<div class="mx-3">
 											<button type="button" class="btn btn-sm btn-primary imgActionsEdit" data-id="${room.id}" th:onclick="editRoom([[${room.id}]])">
 												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" >
-											  </button>
-											
-											
-											
-											
-											  
-											
+											</button>
 										</div>
 										<div class="mx-3">
-											<button type="button" class="imgActionsDelete">
-												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" data-bs-toggle="modal" data-bs-target="#deleteRoomModal">
+											<button type="button" class="imgActionsDelete" th:onclick="deleteRoom([[${room.id}]])">
+												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" >
 											</button>
 										</div>
 									</div>
@@ -231,7 +225,7 @@
 
 					<div class="modal-footer text-center d-flex justify-content-between align-items-center">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-						<button type="submit" id="buttonTaskUpdate" data-bs-dismiss="modal" class="btn btn-primary"  >
+						<button type="submit" id="buttonRoomUpdate" data-bs-dismiss="modal" class="btn btn-primary"  >
 
 							<div>Confirmar cambios</div>
 						</button>
@@ -252,15 +246,15 @@
                 </div>
 
 				<div class="modal-body">
-					<div class="p-3 text-center">
-						<h5>¿Estás segur@ que desea eliminar <span style="color: #02B9D8;">Cocina</span>?</h5>
+					<div class="p-3 text-center" id="titleDeleteModal">
+						
 					</div>
 					<div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>
 					
 					
 					<div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-						<button type="submit" data-bs-dismiss="modal" class="btn btn-primary" onclick="deleteRoom(event)">Confirmar</button>
+						<button type="submit" id="confirmDeleteRoomButton" data-bs-dismiss="modal" class="btn btn-primary" >Confirmar</button>
 					</div>
 				</div>
 			</div>
