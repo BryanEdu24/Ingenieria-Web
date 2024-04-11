@@ -80,7 +80,7 @@ function confirmDeleteHouse(id){
 
     console.log("PARAMS: ", params);
 
-    go("/user/deleteHouse", 'POST', params)
+    go("/admin/deleteHouse", 'POST', params)
         .then(d => {
             console.log("Success");
             console.log(d);

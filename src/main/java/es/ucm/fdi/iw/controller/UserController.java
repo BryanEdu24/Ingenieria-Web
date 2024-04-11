@@ -480,14 +480,14 @@ public class UserController {
 		long house_id = data.get("id").asLong(); // Obtén el ID del usuario
 		House house = entityManager.find(House.class, house_id); // Encuentra el usuario en la base de datos
 
-		// Desvincula al usuario de la casa
-		List<User> users = house.getUsers();
-		int i = 0;
-		for (User u : users) {
-			u.setHouse(null);
-			entityManager.persist(u);
-			// users.remove(i);
-		}
+		// // Desvincula al usuario de la casa
+		// List<User> users = house.getUsers();
+
+		// for (User u : users) {
+		// u.setHouse(null);
+		// entityManager.persist(u);
+		// // users.remove(i);
+		// }
 
 		house.setEnabled(false);
 		entityManager.persist(house);
