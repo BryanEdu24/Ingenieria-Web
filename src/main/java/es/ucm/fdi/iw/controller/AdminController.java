@@ -78,13 +78,13 @@ public class AdminController {
         House house = entityManager.find(House.class, house_id); // Encuentra el usuario en la base de datos
 
         // // Desvincula al usuario de la casa
-        // List<User> users = house.getUsers();
+        List<User> users = house.getUsers();
 
-        // for (User u : users) {
-        // u.setHouse(null);
-        // entityManager.persist(u);
-        // // users.remove(i);
-        // }
+        for (User u : users) {
+            u.setHouse(null);
+            entityManager.persist(u);
+            // users.remove(i);
+        }
 
         house.setEnabled(false);
         entityManager.persist(house);
