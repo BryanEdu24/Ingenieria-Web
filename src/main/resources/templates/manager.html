@@ -7,6 +7,7 @@
 	<script th:src="@{/js/stomp.js}" src="/js/stomp.js"></script>
     <script th:src="@{/js/iw.js}" src="/js/iw.js"></script>
     <script th:src="@{/js/room.js}" src="/js/room.js"></script>
+	<script th:src="@{/js/user.js}" src="/js/user.js"></script>
 </head>
 
 <body>
@@ -105,7 +106,7 @@
 											<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
 										</div> -->
 										<div class="mx-3">
-											<button type="button" class="imgActionsDelete" th:onclick="deleteUser([[${user.id}]])">
+											<button type="button" class="imgActionsDelete" th:onclick="deletehouseUser([[${user.id}]])">
 												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" data-bs-toggle="modal" data-bs-target="#deleteMemberModal">
 											</button>
 										</div>

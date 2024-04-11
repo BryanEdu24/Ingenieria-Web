@@ -457,27 +457,25 @@ public class UserController {
 			Model model, HttpSession session) throws IOException {
 
 		// Obtén el nuevo nombre de la habitación
-		long userId = data.get("id").asLong(); // Obtén el ID de la habitación
-		User userToDelete = entityManager.find(User.class, userId); // Encuentra la habitación en la base de datos
-		House house = entityManager.find(House.class, userToDelete.getHouse());
+		long userId = data.get("id").asLong(); // Obtén el ID del usuario
+		User userToDelete = entityManager.find(User.class, userId); // Encuentra el usuario en la base de datos
+
+		// Desvincula al usuario de la casa
 		userToDelete.setHouse(null);
 
-		List<User> users = house.getUsers();
-		int indice = 0;
+		// Actualiza el usuario en la base de datos
+		// entityManager.merge(userToDelete);
 
-		for (User u : users) {
-			if (u.getId() == userId) {
-
-				users.remove(indice);
-				break; // Se encuentra el elemento, se sale del bucle
-			}
-			indice++;
-		}
+		// // Si deseas, también puedes actualizar la casa en la base de datos
+		// // para reflejar el cambio de usuario
+		// House houseToUpdate = userToDelete.getHouse();
+		// if (houseToUpdate != null) {
+		// houseToUpdate.getUsers().remove(userToDelete);
+		// entityManager.merge(houseToUpdate);
+		// }
 
 		entityManager.persist(userToDelete);
-		entityManager.persist(house); // Persiste los cambios en la base de datos
 		entityManager.flush();
-
 		return userToDelete.toTransfer(); // Devuelve los datos actualizados de la habitación
 	}
 

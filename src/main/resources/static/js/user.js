@@ -1,6 +1,6 @@
 "use strict"
 
-function deleteUser(id){
+function deletehouseUser(id){
     console.log("Botón de bloquear clickeado");
     // var id = $(button).data('id');
     console.log("ID de la tarjeta:", id);
@@ -12,7 +12,7 @@ function deleteUser(id){
 }
 
 function confirmDeleteUser(id){
-
+    console.log("Llegué a confirm");
     var params = {
         id: id,
         

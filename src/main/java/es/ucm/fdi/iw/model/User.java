@@ -51,7 +51,7 @@ public class User implements Transferable<User.Transfer> {
 
     private String roles; // split by ',' to separate roles
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private House house;
 
     /**
