@@ -463,20 +463,36 @@ public class UserController {
 		// Desvincula al usuario de la casa
 		userToDelete.setHouse(null);
 
-		// Actualiza el usuario en la base de datos
-		// entityManager.merge(userToDelete);
-
-		// // Si deseas, también puedes actualizar la casa en la base de datos
-		// // para reflejar el cambio de usuario
-		// House houseToUpdate = userToDelete.getHouse();
-		// if (houseToUpdate != null) {
-		// houseToUpdate.getUsers().remove(userToDelete);
-		// entityManager.merge(houseToUpdate);
-		// }
-
 		entityManager.persist(userToDelete);
 		entityManager.flush();
 		return userToDelete.toTransfer(); // Devuelve los datos actualizados de la habitación
+	}
+
+	@PostMapping("/deleteHouse")
+	@Transactional
+	@ResponseBody
+	public House.Transfer deleteHouse(
+			HttpServletResponse response,
+			@RequestBody JsonNode data,
+			Model model, HttpSession session) throws IOException {
+
+		// Obtén el nuevo nombre de la habitación
+		long house_id = data.get("id").asLong(); // Obtén el ID del usuario
+		House house = entityManager.find(House.class, house_id); // Encuentra el usuario en la base de datos
+
+		// Desvincula al usuario de la casa
+		List<User> users = house.getUsers();
+		int i = 0;
+		for (User u : users) {
+			u.setHouse(null);
+			entityManager.persist(u);
+			// users.remove(i);
+		}
+
+		house.setEnabled(false);
+		entityManager.persist(house);
+		entityManager.flush();
+		return house.toTransfer(); // Devuelve los datos actualizados de la habitación
 	}
 
 	@PostMapping("/joinHouse")

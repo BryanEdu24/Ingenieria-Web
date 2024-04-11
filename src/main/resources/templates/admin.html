@@ -4,6 +4,7 @@
 <head>
     <th:block th:replace="fragments/head :: header" />
     <title>Admin</title>
+    <script th:src="@{/js/house.js}" src="/js/house.js"></script>
 </head>
 
 <body>
@@ -26,8 +27,8 @@
                             <button type="button" class="imgActionsEdit">
                                 <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="50" height="50" style="margin-right: 5%;">
                             </button>
-                            <button type="button" class="imgActionsDelete">
-                                <img th:src="@{/img/basura.png}" src="/img/basura.png" width="50" height="50" style="margin-right: 5%;">
+                            <button type="button" class="imgActionsDelete" th:onclick="deleteHouse([[${house.id}]])">
+                                <img th:src="@{/img/basura.png}" src="/img/basura.png" width="50" height="50" style="margin-right: 5%;" >
                             </button>
                             <button class="btn" type="button" onclick="viewUser(event)">
                                 <div class="d-none" id="housePersonalID" th:text="${house.id}"></div>
@@ -48,6 +49,32 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal BORRAR CASA -->
+	<div class="modal fade" id="deleteHouseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+                    <h4 class="modal-title">⚠️ <u>Borrar Casa</u></h4>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+				<div class="modal-body">
+					<div class="p-3 text-center" id="titleDeleteModal">
+						
+					</div>
+					<div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>
+					
+					
+					<div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+						<button type="submit" id="confirmDeleteHouseButton" data-bs-dismiss="modal" class="btn btn-primary" >Confirmar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 </body>
 

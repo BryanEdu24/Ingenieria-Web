@@ -59,3 +59,34 @@ function viewUser(event) {
             console.log(e);
         });
 }
+
+function deleteHouse(id){
+    console.log("Botón de bloquear clickeado");
+    // var id = $(button).data('id');
+    console.log("ID de la tarjeta:", id);
+    
+    // // Mostrar modal de edición
+    $('#deleteHouseModal').modal('show');
+    $('#confirmDeleteHouseButton').attr("onclick", `confirmDeleteHouse(${id})`);
+
+}
+
+function confirmDeleteHouse(id){
+    console.log("Llegué a confirm");
+    var params = {
+        id: id,
+        
+    };
+
+    console.log("PARAMS: ", params);
+
+    go("/user/deleteHouse", 'POST', params)
+        .then(d => {
+            console.log("Success");
+            console.log(d);
+        })
+        .catch(e => {
+            console.log("Fail");
+            console.log(e);
+        });
+}
