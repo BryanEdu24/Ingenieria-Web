@@ -71,13 +71,17 @@ public class User implements Transferable<User.Transfer> {
         private long id;
         private String username;
         private String email;
-        private long house_id;
+        private Long house_id;
         private String roles;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, username, email, house.getId(), roles);
+
+        if (house == null)
+            return new Transfer(id, username, email, null, roles);
+        else
+            return new Transfer(id, username, email, house.getId(), roles);
     }
 
     @Override
