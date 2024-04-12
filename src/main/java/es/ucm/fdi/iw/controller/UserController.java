@@ -389,12 +389,6 @@ public class UserController {
 				.getSingleResult();
 		House h = user.getHouse();
 
-		// Room existingRoom = entityManager.createNamedQuery("Room.byroomname",
-		// Room.class)
-		// .setParameter("roomName", roomName)
-		// .getSingleResult();
-
-		// if (existingRoom == null || existingRoom.getHouse() != h) {
 		String roomName = data.get("roomName").asText();
 		String roomPhoto = data.get("roomPhoto").asText();
 
