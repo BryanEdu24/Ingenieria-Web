@@ -241,6 +241,7 @@ public class UserController {
 
 		List<Room> rooms = target.getRooms();
 
+		model.addAttribute("currHouse", target);
 		model.addAttribute("membersHouse", target.getUsers());
 		model.addAttribute("rooms", rooms);
 		model.addAttribute("u", u);

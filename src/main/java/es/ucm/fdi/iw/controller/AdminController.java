@@ -91,4 +91,19 @@ public class AdminController {
         entityManager.flush();
         return house.toTransfer(); // Devuelve los datos actualizados de la habitación
     }
+
+    @GetMapping("/getHouseUserInfo")
+    @ResponseBody
+    public House.Transfer getHouseUserInfo(
+            HttpServletResponse response,
+            @RequestBody JsonNode data,
+            Model model, HttpSession session) {
+
+        long houseid = data.get("id").asLong();
+        House target = entityManager.find(House.class, houseid);
+
+        List<User> users = target.getUsers();
+        model.addAttribute("ListHouseUsers", users);
+        return target.toTransfer();
+    }
 }
