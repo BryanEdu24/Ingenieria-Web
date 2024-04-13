@@ -128,7 +128,7 @@ public class UserController {
 		for (Task t : tasks) {
 			filterByRoomList.add(t.toTransfer());
 		}
-
+		
 		return filterByRoomList;
 	}
 
@@ -438,6 +438,14 @@ public class UserController {
 		Room roomToDelete = entityManager.find(Room.class, roomId); // Encuentra la habitación en la base de datos
 		roomToDelete.setEnabled(false);
 		entityManager.persist(roomToDelete); // Persiste los cambios en la base de datos
+		entityManager.flush();
+
+		House houseUpdate = entityManager.find(House.class, roomToDelete.getHouse().getId());
+		houseUpdate.setRooms(entityManager
+			.createNamedQuery("Room.byHouse", Room.class)
+			.setParameter("houseId", houseUpdate.getId())
+			.getResultList());
+		entityManager.persist(houseUpdate); // Persiste los cambios en la base de datos
 		entityManager.flush();
 
 		return roomToDelete.toTransfer(); // Devuelve los datos actualizados de la habitación

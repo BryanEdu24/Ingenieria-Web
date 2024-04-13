@@ -51,7 +51,7 @@
 					</div>
 					
 					<div id="divCardsRoom">
-						<div class="card my-2" th:each="room : ${rooms}">
+						<div class="card my-2" th:each="room : ${rooms}" th:id="'idCardRoom'+${room.id}">
 							<div class="card-content d-flex justify-content-between ms-2 p-1">
 								<div class="d-flex">
 									<div class="mx-3">
@@ -60,24 +60,21 @@
 									<div th:text="${room.name}" class="titleStyle textCardManager"></div>
 								</div>
 								<div class="mx-4 text-center">
-									<div class="mx-3 room-info" data-room-id="${room.id}" data-room-name="${room.name}"></div>
-
 									<b><u>Acciones</u></b>
 									<div class="d-flex mt-1">
 										<div class="mx-3">
-											<button type="button" class="btn btn-sm btn-primary imgActionsEdit" data-id="${room.id}" th:onclick="editRoom([[${room.id}]])">
+											<button type="button" class="imgActionsEdit" data-id="${room.id}" th:onclick="editRoom([[${room.id}]])">
 												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" >
 											</button>
 										</div>
 										<div class="mx-3">
-											<button type="button" class="imgActionsDelete" th:onclick="deleteRoom([[${room.id}]])">
+											<button type="button" class="imgActionsDelete" id="btnDeleteRoom" th:attr="data-name=${room.name}" th:onclick="deleteRoom([[${room.id}]], [[${room.name}]])">
 												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" >
 											</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="room-info" style="display: none;" data-room-id="${room.id}" data-room-name="${room.name}"></div>
 						</div>
 					</div>
 				</div>
@@ -247,7 +244,7 @@
                 </div>
 
 				<div class="modal-body">
-					<div class="p-3 text-center" id="titleDeleteModal">
+					<div class="p-3 text-center" id="bodyDeleteModal">
 						
 					</div>
 					<div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>

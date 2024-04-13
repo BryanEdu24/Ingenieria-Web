@@ -95,30 +95,6 @@ function updateTask(event, idTask) {
 
             $("#containerButtonEditDelete").show();
             $("#containerButtonSendCancel").hide();
-
-            //TODO habitación
-            // $('#divCardsTasks').prepend(`
-            //     <div class="card my-2">
-            //         <div class="card-content d-flex p-1 align-items-center taskCard">
-            //             <div class="col ms-2 my-1">
-            //                 <h3>${d.title}</h3>
-            //                 <h5>${d.author}</h5>
-            //             </div>
-            //             <div class="col-4">
-            //                 <div>
-            //                     <h5>${formatDate(d.creationDate)}<h5>
-            //                 </div>
-            //                 <div>
-            //                     <h5>${d.room}</h5>
-            //                 </div>
-            //             </div>
-            //             <button class="btn" onclick="viewInfo(event)">
-            //                 <div class="d-none" id="taskPersonalID">${d.id}</div>
-            //                 <img th:src="@{/img/vista.png}" src="/img/vista.png" width="50" height="50" style="margin-right: 5%;">
-            //             </button>
-            //         </div>
-            //     </div>
-            // `)
         })
         .catch(e => {
             console.log("Fail");
@@ -213,12 +189,13 @@ function filterUpdate(event, x) {
         selectDates: $("#selectUpdateByDate").val()
     };
 
-
     if (params.selectRooms && x === 1) {
         go("/user/filterRoom/" + params.selectRooms, 'GET')
             .then(d => {
                 console.log("Success");
                 console.log(d);
+
+                $("#addTaskImg").hide();
 
                 $('#divCardsTasks').empty();
 
@@ -262,6 +239,12 @@ function filterUpdate(event, x) {
             .catch(e => {
                 console.log("Fail Room");
                 console.log(e);
+                $('#divCardsTasks').empty();
+                $('#divCardsTasks').append(
+                    `<div id="noTasks" class="titleStyle">
+                <h4>No se encuentran tareas con ese filtro</h4>
+                <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
+                </div>`)
             });
     }
     else if (params.selectUsers && x === 2) {
@@ -269,6 +252,8 @@ function filterUpdate(event, x) {
             .then(d => {
                 console.log("Success");
                 console.log(d);
+
+                $("#addTaskImg").hide();
 
                 $('#divCardsTasks').empty();
 
@@ -312,9 +297,17 @@ function filterUpdate(event, x) {
             .catch(e => {
                 console.log("Fail User");
                 console.log(e);
+                $('#divCardsTasks').empty();
+                $('#divCardsTasks').append(
+                    `<div id="noTasks" class="titleStyle">
+                <h4>No se encuentran tareas con ese filtro</h4>
+                <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
+                </div>`)
             });
     }
-    else { // selectDates
+    else { // TODO selectDates
+
+        $("#addTaskImg").hide();
 
         $('#divCardsTasks').empty();
 

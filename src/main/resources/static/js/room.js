@@ -97,23 +97,19 @@ function updateRoom(id){
         });
 }
 
-function deleteRoom(id){
-    console.log("Botón de editar clickeado");
-    // var id = $(button).data('id');
-    console.log("ID de la tarjeta:", id);
+function deleteRoom(id, nameRoom){
+    console.log("Botón de borrar clickeado");
+    console.log("Datos de deleteRoom:", id, " y ", nameRoom); 
     
-    // // Mostrar modal de edición
     $('#deleteRoomModal').modal('show');
-    $('#titleDeleteModal').prepend(`<h5>¿Estás segur@ que desea eliminar <span style="color: #02B9D8;">${id}</span>?</h5>`)
+    $('#bodyDeleteModal').empty();
+    $('#bodyDeleteModal').prepend(`<h5>¿Estás segur@ que desea eliminar <span style="color: #02B9D8;">${nameRoom}</span>?</h5>`)
     $('#confirmDeleteRoomButton').attr("onclick", `confirmDeleteRoom(${id})`);
-
 }
 
 function confirmDeleteRoom(id){
-
     var params = {
         id: id,
-        
     };
 
     console.log("PARAMS: ", params);
@@ -122,11 +118,10 @@ function confirmDeleteRoom(id){
         .then(d => {
             console.log("Success");
             console.log(d);
+            $('#idCardRoom'+id).hide();
         })
         .catch(e => {
             console.log("Fail");
             console.log(e);
         });
 }
-
-    

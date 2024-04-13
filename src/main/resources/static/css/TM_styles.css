@@ -226,7 +226,8 @@ input, select {
 
 #selectUpdateByRoom, #selectUpdateByUser, #selectUpdateByDate {
     background-color: #FFB919 !important;
-    color: #02b9d8 !important;
+    color: #202024;
+    font-weight: bold;
 }
 /* --- EXPENSES --- */
 
