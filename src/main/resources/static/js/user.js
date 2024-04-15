@@ -1,7 +1,7 @@
 "use strict"
 
 function deletehouseUser(id){
-    console.log("Botón de bloquear clickeado");
+    console.log("Botón de borrar user clickeado");
     // var id = $(button).data('id');
     console.log("ID de la tarjeta:", id);
     

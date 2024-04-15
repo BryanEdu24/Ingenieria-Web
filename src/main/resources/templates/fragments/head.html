@@ -27,6 +27,7 @@
             const config = {
                 socketUrl: "[[${session.ws}?:'']]", // empty is false, will result in no WS being opened
                 rootUrl: "[[${session.url}?:'']]",
+                homeId: "[[${session.homeId}?:'']]",
                 csrf: {
                     name: "[[${_csrf.parameterName}]]",
                     value: "[[${_csrf.token}]]"
@@ -36,6 +37,8 @@
             };
             config.admin = config.admin == "true"; // ensure boolean
         </script>
+        <script th:src="@{/js/stomp.js}" src="/js/stomp.js"></script>
+        <script th:src="@{/js/iw.js}" src="/js/iw.js"></script>
     </th:block>
 </head>
 

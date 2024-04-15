@@ -263,6 +263,41 @@ public class UserController {
 		return "expenses";
 	}
 
+	// WebSockets ----------------------------------
+	 
+	/**
+     * Returns JSON with count of unread messages 
+     */
+	@GetMapping(path = "unread", produces = "application/json")
+	@ResponseBody
+	public String checkUnread(HttpSession session) {
+		long userId = ((User)session.getAttribute("u")).getId();		
+		long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
+			.setParameter("userId", userId)
+			.getSingleResult();
+		session.setAttribute("unread", unread);
+		return "{\"unread\": " + unread + "}";
+    }
+
+	/* 
+    @GetMapping(path = "unread", produces = "application/json")
+    @ResponseBody
+    public String checkUnread(HttpSession session) {
+        User u = (User) session.getAttribute("u");
+        long userId = u.getId();
+        u = entityManager.find(User.class, userId);
+
+        long unread = entityManager.createNamedQuery("Notification.countUnread", Long.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+
+        log.info("UNREAD - {} User notifications", unread);
+
+        session.setAttribute("unread", unread);
+        return "{\"unread\": " + unread + "}";
+    }
+	*/
+
 	// POSTS ----------------------------------
 
 	@PostMapping("/newTask")

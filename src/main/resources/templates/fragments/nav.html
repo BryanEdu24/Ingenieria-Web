@@ -52,18 +52,22 @@
                     <img th:src="@{/img/bell-fill.png}" src="/img/bell-fill.png" alt="Notificaciones" height="40"
                         width="40" id="notificacion-bell" title="Tus notificaciones">
                         <!-- Se puede hacer con contador, lo dejo genérico por ahora. Revisar reacción al mouse. -->
-                    <span hidden id="newNotificacionAdvice" class="position-absolute top-50 start-80 p-2 bg-danger border border-light rounded-circle">
-                        <span class="visually-hidden"> New Notification </span>
-                    </span>
+                    <span id="nav-unread" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>     
                 </button>
                 <!--Usuario-->
                 <div class="Perfil mx-2">
-                    <img th:if="${#strings.equals(u.roles, 'MANAGER')}" th:src="@{/img/JefeCasa.png}"
-                        src="/img/JefeCasa.png" alt="Foto de perfil" height="60" title="Perfil">
-                    <img th:if="${#strings.equals(u.roles, 'USER')}" th:src="@{/img/User.png}"
-                        src="/img/User.png" alt="Foto de perfil" height="70" title="Perfil">
+                    <div class="dropdown">
+                        <img th:if="${#strings.equals(u.roles, 'MANAGER')}" th:src="@{/img/JefeCasa.png}"
+                            src="/img/JefeCasa.png" height="60" title="Perfil">
+                        <img th:if="${#strings.equals(u.roles, 'USER')}" th:src="@{/img/User.png}"
+                            src="/img/User.png" height="70" title="Perfil"
+                            class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <img th:if="${#strings.equals(u.roles, 'ADMIN')}" th:src="@{/img/LogoTM.png}"
-                        src="/img/LogoTM.png" alt="Foto de perfil" height="70" title="Perfil">
+                            src="/img/LogoTM.png" height="70" title="Perfil">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
