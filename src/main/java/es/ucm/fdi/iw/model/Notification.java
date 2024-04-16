@@ -50,13 +50,17 @@ public class Notification implements Transferable<Notification.Transfer> {
         private String message;
         private Date date;
         private boolean read;
-        private User user;
-        private House house;
+        private long userId;
+        private long houseId;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, message, date, read, user, house);
+        if(user != null){
+            return new Transfer(id, message, date, read, user.getId(), house.getId());
+        } else{ //Se devuleve -1 para las notis que no van dirigidas a nadie
+            return new Transfer(id, message, date, read, -1, house.getId());
+        }
     }
 
     @Override

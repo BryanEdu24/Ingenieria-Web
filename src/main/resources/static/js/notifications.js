@@ -1,24 +1,24 @@
 "use strict"
 
 if(ws.receive){
-    console.log("WS", ws.receive);
+    //console.log("WS", ws.receive);
     const oldFn = ws.receive; // guarda referencia a manejador anterior
     ws.receive = (destination, obj) => {
         oldFn(destination, obj);
 
-        if (obj.type == "NOTIFICATION") {
-            console.log("Received notification");
-            let p = document.querySelector("#nav-unread");
-            if (p) {
-                p.textContent = + p.textContent + 1;
-            }
+        //TODO revisar el Obj
+        // if (obj.type == "NOTIFICATION") {
+        //     console.log("Received notification");
+        //     let p = document.querySelector("#nav-unread");
+        //     if (p) {
+        //         p.textContent = + p.textContent + 1;
+        //     }
 
-            let notif = obj.notification;
-            let notifsDiv = document.getElementById("div-card-list");
+        //     let notif = obj.notification;
+        //     let notifsDiv = document.getElementById("div-card-list");
 
-            notifsDiv.insertAdjacentHTML("afterbegin", renderUnreadNotif(notif));
-            
-        }
+        //     notifsDiv.insertAdjacentHTML("afterbegin", renderUnreadNotif(notif));
+        // }
     }
 }
 

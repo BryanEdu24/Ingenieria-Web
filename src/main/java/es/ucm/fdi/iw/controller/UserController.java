@@ -116,19 +116,6 @@ public class UserController {
 	// --------------------------------------------------------------------------------------------------------------------
 
 	// GETTERS ----------------------------------
-	@GetMapping("/unread")
-	@Transactional
-	@ResponseBody
-	public long unreadNotifications(@PathVariable long id, HttpServletResponse response, HttpSession session) {
-		User u = (User) session.getAttribute("u");
-		long num = entityManager
-				.createNamedQuery("Notification.unRead", Integer.class)
-				.setParameter("houseId", u.getHouse().getId())
-				.setParameter("userId", u.getId())
-				.getSingleResult();
-		return num;
-	}
-
 	@GetMapping("/filterRoom/{id}")
 	@ResponseBody
 	public List<Task.Transfer> filterRoom(@PathVariable long id, HttpServletResponse response) {
@@ -285,13 +272,28 @@ public class UserController {
 	@GetMapping(path = "unread", produces = "application/json")
 	@ResponseBody
 	public String checkUnread(HttpSession session) {
-		long userId = ((User)session.getAttribute("u")).getId();		
-		long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
-			.setParameter("userId", userId)
-			.getSingleResult();
+		User u = (User) session.getAttribute("u");
+		long unread = (long) entityManager.createNamedQuery("Notification.unRead")
+				.setParameter("houseId", u.getHouse().getId())
+				.setParameter("userId", u.getId())
+				.getSingleResult();
+
 		session.setAttribute("unread", unread);
 		return "{\"unread\": " + unread + "}";
     }
+
+	// @GetMapping("/unread")
+	// @Transactional
+	// @ResponseBody
+	// public long unreadNotifications(@PathVariable long id, HttpServletResponse response, HttpSession session) {
+	// 	User u = (User) session.getAttribute("u");
+	// 	long num = entityManager
+	// 			.createNamedQuery("Notification.unRead", Integer.class)
+	// 			.setParameter("houseId", u.getHouse().getId())
+	// 			.setParameter("userId", u.getId())
+	// 			.getSingleResult();
+	// 	return num;
+	// }
 
 	/* 
     @GetMapping(path = "unread", produces = "application/json")
@@ -346,27 +348,13 @@ public class UserController {
 		notif.setDate(new Date(ms));
 		notif.setEnabled(true);
 		notif.setUser(null);
-		notif.setHouse(((User) session.getAttribute("u")).getHouse());
+		notif.setHouse(entityManager.find(House.class, ((User) session.getAttribute("u")).getHouse().getId()));
 		notif.setMessage("Tarea creada por " + ((User) session.getAttribute("u")).getUsername());
 
         entityManager.persist(notif);
         entityManager.flush();
-		
-		String endpoint = "/topic/" + ((User) session.getAttribute("u")).getHouse().getId();
 
-		// Mandar notificación
-		try {
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonNotif = mapper.writeValueAsString(notif.toTransfer());
-            log.info("Sending a notification to {} with contents '{}'", endpoint, jsonNotif);
-
-            String json = "{\"type\" : \"NOTIFICATION\", \"notification\" : " + jsonNotif + "}";
-
-            messagingTemplate.convertAndSend(endpoint, json);
-        } catch (JsonProcessingException exception) {
-            log.error("Failed to parse notification - {}}", notif);
-            log.error("Exception {}", exception);
-        }
+		sendNotification("/topic/" + ((User) session.getAttribute("u")).getHouse().getId(), notif);
 
 		return target.toTransfer();
 	}
@@ -609,7 +597,19 @@ public class UserController {
 	}
 
 	public void sendNotification(String endpoint, Notification notif) {
-		
+		// Mandar notificación
+		try {
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonNotif = mapper.writeValueAsString(notif.toTransfer());
+            log.info("Sending a notification to {} with contents '{}'", endpoint, jsonNotif);
+
+            String json = "{\"type\" : \"NOTIFICATION\", \"notification\" : " + jsonNotif + "}";
+
+            messagingTemplate.convertAndSend(endpoint, json);
+        } catch (JsonProcessingException exception) {
+            log.error("Failed to parse notification - {}}", notif);
+            log.error("Exception {}", exception);
+        }
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------
