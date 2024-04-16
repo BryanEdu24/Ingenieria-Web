@@ -5,20 +5,20 @@ if(ws.receive){
     const oldFn = ws.receive; // guarda referencia a manejador anterior
     ws.receive = (destination, obj) => {
         oldFn(destination, obj);
-
+        
         //TODO revisar el Obj
-        // if (obj.type == "NOTIFICATION") {
-        //     console.log("Received notification");
-        //     let p = document.querySelector("#nav-unread");
-        //     if (p) {
-        //         p.textContent = + p.textContent + 1;
-        //     }
+        if (obj.type == "NOTIFICATION") {
+            console.log("Received notification");
+            let p = document.querySelector("#nav-unread");
+            if (p) {
+                p.textContent = + p.textContent + 1;
+            }
 
-        //     let notif = obj.notification;
-        //     let notifsDiv = document.getElementById("div-card-list");
+            let notif = obj.notification;
+            let notifsDiv = document.getElementById("div-card-list");
 
-        //     notifsDiv.insertAdjacentHTML("afterbegin", renderUnreadNotif(notif));
-        // }
+            notifsDiv.insertAdjacentHTML("afterbegin", renderUnreadNotif(notif));
+        }
     }
 }
 

@@ -55,7 +55,7 @@ const ws = {
     subscribe: (sub) => {
         try {
             ws.stompClient.subscribe(sub,
-                (m) => ws.receive(JSON.parse(m.body))); // fails if non-json received!
+                (m) => ws.receive(m.headers.destination, JSON.parse(m.body))); // fails if non-json received!
             console.log("Hopefully subscribed to " + sub);
         } catch (e) {
             console.log("Error, could not subscribe to " + sub, e);
