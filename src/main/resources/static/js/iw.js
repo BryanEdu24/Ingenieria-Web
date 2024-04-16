@@ -13,12 +13,8 @@ const ws = {
     /**
      * Default action when message is received. 
      */
-    receive: (text) => {
-        console.log(text);
-        let p = document.querySelector("#nav-unread");
-        if (p) {
-            p.textContent = +p.textContent + 1;
-        }
+    receive: (destination, text) => {
+        console.log("Message to ", destination, text);
     },
 
     headers: { 'X-CSRF-TOKEN': config.csrf.value },
@@ -196,10 +192,15 @@ function postImage(img, endpoint, name, filename) {
  */
 document.addEventListener("DOMContentLoaded", () => {
     if (config.socketUrl) {
-        let subs = ["/user/queue/updates", `/topic/${config.homeId}`];
+        let subs = ["/user/queue/updates"];
+        console.log(config.homeId);
+        if(config.homeId != 0) {
+            subs = subs.concat(`/topic/${config.homeId}`);
+        }
 
         ws.initialize(config.socketUrl, subs);
 
+        // TODO
         let p = document.querySelector("#nav-unread");
         if (p) {
             go(`${config.rootUrl}/user/unread`, "GET").then(d => p.textContent = d.unread);

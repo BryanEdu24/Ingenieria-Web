@@ -2,6 +2,7 @@ package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.House;
+import es.ucm.fdi.iw.model.Notification;
 import es.ucm.fdi.iw.model.Room;
 import es.ucm.fdi.iw.model.Task;
 import es.ucm.fdi.iw.model.Transferable;
@@ -115,6 +116,19 @@ public class UserController {
 	// --------------------------------------------------------------------------------------------------------------------
 
 	// GETTERS ----------------------------------
+	@GetMapping("/unread")
+	@Transactional
+	@ResponseBody
+	public long unreadNotifications(@PathVariable long id, HttpServletResponse response, HttpSession session) {
+		User u = (User) session.getAttribute("u");
+		long num = entityManager
+				.createNamedQuery("Notification.unRead", Integer.class)
+				.setParameter("houseId", u.getHouse().getId())
+				.setParameter("userId", u.getId())
+				.getSingleResult();
+		return num;
+	}
+
 	@GetMapping("/filterRoom/{id}")
 	@ResponseBody
 	public List<Task.Transfer> filterRoom(@PathVariable long id, HttpServletResponse response) {
@@ -326,6 +340,33 @@ public class UserController {
 
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
+
+		// Crear notification
+		Notification notif = new Notification();
+		notif.setDate(new Date(ms));
+		notif.setEnabled(true);
+		notif.setUser(null);
+		notif.setHouse(((User) session.getAttribute("u")).getHouse());
+		notif.setMessage("Tarea creada por " + ((User) session.getAttribute("u")).getUsername());
+
+        entityManager.persist(notif);
+        entityManager.flush();
+		
+		String endpoint = "/topic/" + ((User) session.getAttribute("u")).getHouse().getId();
+
+		// Mandar notificación
+		try {
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonNotif = mapper.writeValueAsString(notif.toTransfer());
+            log.info("Sending a notification to {} with contents '{}'", endpoint, jsonNotif);
+
+            String json = "{\"type\" : \"NOTIFICATION\", \"notification\" : " + jsonNotif + "}";
+
+            messagingTemplate.convertAndSend(endpoint, json);
+        } catch (JsonProcessingException exception) {
+            log.error("Failed to parse notification - {}}", notif);
+            log.error("Exception {}", exception);
+        }
 
 		return target.toTransfer();
 	}
@@ -565,6 +606,10 @@ public class UserController {
 		session.setAttribute("u", user);
 
 		return "redirect:/user/home";
+	}
+
+	public void sendNotification(String endpoint, Notification notif) {
+		
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------

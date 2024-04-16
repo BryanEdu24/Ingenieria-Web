@@ -123,6 +123,10 @@ input, select {
     text-shadow: #B6ADAA 0.1em 0.1em 0.2em;
 }
 
+.dropdown-menu-dark {
+    background-color: #202024;
+}
+
 /* --- NAV - NOTIFICATIONS --- */
 .canvasNot{
     background-color: #202024;

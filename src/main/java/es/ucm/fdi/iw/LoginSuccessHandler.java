@@ -83,7 +83,12 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		}
 		session.setAttribute("url", url);
 		session.setAttribute("ws", ws);
-		session.setAttribute("homeId", u.getHouse().getId());
+		if(u.getHouse() != null){
+			session.setAttribute("homeId", u.getHouse().getId());
+		}
+		else{
+			session.setAttribute("homeId", 0);
+		}		
 
 		// redirects to 'admin' or 'user/{id}', depending on the user
 		String nextUrl = u.hasRole(User.Role.ADMIN) ? "admin/" : "user/home";

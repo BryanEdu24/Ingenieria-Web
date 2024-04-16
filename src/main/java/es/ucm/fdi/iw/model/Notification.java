@@ -11,6 +11,13 @@ import java.util.Date;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({
+        @NamedQuery(name = "Notification.unRead", query = "SELECT COUNT(*) FROM Notification n "
+                + "WHERE n.house.id= :houseId AND (n.user.id = :userId OR n.user.id IS NULL) AND n.read = FALSE "),
+        @NamedQuery(name = "Notification.unReadCompleted", query = "SELECT n FROM Notification n "
+                + "WHERE n.house.id= :houseId AND (n.user.id = :user_id OR n.user.id IS NULL) AND n.read = FALSE ")
+})
+
 public class Notification implements Transferable<Notification.Transfer> {
 
     @Id
@@ -30,7 +37,11 @@ public class Notification implements Transferable<Notification.Transfer> {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private House user;
+    private User user; // Usuario que recibe la notificación, null si es para todos
+
+    @ManyToOne
+    @JoinColumn(name = "house_id")
+    private House house;
 
     @Getter
     @AllArgsConstructor
@@ -39,11 +50,13 @@ public class Notification implements Transferable<Notification.Transfer> {
         private String message;
         private Date date;
         private boolean read;
+        private User user;
+        private House house;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, message, date, read);
+        return new Transfer(id, message, date, read, user, house);
     }
 
     @Override
