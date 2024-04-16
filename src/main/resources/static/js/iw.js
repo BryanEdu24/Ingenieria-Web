@@ -13,17 +13,16 @@ const ws = {
     /**
      * Default action when message is received. 
      */
-    receive: (text) => {
-        console.log(text);
-        let p = document.querySelector("#nav-unread");
-        if (p) {
-            p.textContent = +p.textContent + 1;
-        }
-    },
-
-    // receive: (destination, text) => {
-    //     console.log("Message to ", destination, text);
+    // receive: (text) => {
+    //     console.log(text);
+    //     let p = document.querySelector("#nav-unread");
+    //     if (p) {
+    //         p.textContent = +p.textContent + 1;
+    //     }
     // },
+    receive: (destination, text) => {
+        console.log("Message to ", destination, text);
+    },
 
     headers: { 'X-CSRF-TOKEN': config.csrf.value },
 
