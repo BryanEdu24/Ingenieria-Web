@@ -265,9 +265,8 @@ public class UserController {
 	}
 
 	// WebSockets ----------------------------------
-	 
 	/**
-     * Returns JSON with count of unread messages 
+     * Returns JSON with count of unread messages
      */
 	@GetMapping(path = "unread", produces = "application/json")
 	@ResponseBody
@@ -552,9 +551,13 @@ public class UserController {
 				userToDelete.setHouse(null); // Desvincula al usuario de la casa
 				userToDelete.setRoles(Role.USER.name());
 				entityManager.persist(userToDelete);
+
+				session.setAttribute("u", userToDelete);
+
 				User newManager = entityManager.find(User.class, newManagerId);
 				newManager.setRoles(Role.MANAGER.name());
 				entityManager.persist(newManager);
+
 				entityManager.flush();
 			}
 

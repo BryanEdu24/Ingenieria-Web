@@ -36,12 +36,12 @@ function confirmDeleteUser(id){
                 $('#deleteMemberModal').modal('hide');
                 $('#idCardUser' + id).hide();
             }
-            else {                
+            else {
                 $('#alertDeleteUser').show();
             }
         })
-        .catch(e => {    
-            console.log("Fail :/");        
+        .catch(e => {
+            console.log("Fail :/");
             console.log(e);
         });
 }
