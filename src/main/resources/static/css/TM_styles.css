@@ -110,6 +110,11 @@ input, select {
     filter: drop-shadow(0 2px 5px #B6ADAA); 
 }
 
+#navbarDarkDropdownMenuLink:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 2px 5px #B6ADAA); 
+}
+
 #buttonTasks,  #buttonExpenses {
     color: #F8F4EA;
 }
@@ -125,6 +130,12 @@ input, select {
 
 .dropdown-menu-dark {
     background-color: #202024;
+}
+
+.dropdown-item:hover {
+    background-color: darkred !important;
+    filter: drop-shadow(0 2px 5px #B6ADAA); 
+    font-weight: bold;
 }
 
 /* --- NAV - NOTIFICATIONS --- */
@@ -144,36 +155,6 @@ input, select {
 
 .notas, .gastos {
     width: 90%;
-}
-
-/*Para el carousel*/
-.task-card {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
-    border: 2px solid;
-    border-radius: 10px;
-    padding: 2%;
-    background-color: whitesmoke;
-}
-
-.carousel-item {
-    justify-content: center;
-    align-items: center;
-}
-
-.carousel-control-prev, .carousel-control-next {
-    width: auto;
-    color: black;
-}
-
-.carousel-control-prev:hover, .carousel-control-next:hover {
-    color: black;
-}
-
-.carousel-control-prev-icon, .carousel-control-next-icon {
-    background-color: black;
-    border-radius: 50%;
 }
 
 /* --- WELCOME --- */
@@ -232,6 +213,36 @@ input, select {
     background-color: #FFB919 !important;
     color: #202024;
     font-weight: bold;
+}
+
+/*Carousel notas*/
+.task-card {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 2%;
+    background-color: whitesmoke;
+}
+
+.carousel-item {
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    width: auto;
+    color: black;
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    color: black;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: black;
+    border-radius: 50%;
 }
 /* --- EXPENSES --- */
 

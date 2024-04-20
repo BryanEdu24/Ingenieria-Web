@@ -102,6 +102,7 @@ function deleteRoom(id, nameRoom){
     console.log("Datos de deleteRoom:", id, " y ", nameRoom); 
     
     $('#deleteRoomModal').modal('show');
+    $('#alertDeleteRoom').hide();
     $('#bodyDeleteModal').empty();
     $('#bodyDeleteModal').prepend(`<h5>¿Estás segur@ que desea eliminar <span style="color: #02B9D8;">${nameRoom}</span>?</h5>`)
     $('#confirmDeleteRoomButton').attr("onclick", `confirmDeleteRoom(${id})`);
@@ -118,7 +119,13 @@ function confirmDeleteRoom(id){
         .then(d => {
             console.log("Success");
             console.log(d);
-            $('#idCardRoom'+id).hide();
+            if (d) {
+                $('#deleteRoomModal').modal('hide');
+                $('#idCardRoom' + id).hide();
+            }
+            else {                
+                $('#alertDeleteRoom').show();
+            }
         })
         .catch(e => {
             console.log("Fail");

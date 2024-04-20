@@ -83,10 +83,9 @@
 					<div class="titleStyle">Miembros</div>
 					
 					<div id="divCardsMembers">
-						<div class="card my-2" th:each="user : ${membersHouse}">
+						<div class="card my-2" th:each="user : ${membersHouse}" th:id="'idCardUser'+${user.id}">
 							<div class="card-content d-flex justify-content-between ms-2 p-1">
 								<div class="d-flex">
-									<!-- AQUI -->
 									<div class="mx-3">
 										<img th:if="${#strings.equals(user.roles, 'MANAGER')}" th:src="@{/img/JefeCasa.png}" src="/img/JefeCasa.png" width="50" height="60">
 										<img th:if="${#strings.equals(user.roles, 'ADMIN')}" th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" width="50" height="60">
@@ -97,12 +96,9 @@
 								<div class="mx-4 text-center">
 									<b><u>Acciones</u></b>
 									<div class="d-flex mt-1">
-										<!-- <div class="mx-3 imgActionsEdit">
-											<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
-										</div> -->
 										<div class="mx-3">
-											<button type="button" class="imgActionsDelete" th:onclick="deletehouseUser([[${user.id}]])">
-												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" data-bs-toggle="modal" data-bs-target="#deleteMemberModal">
+											<button type="button" class="imgActionsDelete" th:onclick="deletehouseUser([[${user.id}]], [[${user.username}]], [[${user.roles}]] )">
+												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
 											</button>
 										</div>
 									</div>
@@ -242,15 +238,16 @@
                 </div>
 
 				<div class="modal-body">
-					<div class="p-3 text-center" id="bodyDeleteModal">
-						
+					<div id="alertDeleteRoom" class="error alert alert-danger text-center text-danger" style="display: none;" role="alert">
+						<b>⛔ La habitación tiene tareas asignadas. ⛔</b>
 					</div>
+					<div class="p-3 text-center" id="bodyDeleteModal"></div>
 					<div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>
 					
 					
 					<div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-						<button type="submit" id="confirmDeleteRoomButton" data-bs-dismiss="modal" class="btn btn-primary" >Confirmar</button>
+						<button type="submit" id="confirmDeleteRoomButton" class="btn btn-primary" >Confirmar</button>
 					</div>
 				</div>
 			</div>
@@ -267,14 +264,57 @@
                 </div>
 
 				<div class="modal-body">
-					<div class="p-3 text-center">
-						<h5>¿Estás segur@ que desea eliminar a <span style="color: #FFB919;">Lucas</span>?</h5>
+					<div id="alertDeleteUser" class="error alert alert-danger text-center text-danger" style="display: none;" role="alert">
+						<b>⛔ El usuario tiene tareas pendientes. ⛔</b>
+					</div>
+					<div class="p-3 text-center" id="bodyDeleteModal2"></div>
+					<div class="text-center" id="divDeleteManager" style="display: none;">
+						<h5>Usted es la Manager de la casa.<br>Seleccione un miembro como <u>nuevo manager</u>:</h5>
+						<div class="">
+							<select name="manager_id" id="selectNewManager" class="form-select input" required>
+								<option disabled hidden selected>Seleccione uno...</option>
+								<option th:each="houseUser: ${membersHouse}" th:value="${houseUser.id}" th:text="${houseUser.username}" th:if="${houseUser.id != u.id}"></option>
+							</select>
+						</div>
 					</div>
 					<div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>
 					
 					<div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-						<button type="submit" id="confirmDeleteUserButton" data-bs-dismiss="modal" class="btn btn-primary">Confirmar</button>
+						<button type="submit" id="confirmDeleteUserButton" class="btn btn-primary">Confirmar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal BORRAR MANAGER -->
+	<div class="modal fade" id="deleteManagerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+                    <h4 class="modal-title">💀 <u>Eliminar Miembro</u></h4>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+				<div class="modal-body">
+					<div id="alertDeleteUser" class="error alert alert-danger text-center text-danger" style="display: none;" role="alert">
+						<b>⛔ El usuario tiene tareas pendientes. ⛔</b>
+					</div>
+					<div class="p-3 text-center" id="bodyDeleteModal2"></div>
+					<div class="text-center">
+						<h5>Usted es la Manager de la casa.<br>Seleccione un miembro como <u>nuevo manager</u>:</h5>
+						<div class="">
+							<select name="user_id" id="viewTaskSelectUser" class="form-select input" required>
+								<option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}" th:text="${houseUser.username}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>
+					
+					<div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+						<button type="submit" id="confirmDeleteUserButton" class="btn btn-primary">Confirmar</button>
 					</div>
 				</div>
 			</div>

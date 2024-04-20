@@ -18,13 +18,13 @@ import java.util.Date;
                 + " order by t.creationDate"),
         @NamedQuery(name = "Task.byUser", query = "SELECT t "
                 + "FROM Task t "
-                + "WHERE t.user = :userId"),
+                + "WHERE t.user = :user AND t.enabled= true"),
         @NamedQuery(name = "Task.byId", query = "SELECT t "
                 + "FROM Task t "
                 + "WHERE t.id = :taskId"),
         @NamedQuery(name = "Task.byRoom", query = "SELECT t "
                 + "FROM Task t "
-                + "WHERE t.room.id = :roomId")
+                + "WHERE t.room.id = :roomId AND t.enabled= true")
 })
 public class Task implements Transferable<Task.Transfer> {
 

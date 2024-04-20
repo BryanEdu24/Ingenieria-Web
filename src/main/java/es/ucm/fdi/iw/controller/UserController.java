@@ -140,7 +140,7 @@ public class UserController {
 		User aux = entityManager.find(User.class, id);
 		List<Task> tasks = entityManager
 				.createNamedQuery("Task.byUser", Task.class)
-				.setParameter("userId", aux)
+				.setParameter("user", aux)
 				.getResultList();
 
 		List<Task.Transfer> filterByUserList = new ArrayList<Task.Transfer>();
@@ -173,7 +173,7 @@ public class UserController {
 
 		List<Task> tasks = entityManager
 				.createNamedQuery("Task.byUser", Task.class)
-				.setParameter("userId", u)
+				.setParameter("user", u)
 				.getResultList();
 
 		model.addAttribute("tasks", tasks);
@@ -492,33 +492,41 @@ public class UserController {
 	@PostMapping("/deleteRoom")
 	@Transactional
 	@ResponseBody
-	public Room.Transfer deleteRoom(
+	public boolean deleteRoom(
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
 
 		// Obtén el nuevo nombre de la habitación
 		long roomId = data.get("id").asLong(); // Obtén el ID de la habitación
-		Room roomToDelete = entityManager.find(Room.class, roomId); // Encuentra la habitación en la base de datos
-		roomToDelete.setEnabled(false);
-		entityManager.persist(roomToDelete); // Persiste los cambios en la base de datos
-		entityManager.flush();
-
-		House houseUpdate = entityManager.find(House.class, roomToDelete.getHouse().getId());
-		houseUpdate.setRooms(entityManager
-			.createNamedQuery("Room.byHouse", Room.class)
-			.setParameter("houseId", houseUpdate.getId())
-			.getResultList());
-		entityManager.persist(houseUpdate); // Persiste los cambios en la base de datos
-		entityManager.flush();
-
-		return roomToDelete.toTransfer(); // Devuelve los datos actualizados de la habitación
+		List<Task> tasks = entityManager.createNamedQuery("Task.byRoom", Task.class)
+		.setParameter("roomId", roomId).getResultList();
+		
+		if (tasks.size() > 0) {
+			return false;
+		}
+		else {
+			Room roomToDelete = entityManager.find(Room.class, roomId); // Encuentra la habitación en la base de datos
+			roomToDelete.setEnabled(false);
+			entityManager.persist(roomToDelete); // Persiste los cambios en la base de datos
+			entityManager.flush();
+	
+			House houseUpdate = entityManager.find(House.class, roomToDelete.getHouse().getId());
+			houseUpdate.setRooms(entityManager
+				.createNamedQuery("Room.byHouse", Room.class)
+				.setParameter("houseId", houseUpdate.getId())
+				.getResultList());
+			entityManager.persist(houseUpdate); // Persiste los cambios en la base de datos
+			entityManager.flush();
+	
+			return true;
+		}
 	}
 
 	@PostMapping("/deleteUser")
 	@Transactional
 	@ResponseBody
-	public User.Transfer deleteUser(
+	public boolean deleteUser(
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
@@ -526,13 +534,32 @@ public class UserController {
 		// Obtén el nuevo nombre de la habitación
 		long userId = data.get("id").asLong(); // Obtén el ID del usuario
 		User userToDelete = entityManager.find(User.class, userId); // Encuentra el usuario en la base de datos
+		
+		List<Task> tasks = entityManager.createNamedQuery("Task.byUser", Task.class)
+		.setParameter("user", userToDelete).getResultList();
+		
+		if (tasks.size() > 0) {
+			return false;
+		}
+		else {
+			long newManagerId = data.get("newManager").asLong(); // Obtén el ID del nuevo manager
+			if (newManagerId == -1) {
+				userToDelete.setHouse(null); // Desvincula al usuario de la casa
+				entityManager.persist(userToDelete);
+				entityManager.flush();
+			}
+			else {
+				userToDelete.setHouse(null); // Desvincula al usuario de la casa
+				userToDelete.setRoles(Role.USER.name());
+				entityManager.persist(userToDelete);
+				User newManager = entityManager.find(User.class, newManagerId);
+				newManager.setRoles(Role.MANAGER.name());
+				entityManager.persist(newManager);
+				entityManager.flush();
+			}
 
-		// Desvincula al usuario de la casa
-		userToDelete.setHouse(null);
-
-		entityManager.persist(userToDelete);
-		entityManager.flush();
-		return userToDelete.toTransfer(); // Devuelve los datos actualizados de la habitación
+			return true;
+		}
 	}
 
 	@PostMapping("/deleteHouse")

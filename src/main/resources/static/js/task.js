@@ -40,7 +40,7 @@ function newTask(event) {
                         <button class="btn" onclick="viewInfo(event)">
                             <div class="d-none" id="taskPersonalID">${d.id}</div>
                             <span class="image-container">
-                                <img th:src="@{/img/vista.png}" src="/img/vista.png" width="50" height="50" style="margin-right: 5%;" >
+                                <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65" style="margin-right: 5%;" >
                             </span>
                         </button>
                     </div>
