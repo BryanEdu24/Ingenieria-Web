@@ -83,9 +83,9 @@ function updateTask(event, idTask) {
 
     console.log(`PARAMS: id:${params.id}, title:${params.title}, user_id:${params.user_id}, room_id:${params.room_id}`);
     go("/user/updateTask", 'POST', params)
-        .then(d => {
+        .then(taskT => {
             console.log("Success");
-            console.log(d);
+            console.log(taskT);
 
             $("#noTasks").hide()
 
@@ -95,6 +95,30 @@ function updateTask(event, idTask) {
 
             $("#containerButtonEditDelete").show();
             $("#containerButtonSendCancel").hide();
+
+            $("#divCardTasksTask" + idTask).empty()
+            const formattedDate = formatDate(taskT.creationDate);
+            $("#divCardTasksTask" + idTask).append(
+                `<div class="card-content d-flex p-1 align-items-center taskCard">
+                <div class="col ms-2 my-1">
+                    <h3>${taskT.title}</h3>
+                    <h5>${taskT.userT.username}</h5>
+                </div>
+                <div class="col-4">
+                    <div>
+                        <h5>${formattedDate}</h5>
+                    </div>
+                    <div>
+                        <h5>${taskT.room.name}</h5>
+                    </div>
+                </div>
+                <button class="btn" type="button" onclick="viewInfo(event)">
+                    <div class="d-none" id="taskPersonalID">${taskT.id}</div>
+                    <span class="image-container">
+                        <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
+                    </span>
+                </button>
+            </div>`)
         })
         .catch(e => {
             console.log("Fail");
@@ -145,6 +169,7 @@ function deleteTask(event, idTask) {
             $("#noTaskSelected").html(`
             <div> TAREA BORRADA </div>
             `)
+            $("#divCardTasksTask" + idTask).hide()
 
         })
         .catch(e => {
@@ -152,7 +177,6 @@ function deleteTask(event, idTask) {
             console.log(e);
         });
 }
-
 
 function updateInfo(event, idTask) {
     event.preventDefault();
@@ -186,8 +210,11 @@ function filterUpdate(event, x) {
     let params = {
         selectRooms: $("#selectUpdateByRoom").val(),
         selectUsers: $("#selectUpdateByUser").val(),
-        selectDates: $("#selectUpdateByDate").val()
+        selectDates: $("#selectUpdateByDate").val(),
+        selectHouseId: $("#houseIdForFilters").text()
     };
+
+    console.log("PARAMS " + params);
 
     if (params.selectRooms && x === 1) {
         go("/user/filterRoom/" + params.selectRooms, 'GET')
@@ -195,7 +222,8 @@ function filterUpdate(event, x) {
                 console.log("Success");
                 console.log(d);
 
-                $("#addTaskImg").hide();
+                $("#addTaskButton").hide();
+                $("#resetFilterButton").show();
 
                 $('#divCardsTasks').empty();
 
@@ -206,24 +234,25 @@ function filterUpdate(event, x) {
                     d.forEach(taskT => {
                         const formattedDate = formatDate(taskT.creationDate);
                         $('#divCardsTasks').append(
-                            `<div class="card my-2">
-                        <div class="card-content d-flex p-1 bg align-items-center taskCard">
-                            <div class="col">
+                            `<div class="card my-2" id="divCardTasksTask${taskT.id}">
+                            <div class="card-content d-flex p-1 align-items-center taskCard">
+                            <div class="col ms-2 my-1">
                                 <h3>${taskT.title}</h3>
                                 <h5>${taskT.userT.username}</h5>
                             </div>
-                            <div class="col">
+                            <div class="col-4">
                                 <div>
-                                    <h5>${formattedDate}<h5>
+                                    <h5>${formattedDate}</h5>
                                 </div>
                                 <div>
                                     <h5>${taskT.room.name}</h5>
                                 </div>
                             </div>
-                            <button class="btn" onclick="viewInfo(event)">
+                            <button class="btn" type="button" onclick="viewInfo(event)">
                                 <div class="d-none" id="taskPersonalID">${taskT.id}</div>
-                                <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
-                                    height="50" style="margin-right: 5%;">
+                                <span class="image-container">
+                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
+                                </span>
                             </button>
                         </div>
                 </div>`)
@@ -253,7 +282,8 @@ function filterUpdate(event, x) {
                 console.log("Success");
                 console.log(d);
 
-                $("#addTaskImg").hide();
+                $("#addTaskButton").hide();
+                $("#resetFilterButton").show();
 
                 $('#divCardsTasks').empty();
 
@@ -264,24 +294,25 @@ function filterUpdate(event, x) {
                     d.forEach(taskT => {
                         const formattedDate = formatDate(taskT.creationDate);
                         $('#divCardsTasks').append(
-                            `<div class="card my-2">
-                        <div class="card-content d-flex p-1 bg align-items-center taskCard">
-                            <div class="col">
+                            `<div class="card my-2" id="divCardTasksTask${taskT.id}">
+                            <div class="card-content d-flex p-1 align-items-center taskCard">
+                            <div class="col ms-2 my-1">
                                 <h3>${taskT.title}</h3>
                                 <h5>${taskT.userT.username}</h5>
                             </div>
-                            <div class="col">
+                            <div class="col-4">
                                 <div>
-                                    <h5>${formattedDate}<h5>
+                                    <h5>${formattedDate}</h5>
                                 </div>
                                 <div>
                                     <h5>${taskT.room.name}</h5>
                                 </div>
                             </div>
-                            <button class="btn" onclick="viewInfo(event)">
+                            <button class="btn" type="button" onclick="viewInfo(event)">
                                 <div class="d-none" id="taskPersonalID">${taskT.id}</div>
-                                <img th:src="@{/img/vista.png}" src="/img/vista.png" alt="Imagen" width="50"
-                                    height="50" style="margin-right: 5%;">
+                                <span class="image-container">
+                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
+                                </span>
                             </button>
                         </div>
                 </div>`)
@@ -305,30 +336,139 @@ function filterUpdate(event, x) {
                 </div>`)
             });
     }
-    else { // TODO selectDates
+    else {
 
-        $("#addTaskImg").hide();
+        $("#addTaskButton").hide();
+        $("#resetFilterButton").show();
 
         $('#divCardsTasks').empty();
 
         $("#selectUpdateByRoom").prop('selectedIndex', 0);
         $("#selectUpdateByUser").prop('selectedIndex', 0);
 
-        switch (params.selectDates) {
-            case "moreNew":
-                //TODO
-                break;
-            case "moreOld":
-                //TODO
-                break;
-        }
-
-        $('#divCardsTasks').append(
-            `<div id="noTasks" class="titleStyle">
-        <h4>No se encuentran tareas con ese filtro</h4>
-        <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
-        </div>`)
+        go("/user/filterTasksHouse/" + params.selectHouseId, 'GET')
+            .then(d => {
+                if (d.length > 0) {
+                    switch (params.selectDates) {
+                        case "moreNew":
+                            d.reverse().forEach(taskT => {
+                                const formattedDate = formatDate(taskT.creationDate);
+                                $('#divCardsTasks').append(
+                                    `<div class="card my-2" id="divCardTasksTask${taskT.id}">
+                                    <div class="card-content d-flex p-1 align-items-center taskCard">
+                                    <div class="col ms-2 my-1">
+                                        <h3>${taskT.title}</h3>
+                                        <h5>${taskT.userT.username}</h5>
+                                    </div>
+                                    <div class="col-4">
+                                        <div>
+                                            <h5>${formattedDate}</h5>
+                                        </div>
+                                        <div>
+                                            <h5>${taskT.room.name}</h5>
+                                        </div>
+                                    </div>
+                                    <button class="btn" type="button" onclick="viewInfo(event)">
+                                        <div class="d-none" id="taskPersonalID">${taskT.id}</div>
+                                        <span class="image-container">
+                                            <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
+                                        </span>
+                                    </button>
+                                </div>
+                        </div>`)
+                            });
+                            break;
+                        case "moreOld":
+                            d.forEach(taskT => {
+                                const formattedDate = formatDate(taskT.creationDate);
+                                $('#divCardsTasks').append(
+                                    `<div class="card my-2" id="divCardTasksTask${taskT.id}">
+                                    <div class="card-content d-flex p-1 align-items-center taskCard">
+                                    <div class="col ms-2 my-1">
+                                        <h3>${taskT.title}</h3>
+                                        <h5>${taskT.userT.username}</h5>
+                                    </div>
+                                    <div class="col-4">
+                                        <div>
+                                            <h5>${formattedDate}</h5>
+                                        </div>
+                                        <div>
+                                            <h5>${taskT.room.name}</h5>
+                                        </div>
+                                    </div>
+                                    <button class="btn" type="button" onclick="viewInfo(event)">
+                                        <div class="d-none" id="taskPersonalID">${taskT.id}</div>
+                                        <span class="image-container">
+                                            <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
+                                        </span>
+                                    </button>
+                                </div>
+                        </div>`)
+                            });
+                            break;
+                    }
+                } else {
+                    $('#divCardsTasks').append(
+                        `<div id="noTasks" class="titleStyle">
+                    <h4>No se encuentran tareas con ese filtro</h4>
+                    <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
+                    </div>`)
+                }
+            })
 
     }
+
+}
+
+function resetFilters(event, houseId) {
+
+    go("/user/filterTasksHouse/" + houseId, 'GET')
+        .then(d => {
+            console.log("Success");
+            console.log(d);
+
+            $("#addTaskButton").show();
+            $("#resetFilterButton").hide();
+
+            $('#divCardsTasks').empty();
+
+            $("#selectUpdateByUser").prop('selectedIndex', 0);
+            $("#selectUpdateByDate").prop('selectedIndex', 0);
+
+            if (d.length > 0) {
+                d.forEach(taskT => {
+                    const formattedDate = formatDate(taskT.creationDate);
+                    $('#divCardsTasks').append(
+                        `<div class="card my-2" id="divCardTasksTask${taskT.id}">
+                            <div class="card-content d-flex p-1 align-items-center taskCard">
+                            <div class="col ms-2 my-1">
+                                <h3>${taskT.title}</h3>
+                                <h5>${taskT.userT.username}</h5>
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <h5>${formattedDate}</h5>
+                                </div>
+                                <div>
+                                    <h5>${taskT.room.name}</h5>
+                                </div>
+                            </div>
+                            <button class="btn" type="button" onclick="viewInfo(event)">
+                                <div class="d-none" id="taskPersonalID">${taskT.id}</div>
+                                <span class="image-container">
+                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
+                                </span>
+                            </button>
+                        </div>
+                </div>`)
+                });
+            } else {
+                $('#divCardsTasks').append(
+                    `<div id="noTasks" class="titleStyle">
+                    <h4>No se encuentran tareas con ese filtro</h4>
+                    <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
+                    </div>`)
+            }
+        })
 
 }

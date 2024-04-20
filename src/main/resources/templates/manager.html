@@ -139,19 +139,19 @@
 										<b>Cocina</b>
 									</label><br>
 									
-									<input type="radio" id="photoBathroom" name="photoSelect" value="banio">
+									<input type="radio" id="photoBathroom" name="photoSelect" value="cuarto-de-bano">
 									<label for="photoBathroom">
 										<img th:src="@{/img/cuarto-de-bano.png}" src="/img/cuarto-de-bano.png" id="bathroom" width="50" height="50">
 										<b>Baño</b>
 									</label><br>
 									
-									<input type="radio" id="photoLivingRoom" name="photoSelect" value="salon">
+									<input type="radio" id="photoLivingRoom" name="photoSelect" value="livingroom">
 									<label for="photoLivingRoom">
 										<img th:src="@{/img/livingroom.png}" src="/img/livingroom.png" id="livingroom" width="50" height="50">
 										<b>Salón</b>
 									</label><br>
 									
-									<input type="radio" id="photoRoom" name="photoSelect" value="habitacion">
+									<input type="radio" id="photoRoom" name="photoSelect" value="room">
 									<label for="photoRoom">
 										<img th:src="@{/img/room.png}" src="/img/room.png" id="bedroom" width="50" height="50">
 										<b>Habitación</b>
@@ -187,10 +187,10 @@
                                 <!-- <input type="text" class="form-control" id="roomName" name="roomName" placeholder="Nombre de la habitacion" required> -->
                             </div>
                         </div>
-                       
+                        <div id="errorPhotoNoSelected" class="bg-danger" style="display: none;"> TIENES QUE SELECCIONAR UNA FOTO Y UN NOMBRE </div>
                         <div class="modal-footer text-center d-flex justify-content-between align-items-center">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" data-bs-dismiss="modal" class="btn btn-primary" onclick="newRoom(event)">Nueva Habitación</button>
+                            <button type="submit" class="btn btn-primary" onclick="newRoom(event)">Nueva Habitación</button>
                         </div>
                     </form>
                 </div>

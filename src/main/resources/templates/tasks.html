@@ -19,6 +19,7 @@
                     <div class="titleStyle">Tareas</div>
                     <div class="d-flex justify-content-between">
                         <div class="d-flex align-items-center justify-content-center">
+                            <div id="houseIdForFilters" th:text="${u.house.id}" hidden></div>
                             <div class="mx-2">
                                 <select class="form-select form-select-sm" id="selectUpdateByRoom"
                                     aria-label=".form-select-sm example" onchange="filterUpdate(event, 1)">
@@ -46,11 +47,14 @@
                         </div>
 
                         <div>
-                            <button type="button" class="btn rounded">
+                            <button type="button" id="addTaskButton" class="btn rounded">
                                 <span class="image-container">
                                     <img th:src="@{/img/agregar.png}" id="addTaskImg" src="/img/agregar.png" width="50" height="50" data-bs-toggle="modal"
                                         data-bs-target="#newTaskModal">
                                 </span>
+                            </button>
+                            <button type="button" id="resetFilterButton" class="btn btn-primary rounded" style="display: none;" th:onclick="|resetFilters(event, '${u.house.id}')|">
+                                RESET
                             </button>
                         </div>
                     </div>
@@ -63,7 +67,7 @@
                             <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
                         </div>
 
-                        <div th:each="task: ${tasks}" class="card my-2">
+                        <div th:each="task: ${tasks}" class="card my-2" th:id="'divCardTasksTask' + ${task.id}">
                             <div class="card-content d-flex p-1 align-items-center taskCard">
                                 <div class="col ms-2 my-1">
                                     <h3 th:text="${task.title}"></h3>

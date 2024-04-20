@@ -152,6 +152,23 @@ public class UserController {
 		return filterByUserList;
 	}
 
+	@GetMapping("/filterTasksHouse/{id}")
+	@ResponseBody
+	public List<Task.Transfer> filterTasksByHouse(@PathVariable long id, HttpServletResponse response) {
+		List<Task> tasks = entityManager
+				.createNamedQuery("Task.forHouse", Task.class)
+				.setParameter("house", entityManager.find(House.class, id))
+				.getResultList();
+
+		List<Task.Transfer> filterByHouseList = new ArrayList<Task.Transfer>();
+
+		for (Task t : tasks) {
+			filterByHouseList.add(t.toTransfer());
+		}
+		
+		return filterByHouseList;
+	}
+
 	@GetMapping("/getTaskInfo/{id}")
 	@ResponseBody
 	public Task.Transfer getInfoTask(@PathVariable long id, HttpServletResponse response) {
