@@ -125,6 +125,7 @@ function updateTask(event, idTask) {
             console.log(e);
         });
 }
+
 function viewInfo(event) {
     event.preventDefault();
 
@@ -231,32 +232,7 @@ function filterUpdate(event, x) {
                 $("#selectUpdateByDate").prop('selectedIndex', 0);
 
                 if (d.length > 0) {
-                    d.forEach(taskT => {
-                        const formattedDate = formatDate(taskT.creationDate);
-                        $('#divCardsTasks').append(
-                            `<div class="card my-2" id="divCardTasksTask${taskT.id}">
-                            <div class="card-content d-flex p-1 align-items-center taskCard">
-                            <div class="col ms-2 my-1">
-                                <h3>${taskT.title}</h3>
-                                <h5>${taskT.userT.username}</h5>
-                            </div>
-                            <div class="col-4">
-                                <div>
-                                    <h5>${formattedDate}</h5>
-                                </div>
-                                <div>
-                                    <h5>${taskT.room.name}</h5>
-                                </div>
-                            </div>
-                            <button class="btn" type="button" onclick="viewInfo(event)">
-                                <div class="d-none" id="taskPersonalID">${taskT.id}</div>
-                                <span class="image-container">
-                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
-                                </span>
-                            </button>
-                        </div>
-                </div>`)
-                    });
+                    tasksCardsAppends(d)
                 } else {
                     $('#divCardsTasks').append(
                         `<div id="noTasks" class="titleStyle">
@@ -291,32 +267,7 @@ function filterUpdate(event, x) {
                 $("#selectUpdateByDate").prop('selectedIndex', 0);
 
                 if (d.length > 0) {
-                    d.forEach(taskT => {
-                        const formattedDate = formatDate(taskT.creationDate);
-                        $('#divCardsTasks').append(
-                            `<div class="card my-2" id="divCardTasksTask${taskT.id}">
-                            <div class="card-content d-flex p-1 align-items-center taskCard">
-                            <div class="col ms-2 my-1">
-                                <h3>${taskT.title}</h3>
-                                <h5>${taskT.userT.username}</h5>
-                            </div>
-                            <div class="col-4">
-                                <div>
-                                    <h5>${formattedDate}</h5>
-                                </div>
-                                <div>
-                                    <h5>${taskT.room.name}</h5>
-                                </div>
-                            </div>
-                            <button class="btn" type="button" onclick="viewInfo(event)">
-                                <div class="d-none" id="taskPersonalID">${taskT.id}</div>
-                                <span class="image-container">
-                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
-                                </span>
-                            </button>
-                        </div>
-                </div>`)
-                    });
+                    tasksCardsAppends(d)
                 } else {
                     $('#divCardsTasks').append(
                         `<div id="noTasks" class="titleStyle">
@@ -351,60 +302,10 @@ function filterUpdate(event, x) {
                 if (d.length > 0) {
                     switch (params.selectDates) {
                         case "moreNew":
-                            d.reverse().forEach(taskT => {
-                                const formattedDate = formatDate(taskT.creationDate);
-                                $('#divCardsTasks').append(
-                                    `<div class="card my-2" id="divCardTasksTask${taskT.id}">
-                                    <div class="card-content d-flex p-1 align-items-center taskCard">
-                                    <div class="col ms-2 my-1">
-                                        <h3>${taskT.title}</h3>
-                                        <h5>${taskT.userT.username}</h5>
-                                    </div>
-                                    <div class="col-4">
-                                        <div>
-                                            <h5>${formattedDate}</h5>
-                                        </div>
-                                        <div>
-                                            <h5>${taskT.room.name}</h5>
-                                        </div>
-                                    </div>
-                                    <button class="btn" type="button" onclick="viewInfo(event)">
-                                        <div class="d-none" id="taskPersonalID">${taskT.id}</div>
-                                        <span class="image-container">
-                                            <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
-                                        </span>
-                                    </button>
-                                </div>
-                        </div>`)
-                            });
+                            tasksCardsAppends(d.reverse())
                             break;
                         case "moreOld":
-                            d.forEach(taskT => {
-                                const formattedDate = formatDate(taskT.creationDate);
-                                $('#divCardsTasks').append(
-                                    `<div class="card my-2" id="divCardTasksTask${taskT.id}">
-                                    <div class="card-content d-flex p-1 align-items-center taskCard">
-                                    <div class="col ms-2 my-1">
-                                        <h3>${taskT.title}</h3>
-                                        <h5>${taskT.userT.username}</h5>
-                                    </div>
-                                    <div class="col-4">
-                                        <div>
-                                            <h5>${formattedDate}</h5>
-                                        </div>
-                                        <div>
-                                            <h5>${taskT.room.name}</h5>
-                                        </div>
-                                    </div>
-                                    <button class="btn" type="button" onclick="viewInfo(event)">
-                                        <div class="d-none" id="taskPersonalID">${taskT.id}</div>
-                                        <span class="image-container">
-                                            <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
-                                        </span>
-                                    </button>
-                                </div>
-                        </div>`)
-                            });
+                            tasksCardsAppends(d)
                             break;
                     }
                 } else {
@@ -436,32 +337,7 @@ function resetFilters(event, houseId) {
             $("#selectUpdateByDate").prop('selectedIndex', 0);
 
             if (d.length > 0) {
-                d.forEach(taskT => {
-                    const formattedDate = formatDate(taskT.creationDate);
-                    $('#divCardsTasks').append(
-                        `<div class="card my-2" id="divCardTasksTask${taskT.id}">
-                            <div class="card-content d-flex p-1 align-items-center taskCard">
-                            <div class="col ms-2 my-1">
-                                <h3>${taskT.title}</h3>
-                                <h5>${taskT.userT.username}</h5>
-                            </div>
-                            <div class="col-4">
-                                <div>
-                                    <h5>${formattedDate}</h5>
-                                </div>
-                                <div>
-                                    <h5>${taskT.room.name}</h5>
-                                </div>
-                            </div>
-                            <button class="btn" type="button" onclick="viewInfo(event)">
-                                <div class="d-none" id="taskPersonalID">${taskT.id}</div>
-                                <span class="image-container">
-                                    <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
-                                </span>
-                            </button>
-                        </div>
-                </div>`)
-                });
+                tasksCardsAppends(d)
             } else {
                 $('#divCardsTasks').append(
                     `<div id="noTasks" class="titleStyle">
@@ -471,4 +347,33 @@ function resetFilters(event, houseId) {
             }
         })
 
+}
+
+function tasksCardsAppends(lista){
+    lista.forEach(taskT => {
+        const formattedDate = formatDate(taskT.creationDate);
+        $('#divCardsTasks').append(
+            `<div class="card my-2" id="divCardTasksTask${taskT.id}">
+                <div class="card-content d-flex p-1 align-items-center taskCard">
+                <div class="col ms-2 my-1">
+                    <h3>${taskT.title}</h3>
+                    <h5>${taskT.userT.username}</h5>
+                </div>
+                <div class="col-4">
+                    <div>
+                        <h5>${formattedDate}</h5>
+                    </div>
+                    <div>
+                        <h5>${taskT.room.name}</h5>
+                    </div>
+                </div>
+                <button class="btn" type="button" onclick="viewInfo(event)">
+                    <div class="d-none" id="taskPersonalID">${taskT.id}</div>
+                    <span class="image-container">
+                        <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
+                    </span>
+                </button>
+            </div>
+    </div>`)
+    });
 }
