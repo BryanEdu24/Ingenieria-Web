@@ -23,10 +23,15 @@
 							<h4>Nombre:&ensp;</h4>
 							<h3 th:text="${currHouse.name}"></h3>
 						</div>
-						<div class="d-flex justify-content-center align-items-center mx-5">
+						<div class="d-flex justify-content-center align-items-center ms-5">
 							<h4>Contraseña:&ensp;</h4>
 							<h3>***********</h3>
 						</div>
+						<button type="button" id="changePasswordButton" class="btn rounded">
+							<span class="image-container" title="Cambiar contraseña de casa">
+								<img th:src="@{/img/cambiarContra.png}" src="/img/cambiarContra.png" width="50" height="50" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+							</span>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -41,7 +46,7 @@
 						<div class="titleStyle col d-flex align-items-center justify-content-center">Habitaciones</div>
 						<div class="col d-flex justify-content-end align-items-end">
 							<button type="button" class="btn rounded">
-								<span class="image-container">
+								<span class="image-container" title="Añadir habitación">
 									<img th:src="@{/img/agregar.png}" id="addRoomImg" src="/img/agregar.png" alt="Imagen" width="39" height="39" data-bs-toggle="modal" data-bs-target="#newRoomModal">
 								</span>
 							</button>
@@ -61,12 +66,12 @@
 									<b><u>Acciones</u></b>
 									<div class="d-flex mt-1">
 										<div>
-											<button type="button" class="imgActionsEdit" data-id="${room.id}" th:onclick="editRoom([[${room.id}]])">
+											<button type="button" class="imgActionsEdit" data-id="${room.id}" th:onclick="editRoom([[${room.id}]])" title="Editar habitación">
 												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" >
 											</button>
 										</div>
 										<div>
-											<button type="button" class="imgActionsDelete" id="btnDeleteRoom" th:attr="data-name=${room.name}" th:onclick="deleteRoom([[${room.id}]], [[${room.name}]])">
+											<button type="button" class="imgActionsDelete" id="btnDeleteRoom" th:attr="data-name=${room.name}" th:onclick="deleteRoom([[${room.id}]], [[${room.name}]])" title="Eliminar habitación">
 												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" >
 											</button>
 										</div>
@@ -97,7 +102,7 @@
 									<b><u>Acciones</u></b>
 									<div class="d-flex mt-1">
 										<div class="mx-3">
-											<button type="button" class="imgActionsDelete" th:onclick="deletehouseUser([[${user.id}]], [[${user.username}]], [[${user.roles}]] )">
+											<button type="button" class="imgActionsDelete" th:onclick="deletehouseUser([[${user.id}]], [[${user.username}]], [[${user.roles}]])" title="Eliminar compañer@">
 												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
 											</button>
 										</div>
@@ -123,7 +128,7 @@
                 <div class="modal-body">
                     <form id="form-newRoom">
 						<div id="errorPhotoNoSelected" class="alert alert-danger text-danger text-center" role="alert" style="display: none;">
-							📢 Seleccione una foto para añadir habitación 🖼️
+							📢 Seleccione una foto para añadir habitación 📢
 						</div>
 
                         <div class="row mb-3">
@@ -288,6 +293,69 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal CAMBIO CONTRASEÑA -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">♻️<u>Cambiar Contraseña</u></h4>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row mb-3">
+						<label class="col-5 align-self-center">·&nbsp;Contraseña actual:</label>
+						<div class="col input-group">
+							<input type="password" class="form-control" id="actualPassword" name="actualPassword" placeholder="" required>
+							<button class="btn btn-light" type="button" id="togglePassword" style="border: solid 1px;" title="Mostrar/Ocultar contraseña"><i class="bi bi-eye-fill"></i></button>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-5 align-self-center">·&nbsp;Nueva contraseña:</label>
+						<div class="col input-group">
+							<input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="" required>
+							<button class="btn btn-light" type="button" id="togglePassword2" style="border: solid 1px;" title="Mostrar/Ocultar contraseña"><i class="bi bi-eye-fill"></i></button>
+						</div>
+					</div>
+					<div class="input-group">
+					</div>
+					<div class="text-danger text-center"><b>*La nueva contraseña no puede ser igual que la anterior*</b></div>
+                    
+                    <div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+						<a href="">
+                        	<button type="submit" data-bs-dismiss="modal" class="btn btn-primary">Confirmar</button> <!--¿Redirección a welcome?--> 
+						</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script>
+	const togglePasswordButton = document.getElementById('togglePassword');
+	const passwordInput = document.getElementById('actualPassword');
+	const togglePasswordButton2 = document.getElementById('togglePassword2');
+	const passwordInput2 = document.getElementById('newPassword');
+
+	togglePasswordButton.addEventListener('click', function() {
+		const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+		passwordInput.setAttribute('type', type);
+		this.querySelector('i').classList.toggle('bi-eye');
+		this.querySelector('i').classList.toggle('bi-eye-slash');
+	});
+
+	togglePasswordButton2.addEventListener('click', function() {
+		const type = passwordInput2.getAttribute('type') === 'password' ? 'text' : 'password';
+		passwordInput2.setAttribute('type', type);
+		this.querySelector('i').classList.toggle('bi-eye');
+		this.querySelector('i').classList.toggle('bi-eye-slash');
+	});
+
+</script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
 
 </html>

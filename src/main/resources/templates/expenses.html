@@ -21,8 +21,8 @@
 						</div>
 						<div class="titleStyle col d-flex align-items-center justify-content-center">Gastos</div>
 						<div class="col d-flex justify-content-end align-items-end">
-                            <button type="button" class="btn rounded">
-                                <span class="image-container">
+                            <button type="button" class="btn rounded" data-bs-toggle="tooltip">
+                                <span class="image-container" title="Añadir gasto">
                                     <img th:src="@{/img/agregar.png}" src="/img/agregar.png" width="45" height="45" data-bs-toggle="modal" data-bs-target="#newModalSpent">
                                 </span>
                             </button>
@@ -78,7 +78,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">💲 <u>Nuevo Gasto</u></h4>
+                    <h4 class="modal-title">💲<u>Nuevo Gasto</u></h4>
                     <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 

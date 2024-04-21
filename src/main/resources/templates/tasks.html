@@ -48,12 +48,12 @@
 
                         <div>
                             <button type="button" id="addTaskButton" class="btn rounded">
-                                <span class="image-container">
+                                <span class="image-container" title="Añadir tarea">
                                     <img th:src="@{/img/agregar.png}" id="addTaskImg" src="/img/agregar.png" width="50" height="50" data-bs-toggle="modal" data-bs-target="#newTaskModal">
                                 </span>
                             </button>
                             <button type="button" id="resetFilterButton" class="btn rounded" style="display: none;" th:onclick="|resetFilters(event, '${u.house.id}')|">
-                                <span class="image-container">
+                                <span class="image-container" title="Limpiar filtro">
                                     <img th:src="@{/img/reset.png}" src="/img/reset.png" width="50" height="50">
                                 </span>
                             </button>
@@ -84,7 +84,7 @@
                                 </div>
                                 <button class="btn" type="button" onclick="viewInfo(event)">
                                     <div class="d-none" id="taskPersonalID" th:text="${task.id}"></div>
-                                    <span class="image-container">
+                                    <span class="image-container" title="Ver información de la tarea">
                                         <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
                                     </span>
                                 </button>
@@ -102,8 +102,11 @@
                             <h4>No hay tarea seleccionada</h4>
                         </div>
                     </div>
-                    <div class="p-3 col text-center" id="divDeleteTask" style="display: none;">
-                        <div class="alert alert-success" role="alert"><h3>Tarea eliminada correctamente</h3></div>
+                    <div class="p-3 col" id="divDeleteTask" style="display: none;">
+                        <div class="alert alert-success justify-content-center d-flex" role="alert">
+                            <h3>Tarea eliminada correctamente</h3>
+                            <img th:src="@{/img/tareaBorrada.png}" src="/img/tareaBorrada.png" width="45" height="45">
+                        </div>
                     </div>
                     <div class="p-3 text-center" id="divInfoCard" style="width: 90%;">
                         <form>
@@ -111,24 +114,20 @@
                                 <div class="mb-2 d-flex">
                                     <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
                                     <div class="col">
-                                        <input type="text" id="selectedTaskTitle" class="form-control inputInfo"
-                                            value="${d.title}" readonly>
+                                        <input type="text" id="selectedTaskTitle" class="form-control inputInfo" value="${d.title}" readonly>
                                     </div>
                                 </div>
                                 <div class="mb-2 d-flex">
                                     <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
                                     <div class="col">
-                                        <input type="text" id="selectedTaskAuthor" class="form-control inputInfo"
-                                            value="${d.author}" readonly>
+                                        <input type="text" id="selectedTaskAuthor" class="form-control inputInfo" value="${d.author}" readonly>
                                     </div>
                                 </div>
                                 <div class="updateT mb-2 d-flex">
                                     <label class="col-7 titleStyleInfo text-left"><b>·&nbsp;</b> Asignada a:</label>
                                     <div class="col">
-                                        <select name="user_id" id="viewTaskSelectUser" class="form-select inputInfo"
-                                            required disabled>
-                                            <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}"
-                                                th:text="${houseUser.username}"></option>
+                                        <select name="user_id" id="viewTaskSelectUser" class="form-select inputInfo" required disabled>
+                                            <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}" th:text="${houseUser.username}"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -144,22 +143,20 @@
                                 <div class="updateT mb-2 d-flex">
                                     <label class="col-7 titleStyleInfo text-left"><b>·&nbsp;</b> Habitación:</label>
                                     <div class="col">
-                                        <select name="room_id" id="viewTaskSelectRoom" class="form-select inputInfo"
-                                            disabled>
-                                            <option th:each="room: ${rooms}" th:value="${room.id}"
-                                                th:text="${room.name}"></option>
+                                        <select name="room_id" id="viewTaskSelectRoom" class="form-select inputInfo" disabled>
+                                            <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div id="containerButtonEditDelete">
-                                    <div class="d-flex justify-content-end" id="editDeleteButtonTask">
+                                    <div class="d-flex justify-content-end mt-4" id="editDeleteButtonTask">
                                         <div class="mx-2">
-                                            <button type="button" id="editTaskButton" class="btn imgActionsEdit">
+                                            <button type="button" id="editTaskButton" class="btn imgActionsEdit" title="Editar tarea">
                                                 <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
                                             </button>
                                         </div>
                                         <div class="mx-2">
-                                            <button type="button" id="deleteTaskButton" class="btn imgActionsDelete">
+                                            <button type="button" id="deleteTaskButton" class="btn imgActionsDelete" title="Eliminar tarea">
                                                 <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
                                             </button>
                                         </div>
@@ -167,8 +164,8 @@
                                 </div>
                                 <div id="containerButtonSendCancel" style="display: none">
                                     <div class="d-flex justify-content-between mt-4" id="buttonsEditTask">
-                                        <button type="button" class="btn btn-secondary">Cancelar</button>
-                                        <button type="submit" id="buttonUpdateTask" class="btn btn-primary btnUpdateTask">Modificar Tarea</button>
+                                        <button type="button" class="btn btn-secondary"  onclick="cancelUpdateTask(event)"><b>Cancelar</b></button>
+                                        <button type="submit" id="buttonUpdateTask" class="btn btn-primary btnUpdateTask"><b>Modificar Tarea</b></button>
                                     </div>
                                 </div>
                             </div>

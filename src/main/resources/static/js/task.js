@@ -221,6 +221,13 @@ function updateInfo(event, idTask) {
         });
 }
 
+function cancelUpdateTask(event) {
+    event.preventDefault();
+
+    $("#containerButtonSendCancel").hide();            
+    $("#containerButtonEditDelete").show();
+}
+
 function filterUpdate(event, x) {
     let params = {
         selectRooms: $("#selectUpdateByRoom").val(),

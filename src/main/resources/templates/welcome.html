@@ -57,30 +57,6 @@
                                 <input type="text" class="form-control" id="housePassword" name="housePassword" placeholder="Introduzca contraseña">
                             </div>
                         </div>
-                        <!-- <div class="row mb-3">
-                            <label class="col-5"><b>·&nbsp;</b> Habitaciones:</label>
-                            <div class="col-7">
-                                <div id="roomsContainer">
-                                    <input type="text" class="form-control" placeholder="Nombre habitación">
-                                </div>
-                                <div class="justify-content-end d-flex mt-3">
-                                    <button type="button" class="btn btn-success" onclick="addRoom()">Añadir habitación</button>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!--
-                            <div class="row mb-3">
-                                <label class="col-5"><b>·&nbsp;</b> Compañer@s:</label>
-                                <div class="col-7">
-                                    <div id="roomMateContainer" class="mb-3">
-                                        <input type="text" class="form-control" placeholder="Nombre compañer@">
-                                    </div>
-                                    <div class="justify-content-end d-flex mt-3">
-                                        <button type="button" class="btn btn-success" onclick="addMate()">Añadir compañero</button>
-                                    </div>
-                                </div>
-                            </div>
-                        -->
                         <div class="modal-footer d-flex justify-content-between">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-primary btnCreateHouse" data-bs-dismiss="modal">Crear Casa</button>
@@ -139,34 +115,6 @@
         this.querySelector('i').classList.toggle('bi-eye-fill');
         this.querySelector('i').classList.toggle('bi-eye-slash-fill');
     });
-
-    function addRoom() {
-        var habitacionHtml = `
-            <div class="mb-3 d-flex">
-                <input type="text" class="form-control" placeholder="Nombre habitación">
-                <button class="btn btn-light" type="button" onclick="eliminarCampo(this)">
-                    <img th:src="@{/img/basura.png}" src="/img/basura.png" alt="Eliminar" height="25" width="25">
-                </button>
-            </div>
-        `;
-        document.getElementById('roomsContainer').insertAdjacentHTML('beforeend', habitacionHtml);
-    }
-
-    function addMate() {
-        var companeroHtml = `
-            <div class="mb-3 d-flex">
-                <input type="text" class="form-control" placeholder="Nombre compañer@">
-                <button class="btn btn-light" type="button" onclick="eliminarCampo(this)">
-                    <img th:src="@{/img/basura.png}" src="/img/basura.png" alt="Eliminar" height="20" width="20">
-                </button>
-            </div>
-        `;
-        document.getElementById('roomMateContainer').insertAdjacentHTML('beforeend', companeroHtml);
-    }
-
-    function eliminarCampo(elemento) {
-        elemento.parentNode.remove();
-    }
 </script>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
