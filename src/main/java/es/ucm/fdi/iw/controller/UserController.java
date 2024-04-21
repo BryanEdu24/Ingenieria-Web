@@ -2,6 +2,7 @@ package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.House;
+import es.ucm.fdi.iw.model.Note;
 import es.ucm.fdi.iw.model.Notification;
 import es.ucm.fdi.iw.model.Room;
 import es.ucm.fdi.iw.model.Task;
@@ -297,38 +298,6 @@ public class UserController {
 		session.setAttribute("unread", unread);
 		return "{\"unread\": " + unread + "}";
     }
-
-	// @GetMapping("/unread")
-	// @Transactional
-	// @ResponseBody
-	// public long unreadNotifications(@PathVariable long id, HttpServletResponse response, HttpSession session) {
-	// 	User u = (User) session.getAttribute("u");
-	// 	long num = entityManager
-	// 			.createNamedQuery("Notification.unRead", Integer.class)
-	// 			.setParameter("houseId", u.getHouse().getId())
-	// 			.setParameter("userId", u.getId())
-	// 			.getSingleResult();
-	// 	return num;
-	// }
-
-	/* 
-    @GetMapping(path = "unread", produces = "application/json")
-    @ResponseBody
-    public String checkUnread(HttpSession session) {
-        User u = (User) session.getAttribute("u");
-        long userId = u.getId();
-        u = entityManager.find(User.class, userId);
-
-        long unread = entityManager.createNamedQuery("Notification.countUnread", Long.class)
-                .setParameter("userId", userId)
-                .getSingleResult();
-
-        log.info("UNREAD - {} User notifications", unread);
-
-        session.setAttribute("unread", unread);
-        return "{\"unread\": " + unread + "}";
-    }
-	*/
 
 	// POSTS ----------------------------------
 
@@ -643,6 +612,28 @@ public class UserController {
 		return "redirect:/user/home";
 	}
 
+	@PostMapping("/newNote")
+	@Transactional
+	@ResponseBody
+	public Note.Transfer newNote(
+			HttpServletResponse response,
+			@RequestBody JsonNode data,
+			Model model, HttpSession session) throws IOException {
+
+		Note newNote = new Note();
+		newNote.setAuthor(data.get("author").asText());
+		newNote.setEnabled(true);
+		newNote.setMessage(data.get("message").asText());
+		newNote.setTask(entityManager.find(Task.class, data.get("idTask").asLong()));
+
+		entityManager.persist(newNote);
+		entityManager.flush();
+
+		return newNote.toTransfer();
+	}
+
+
+	// UTILS ----------------------------------
 	public void sendNotification(String endpoint, Notification notif) {
 		// Mandar notificación
 		try {

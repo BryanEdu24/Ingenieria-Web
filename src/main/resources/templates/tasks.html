@@ -176,7 +176,7 @@
                         </form>
                     </div>
                 </div>
-                
+
                 <!--Notas-->
                 <div class="mt-2 tareas justify-content-center align-items-center p-2">
                     <div class="titleStyle mt-2">Notas de la tarea </div>
@@ -184,9 +184,10 @@
                         <div class="p-3 justify-content-center">
                             <form action="" method="post">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Escribir nueva nota">
+                                    <input type="text" class="form-control" id="noteAuthor" th:value="${u.username}" hidden required>
+                                    <input type="text" class="form-control" id="noteMessage" placeholder="Escribir nueva nota" required>
                                     <div class="input-group-append">
-                                        <button class="btn btn-secondary" type="button">Enviar</button>
+                                        <button class="btn btn-secondary" id="newNoteSendButton" type="button">Enviar</button>
                                     </div>
                                 </div>
                             </form>

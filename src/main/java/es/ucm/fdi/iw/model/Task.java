@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -52,6 +53,10 @@ public class Task implements Transferable<Task.Transfer> {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    @OneToMany
+    @JoinColumn(name = "task_id")
+    private List<Note> notes;
+
     @Getter
     @AllArgsConstructor
     public static class Transfer {
@@ -62,11 +67,12 @@ public class Task implements Transferable<Task.Transfer> {
         private User.Transfer userT;
         private Room.Transfer room;
         private Date creationDate;
+        //private List<Note> notes;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, title, author, enabled, user.toTransfer(), room.toTransfer(), creationDate);
+        return new Transfer(id, title, author, enabled, user.toTransfer(), room.toTransfer(), creationDate/*, notes*/);
     }
 
     @Override

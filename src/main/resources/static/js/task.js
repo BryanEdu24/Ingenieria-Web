@@ -143,6 +143,7 @@ function viewInfo(event) {
             $("#noTaskSelected").hide();
             $("#divDeleteTask").hide();
 
+            //Task Info
             const formattedDate = formatDateTime(d.creationDate);
             $("#divInfoCard").show();
             $("#viewFormTask").show();
@@ -153,7 +154,10 @@ function viewInfo(event) {
             $("#viewTaskSelectRoom").val(d.room.id);
             $("#editTaskButton").attr("onclick", `updateInfo(event, ${idTask})`);
             $("#deleteTaskButton").attr("onclick", `deleteTask(event, ${idTask})`);
-            
+
+            //Task Notes
+            $("#newNoteSendButton").attr("onclick", `newNote(event, ${idTask})`);
+
             $("#containerButtonEditDelete").show();
             $("#containerButtonSendCancel").hide();
 
@@ -382,4 +386,26 @@ function tasksCardsAppends(lista){
             </div>
     </div>`)
     });
+}
+
+function newNote(event, idTask){
+
+    var params = {
+        idTask: idTask,
+        author: $("#noteAuthor").val(),
+        message: $("#noteMessage").val()
+    };
+
+    console.log("PARAMS " + params);
+
+    go("/user/newNote", 'POST', params)
+        .then(d => {
+            console.log("Success");
+            console.log(d);
+        })
+        .catch(e => {
+            console.log("Fail");
+            console.log(e);
+        }
+    );
 }

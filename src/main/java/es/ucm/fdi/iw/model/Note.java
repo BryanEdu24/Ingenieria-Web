@@ -19,13 +19,12 @@ public class Note implements Transferable<Note.Transfer> {
 
     private boolean enabled;
 
-    private String title;
+    private String author;
 
     @Column(nullable = false)
     private String message;
 
     @ManyToOne
-    @JoinColumn(name = "task_id")
     private Task task;
 
     @Getter
@@ -33,14 +32,14 @@ public class Note implements Transferable<Note.Transfer> {
     public static class Transfer {
         private long id;
         private boolean enabled;
-        private String title;
+        private String author;
         private String message;
         private long taskId;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, enabled, title, message, task.getId());
+        return new Transfer(id, enabled, author, message, task.getId());
     }
 
     @Override
