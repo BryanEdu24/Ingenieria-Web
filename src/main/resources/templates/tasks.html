@@ -49,12 +49,13 @@
                         <div>
                             <button type="button" id="addTaskButton" class="btn rounded">
                                 <span class="image-container">
-                                    <img th:src="@{/img/agregar.png}" id="addTaskImg" src="/img/agregar.png" width="50" height="50" data-bs-toggle="modal"
-                                        data-bs-target="#newTaskModal">
+                                    <img th:src="@{/img/agregar.png}" id="addTaskImg" src="/img/agregar.png" width="50" height="50" data-bs-toggle="modal" data-bs-target="#newTaskModal">
                                 </span>
                             </button>
-                            <button type="button" id="resetFilterButton" class="btn btn-primary rounded" style="display: none;" th:onclick="|resetFilters(event, '${u.house.id}')|">
-                                RESET
+                            <button type="button" id="resetFilterButton" class="btn rounded" style="display: none;" th:onclick="|resetFilters(event, '${u.house.id}')|">
+                                <span class="image-container">
+                                    <img th:src="@{/img/reset.png}" src="/img/reset.png" width="50" height="50">
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -100,6 +101,9 @@
                         <div class="titleStyle">
                             <h4>No hay tarea seleccionada</h4>
                         </div>
+                    </div>
+                    <div class="p-3 col text-center" id="divDeleteTask" style="display: none;">
+                        <div class="alert alert-success" role="alert"><h3>Tarea eliminada correctamente</h3></div>
                     </div>
                     <div class="p-3 text-center" id="divInfoCard" style="width: 90%;">
                         <form>

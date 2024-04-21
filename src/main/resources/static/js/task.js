@@ -96,6 +96,10 @@ function updateTask(event, idTask) {
             $("#containerButtonEditDelete").show();
             $("#containerButtonSendCancel").hide();
 
+            $("#selectedTaskTitle").addClass("inputInfo");
+            $("#viewTaskSelectUser").addClass("inputInfo");
+            $("#viewTaskSelectRoom").addClass("inputInfo");
+
             $("#divCardTasksTask" + idTask).empty()
             const formattedDate = formatDate(taskT.creationDate);
             $("#divCardTasksTask" + idTask).append(
@@ -137,9 +141,10 @@ function viewInfo(event) {
             console.log(d);
 
             $("#noTaskSelected").hide();
+            $("#divDeleteTask").hide();
 
             const formattedDate = formatDateTime(d.creationDate);
-
+            $("#divInfoCard").show();
             $("#viewFormTask").show();
             $("#selectedTaskTitle").val(d.title);
             $("#selectedTaskAuthor").val(d.author);
@@ -148,6 +153,13 @@ function viewInfo(event) {
             $("#viewTaskSelectRoom").val(d.room.id);
             $("#editTaskButton").attr("onclick", `updateInfo(event, ${idTask})`);
             $("#deleteTaskButton").attr("onclick", `deleteTask(event, ${idTask})`);
+            
+            $("#containerButtonEditDelete").show();
+            $("#containerButtonSendCancel").hide();
+
+            $("#selectedTaskTitle").addClass("inputInfo");
+            $("#viewTaskSelectUser").addClass("inputInfo");
+            $("#viewTaskSelectRoom").addClass("inputInfo");
         })
         .catch(e => {
             console.log("Fail");
@@ -167,11 +179,9 @@ function deleteTask(event, idTask) {
             console.log("Success");
             console.log(d);
 
-            $("#noTaskSelected").html(`
-            <div> TAREA BORRADA </div>
-            `)
+            $("#divDeleteTask").show();
+            $("#divInfoCard").hide();            
             $("#divCardTasksTask" + idTask).hide()
-
         })
         .catch(e => {
             console.log("Fail");
@@ -181,7 +191,6 @@ function deleteTask(event, idTask) {
 
 function updateInfo(event, idTask) {
     event.preventDefault();
-
 
     go("/user/getTaskInfo/" + idTask, 'GET')
         .then(d => {
@@ -198,7 +207,9 @@ function updateInfo(event, idTask) {
 
             $("#containerButtonEditDelete").hide();
             $("#containerButtonSendCancel").show();
-
+            $("#selectedTaskTitle").removeClass("inputInfo");
+            $("#viewTaskSelectUser").removeClass("inputInfo");
+            $("#viewTaskSelectRoom").removeClass("inputInfo");
         })
         .catch(e => {
             console.log("Fail");
@@ -207,7 +218,6 @@ function updateInfo(event, idTask) {
 }
 
 function filterUpdate(event, x) {
-
     let params = {
         selectRooms: $("#selectUpdateByRoom").val(),
         selectUsers: $("#selectUpdateByUser").val(),
@@ -288,7 +298,6 @@ function filterUpdate(event, x) {
             });
     }
     else {
-
         $("#addTaskButton").hide();
         $("#resetFilterButton").show();
 
@@ -316,13 +325,10 @@ function filterUpdate(event, x) {
                     </div>`)
                 }
             })
-
     }
-
 }
 
 function resetFilters(event, houseId) {
-
     go("/user/filterTasksHouse/" + houseId, 'GET')
         .then(d => {
             console.log("Success");
@@ -340,10 +346,10 @@ function resetFilters(event, houseId) {
                 tasksCardsAppends(d)
             } else {
                 $('#divCardsTasks').append(
-                    `<div id="noTasks" class="titleStyle">
+                `<div id="noTasks" class="titleStyle">
                     <h4>No se encuentran tareas con ese filtro</h4>
                     <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
-                    </div>`)
+                </div>`)
             }
         })
 
