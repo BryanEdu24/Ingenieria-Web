@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ws.initialize(config.socketUrl, subs);
 
         // TODO
-        let p = document.querySelector("#nav-unread");
+        let p = document.querySelector(`#nav-unread${config.userId}`);
         if (p) {
             go(`${config.rootUrl}/user/unread`, "GET").then(d => p.textContent = d.unread);
         }

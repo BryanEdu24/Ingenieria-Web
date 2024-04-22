@@ -117,6 +117,24 @@ public class UserController {
 	// --------------------------------------------------------------------------------------------------------------------
 
 	// GETTERS ----------------------------------
+
+	/**
+	 * TODO
+	 * Returns JSON with all received USER messages
+	 */
+	@GetMapping("/unReadNotifications")
+	@Transactional // para no recibir resultados inconsistentes
+	@ResponseBody // para indicar que no devuelve vista, sino un objeto (jsonizado)
+	public List<Notification.Transfer> retrieveUserMessages(HttpSession session) {
+
+		List<Notification> notifications = entityManager
+				.createNamedQuery("Notification.userNotifications", Notification.class)
+				.setParameter("userId", ((User) session.getAttribute("u")).getId())
+				.getResultList();
+
+		return notifications.stream().map(Transferable::toTransfer).collect(Collectors.toList());
+	}
+
 	@GetMapping("/filterRoom/{id}")
 	@ResponseBody
 	public List<Task.Transfer> filterRoom(@PathVariable long id, HttpServletResponse response) {
@@ -130,7 +148,7 @@ public class UserController {
 		for (Task t : tasks) {
 			filterByRoomList.add(t.toTransfer());
 		}
-		
+
 		return filterByRoomList;
 	}
 
@@ -166,7 +184,7 @@ public class UserController {
 		for (Task t : tasks) {
 			filterByHouseList.add(t.toTransfer());
 		}
-		
+
 		return filterByHouseList;
 	}
 
@@ -284,20 +302,19 @@ public class UserController {
 
 	// WebSockets ----------------------------------
 	/**
-     * Returns JSON with count of unread messages
-     */
+	 * Returns JSON with count of unread messages
+	 */
 	@GetMapping(path = "unread", produces = "application/json")
 	@ResponseBody
 	public String checkUnread(HttpSession session) {
 		User u = (User) session.getAttribute("u");
 		long unread = (long) entityManager.createNamedQuery("Notification.unRead")
-				.setParameter("houseId", u.getHouse().getId())
 				.setParameter("userId", u.getId())
 				.getSingleResult();
 
 		session.setAttribute("unread", unread);
 		return "{\"unread\": " + unread + "}";
-    }
+	}
 
 	// POSTS ----------------------------------
 
@@ -312,12 +329,14 @@ public class UserController {
 		String title = data.get("title").asText();
 		long room_id = data.get("room_id").asLong();
 		long user_id = data.get("user_id").asLong();
+		User u_session = (User) session.getAttribute("u");
+		User u_task = entityManager.find(User.class, user_id);
 
 		Task target = new Task();
 		target.setTitle(title);
-		target.setAuthor(((User) session.getAttribute("u")).getUsername());
+		target.setAuthor(u_session.getUsername());
 		target.setRoom(entityManager.find(Room.class, room_id));
-		target.setUser(entityManager.find(User.class, user_id));
+		target.setUser(u_task);
 		target.setEnabled(true);
 
 		long ms = System.currentTimeMillis();
@@ -332,14 +351,14 @@ public class UserController {
 		Notification notif = new Notification();
 		notif.setDate(new Date(ms));
 		notif.setEnabled(true);
-		notif.setUser(null);
-		notif.setHouse(entityManager.find(House.class, ((User) session.getAttribute("u")).getHouse().getId()));
-		notif.setMessage("Tarea creada por " + ((User) session.getAttribute("u")).getUsername());
+		notif.setUser(u_task);
+		notif.setMessage(
+				u_task.getUsername() + ", " + u_session.getUsername() + " te ha asignado a la tarea" + title + ".");
 
-        entityManager.persist(notif);
-        entityManager.flush();
+		entityManager.persist(notif);
+		entityManager.flush();
 
-		sendNotification("/topic/" + ((User) session.getAttribute("u")).getHouse().getId(), notif);
+		sendNotification("/topic/" + u_session.getHouse().getId(), notif);
 
 		return target.toTransfer();
 	}
@@ -485,25 +504,24 @@ public class UserController {
 		// Obtén el nuevo nombre de la habitación
 		long roomId = data.get("id").asLong(); // Obtén el ID de la habitación
 		List<Task> tasks = entityManager.createNamedQuery("Task.byRoom", Task.class)
-		.setParameter("roomId", roomId).getResultList();
-		
+				.setParameter("roomId", roomId).getResultList();
+
 		if (tasks.size() > 0) {
 			return false;
-		}
-		else {
+		} else {
 			Room roomToDelete = entityManager.find(Room.class, roomId); // Encuentra la habitación en la base de datos
 			roomToDelete.setEnabled(false);
 			entityManager.persist(roomToDelete); // Persiste los cambios en la base de datos
 			entityManager.flush();
-	
+
 			House houseUpdate = entityManager.find(House.class, roomToDelete.getHouse().getId());
 			houseUpdate.setRooms(entityManager
-				.createNamedQuery("Room.byHouse", Room.class)
-				.setParameter("houseId", houseUpdate.getId())
-				.getResultList());
+					.createNamedQuery("Room.byHouse", Room.class)
+					.setParameter("houseId", houseUpdate.getId())
+					.getResultList());
 			entityManager.persist(houseUpdate); // Persiste los cambios en la base de datos
 			entityManager.flush();
-	
+
 			return true;
 		}
 	}
@@ -519,21 +537,19 @@ public class UserController {
 		// Obtén el nuevo nombre de la habitación
 		long userId = data.get("id").asLong(); // Obtén el ID del usuario
 		User userToDelete = entityManager.find(User.class, userId); // Encuentra el usuario en la base de datos
-		
+
 		List<Task> tasks = entityManager.createNamedQuery("Task.byUser", Task.class)
-		.setParameter("user", userToDelete).getResultList();
-		
+				.setParameter("user", userToDelete).getResultList();
+
 		if (tasks.size() > 0) {
 			return false;
-		}
-		else {
+		} else {
 			long newManagerId = data.get("newManager").asLong(); // Obtén el ID del nuevo manager
 			if (newManagerId == -1) {
 				userToDelete.setHouse(null); // Desvincula al usuario de la casa
 				entityManager.persist(userToDelete);
 				entityManager.flush();
-			}
-			else {
+			} else {
 				userToDelete.setHouse(null); // Desvincula al usuario de la casa
 				userToDelete.setRoles(Role.USER.name());
 				entityManager.persist(userToDelete);
@@ -632,22 +648,21 @@ public class UserController {
 		return newNote.toTransfer();
 	}
 
-
 	// UTILS ----------------------------------
 	public void sendNotification(String endpoint, Notification notif) {
 		// Mandar notificación
 		try {
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonNotif = mapper.writeValueAsString(notif.toTransfer());
-            log.info("Sending a notification to {} with contents '{}'", endpoint, jsonNotif);
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonNotif = mapper.writeValueAsString(notif.toTransfer());
+			log.info("Sending a notification to {} with contents '{}'", endpoint, jsonNotif);
 
-            String json = "{\"type\" : \"NOTIFICATION\", \"notification\" : " + jsonNotif + "}";
+			String json = "{\"type\" : \"NOTIFICATION\", \"notification\" : " + jsonNotif + "}";
 
-            messagingTemplate.convertAndSend(endpoint, json);
-        } catch (JsonProcessingException exception) {
-            log.error("Failed to parse notification - {}}", notif);
-            log.error("Exception {}", exception);
-        }
+			messagingTemplate.convertAndSend(endpoint, json);
+		} catch (JsonProcessingException exception) {
+			log.error("Failed to parse notification - {}}", notif);
+			log.error("Exception {}", exception);
+		}
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------

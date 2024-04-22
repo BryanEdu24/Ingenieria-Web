@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * An authorized user of the system.
@@ -53,6 +54,9 @@ public class User implements Transferable<User.Transfer> {
 
     @ManyToOne(optional = true)
     private House house;
+
+    @OneToMany
+    private List<Notification> notifications;
 
     /**
      * Checks whether this user has a given role.

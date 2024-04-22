@@ -67,12 +67,13 @@ public class Task implements Transferable<Task.Transfer> {
         private User.Transfer userT;
         private Room.Transfer room;
         private Date creationDate;
-        //private List<Note> notes;
+        // private List<Note> notes;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, title, author, enabled, user.toTransfer(), room.toTransfer(), creationDate/*, notes*/);
+        return new Transfer(id, title, author, enabled, user.toTransfer(), room.toTransfer(),
+                creationDate/* , notes */);
     }
 
     @Override

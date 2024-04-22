@@ -13,9 +13,9 @@ import java.util.Date;
 @NoArgsConstructor
 @NamedQueries({
         @NamedQuery(name = "Notification.unRead", query = "SELECT COUNT(*) FROM Notification n "
-                + "WHERE n.house.id= :houseId AND (n.user.id = :userId OR n.user.id IS NULL) AND n.read = FALSE "),
-        @NamedQuery(name = "Notification.unReadCompleted", query = "SELECT n FROM Notification n "
-                + "WHERE n.house.id= :houseId AND (n.user.id = :user_id OR n.user.id IS NULL) AND n.read = FALSE ")
+                + "WHERE n.user.id = :userId AND n.enabled = true AND n.read = false"),
+        @NamedQuery(name = "Notification.userNotifications", query = "SELECT n FROM Notification n "
+                + "WHERE n.user.id = :userId AND n.enabled = true AND n.read = false")
 })
 
 public class Notification implements Transferable<Notification.Transfer> {
@@ -37,11 +37,7 @@ public class Notification implements Transferable<Notification.Transfer> {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user; // Usuario que recibe la notificación, null si es para todos
-
-    @ManyToOne
-    @JoinColumn(name = "house_id")
-    private House house;
+    private User user;
 
     @Getter
     @AllArgsConstructor
@@ -51,16 +47,11 @@ public class Notification implements Transferable<Notification.Transfer> {
         private Date date;
         private boolean read;
         private long userId;
-        private long houseId;
     }
 
     @Override
     public Transfer toTransfer() {
-        if(user != null){
-            return new Transfer(id, message, date, read, user.getId(), house.getId());
-        } else{ //Se devuleve -1 para las notis que no van dirigidas a nadie
-            return new Transfer(id, message, date, read, -1, house.getId());
-        }
+        return new Transfer(id, message, date, read, user.getId());
     }
 
     @Override

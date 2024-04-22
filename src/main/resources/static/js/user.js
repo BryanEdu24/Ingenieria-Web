@@ -20,10 +20,12 @@ function deletehouseUser(id, nameUser, rolUser){
 
 function confirmDeleteUser(id){
     console.log("Llegué a confirmDeleteUser");
+    var optionDefaultElement = document.getElementById('optionDefault');
+    console.log(optionDefaultElement.id);
     var managerId = $('#selectNewManager').val();
     var params = {
         id: id,
-        newManager: managerId? managerId:-1
+        newManager: managerId? managerId:optionDefaultElement.id
     };
 
     console.log("PARAMS: ", params);
@@ -32,7 +34,7 @@ function confirmDeleteUser(id){
         .then(d => {
             console.log("Success");
             console.log(d);
-            if (d) {
+            if (d && newManager != 'optionDefault') {
                 $('#deleteMemberModal').modal('hide');
                 $('#idCardUser' + id).hide();
             }
@@ -47,13 +49,10 @@ function confirmDeleteUser(id){
 }
 
 function viewHouseUserInfo(id){
-    
     console.log("Llegué a confirm");
     var params = {
         id: id,
-        
     };
-    
 
     console.log("Boton clicado")
     go("/user/getHouseUserInfo/", 'GET', params)
@@ -62,12 +61,13 @@ function viewHouseUserInfo(id){
             console.log(d);
 
             $("HouseUsersCards").removeAttr("hidden");
-            
         })
         .catch(e => {
             console.log("Fail");
             console.log(e);
         });
+}
 
-
+function changePassword(event) {
+    //TODO
 }

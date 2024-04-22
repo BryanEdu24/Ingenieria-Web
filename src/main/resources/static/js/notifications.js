@@ -5,17 +5,21 @@ if(ws.receive){
     const oldFn = ws.receive; // guarda referencia a manejador anterior
     ws.receive = (destination, obj) => {
         oldFn(destination, obj);
+
+        console.log("OBJ ", obj);
         
         //TODO revisar el Obj
         if (obj.type == "NOTIFICATION") {
             console.log("Received notification");
-            let p = document.querySelector("#nav-unread");
+            let notif = obj.notification;
+            let notifsDiv = document.getElementById("divNotificationOffCanvas");
+            let p = document.querySelector(`#nav-unread${notif.userId}`);
+            
+            console.log("New Notification", notif);
+
             if (p) {
                 p.textContent = + p.textContent + 1;
             }
-
-            let notif = obj.notification;
-            let notifsDiv = document.getElementById("div-card-list");
 
             notifsDiv.insertAdjacentHTML("afterbegin", renderUnreadNotif(notif));
         }
@@ -37,4 +41,22 @@ function renderUnreadNotif(notif) {
                     </div>
                 </div>
             </div>`
+}
+
+function loadNotificationsOffCanvas(event){
+    go("/user/unReadNotifications", 'GET')
+            .then(notifications => {
+                console.log("Success");
+                console.log(notifications);
+
+                $("#divNotificationOffCanvas").empty();
+
+                notifications.forEach(element => {
+                   $("#divNotificationOffCanvas").prepend(renderUnreadNotif(element));
+                });
+            })
+            .catch(e => {
+                console.log("Fail");
+                console.log(e);
+            });
 }

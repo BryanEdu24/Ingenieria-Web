@@ -226,6 +226,9 @@ function cancelUpdateTask(event) {
 
     $("#containerButtonSendCancel").hide();            
     $("#containerButtonEditDelete").show();
+    $("#selectedTaskTitle").addClass("inputInfo");
+    $("#viewTaskSelectUser").addClass("inputInfo");
+    $("#viewTaskSelectRoom").addClass("inputInfo");
 }
 
 function filterUpdate(event, x) {

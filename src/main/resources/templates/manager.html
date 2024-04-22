@@ -128,7 +128,7 @@
                 <div class="modal-body">
                     <form id="form-newRoom">
 						<div id="errorPhotoNoSelected" class="alert alert-danger text-danger text-center" role="alert" style="display: none;">
-							📢 Seleccione una foto para añadir habitación 📢
+							📢 Rellene todos los campos para añadir habitación 📢
 						</div>
 
                         <div class="row mb-3">
@@ -278,7 +278,7 @@
 						<h5>❗Usted es Manager de la casa.❗<br>Establezca <u>nuevo manager</u> de casa:</h5>
 						<div class="d-flex justify-content-center mb-4">
 							<select name="manager_id" id="selectNewManager" class="form-select w-50" required>
-								<option disabled hidden selected>Seleccione uno...</option>
+								<option th:value="${optionDefault}" id="optionDefault" disabled hidden selected>Seleccione uno...</option>
 								<option th:each="houseUser: ${membersHouse}" th:value="${houseUser.id}" th:text="${houseUser.username}" th:if="${houseUser.id != u.id}"></option>
 							</select>
 						</div>
