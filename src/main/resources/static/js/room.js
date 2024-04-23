@@ -106,6 +106,31 @@ function updateRoom(id){
         .then(d => {
             console.log("Success");
             console.log(d);
+
+            $('#idCardRoom' + id).empty()
+
+            $('#idCardRoom' + id).append(`<div class="card-content d-flex justify-content-between ms-2 p-1">
+            <div class="d-flex">
+                <div class="mx-3">
+                    <img src="/img/${d.img}.png" width="50" height="60">
+                </div>
+                <div class="titleStyle textCardManager"> ${d.name} </div>
+            </div>
+            <div class="mx-4 text-center">
+                <b><u>Acciones</u></b>
+                <div class="d-flex mt-1">
+                    <div>
+                        <button type="button" class="imgActionsEdit" data-id="${d.id}" onclick="editRoom(${d.id})" title="Editar habitación">
+                            <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" >
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button" class="imgActionsDelete" id="btnDeleteRoom" data-name="${d.name}" onclick="deleteRoom(${d.id},\'${d.name}\')" title="Eliminar habitación">
+                            <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" >
+                        </button>
+                    </div>
+                </div>
+            </div>`)
         })
         .catch(e => {
             console.log("Fail");
