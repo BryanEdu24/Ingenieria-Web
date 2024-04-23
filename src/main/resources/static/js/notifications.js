@@ -69,12 +69,19 @@ function notificationRead(event, nId){
     }
 
     go("/user/notificationRead", 'POST', params)
-            .then(notifications => {
+            .then(notification => {
                 console.log("Success");
-                console.log(notifications);
+                console.log(notification);
 
-                $("#divNotif" + nId).hide()
-            })
+                $("#divNotif" + notification.id).hide()
+
+                let p = document.querySelector(`#nav-unread${notification.userId}`);
+
+                if (p) {
+                    p.textContent -= 1;
+                }
+                })
+
             .catch(e => {
                 console.log("Fail");
                 console.log(e);
