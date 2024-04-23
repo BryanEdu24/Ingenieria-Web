@@ -24,10 +24,6 @@
                             <div class="col">
                                 <h5 th:text="${house.name}"> NOMBRE CASA </h5>
                             </div>
-
-                            <button type="button" class="imgActionsEdit">
-                                <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="50" height="50" style="margin-right: 5%;">
-                            </button>
                             <button type="button" class="imgActionsDelete" th:onclick="deleteHouse([[${house.id}]])">
                                 <img th:src="@{/img/basura.png}" src="/img/basura.png" width="50" height="50" style="margin-right: 5%;" >
                             </button>

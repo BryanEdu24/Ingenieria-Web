@@ -8,7 +8,7 @@ function deletehouseUser(id, nameUser, rolUser){
     $('#deleteMemberModal').modal('show');
     $('#alertDeleteUser').hide();
     $('#bodyDeleteModal2').empty();
-    $('#bodyDeleteModal2').prepend(`<h5>¿Estás segur@ que desea eliminar <span style="color: #FFB919;">${nameUser}</span>?</h5>`)
+    $('#bodyDeleteModal2').prepend(`<h5>¿Estás segur@ que deseas eliminar a: <span style="color: #FFB919;">${nameUser}</span>?</h5>`)
     if (rolUser == "MANAGER") {
         $('#divDeleteManager').show();
     }
@@ -21,24 +21,34 @@ function deletehouseUser(id, nameUser, rolUser){
 function confirmDeleteUser(id){
     console.log("Llegué a confirmDeleteUser");
     var optionDefaultElement = document.getElementById('optionDefault');
-    console.log(optionDefaultElement.id);
+    console.log("optionDefaultElement", optionDefaultElement.value);
     var managerId = $('#selectNewManager').val();
     var params = {
         id: id,
-        newManager: managerId? managerId:optionDefaultElement.id
+        newManager: managerId? managerId:optionDefaultElement.value
     };
 
     console.log("PARAMS: ", params);
 
+    //TODO href.location("DONDE QUIERO REDIRIGIR")
+    // Session dispose en el controller. Session.invalidate()
+
     go("/user/deleteUser", 'POST', params)
         .then(d => {
-            console.log("Success");
+            console.log("Success", params);
             console.log(d);
-            if (d && newManager != 'optionDefault') {
+            if (d && params.newManager == '-1') {
+                console.log("Aqui");
                 $('#deleteMemberModal').modal('hide');
-                $('#idCardUser' + id).hide();
+                $('#deleteMemberModal').attr('hiden');
+                $('#idCardUser' + params.id).hide();
+            }
+            else if (d && params.newManager != '-1') {
+                console.log("Aqui3");
+                document.getElementById('button-logout').click();
             }
             else {
+                console.log("Aqui3");
                 $('#alertDeleteUser').show();
             }
         })

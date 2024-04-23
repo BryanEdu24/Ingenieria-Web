@@ -67,10 +67,9 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-start dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        <img th:src="@{/img/cerrarSesion.svg}" src="/img/cerrarSesion.svg" height="30" width="30">
-                                        Cerrar sesión
-                                    </a>
+                                    <form id="logoutFormUser" th:action="@{/logout}" method="post">
+                                        <button id="button-logout" type="button" class="btn dropdown-item" onclick="document.getElementById('logoutFormUser').submit();"><img th:src="@{/img/cerrarSesion.svg}" src="/img/cerrarSesion.svg" height="30" width="30"> Cerrar sesión </button>
+                                    </form>
                                 </li>
                             </ul>
                         </li>

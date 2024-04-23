@@ -120,7 +120,7 @@ function deleteRoom(id, nameRoom){
     $('#deleteRoomModal').modal('show');
     $('#alertDeleteRoom').hide();
     $('#bodyDeleteModal').empty();
-    $('#bodyDeleteModal').prepend(`<h5>¿Estás segur@ que desea eliminar <span style="color: #02B9D8;">${nameRoom}</span>?</h5>`)
+    $('#bodyDeleteModal').prepend(`<h5>¿Estás segur@ que deseas eliminar la habitación: <span style="color: #02B9D8;">${nameRoom}</span>?</h5>`)
     $('#confirmDeleteRoomButton').attr("onclick", `confirmDeleteRoom(${id})`);
 }
 

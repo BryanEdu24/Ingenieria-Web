@@ -27,7 +27,8 @@ if(ws.receive){
 }
 
 function renderUnreadNotif(notif) {
-    return `<div class="card p-3 mt-2">
+    var aux = "divNotif" + notif.id
+    return `<div class="card p-3 mt-2" id="${aux}">
                 <div class="card-content d-flex align-items-center">
                     <div class="col d-flex d-flex justify-content-between align-middle textColor">
                         <div class="d-flex align-middle">
@@ -35,7 +36,7 @@ function renderUnreadNotif(notif) {
                         </div>
                         <div class="d-flex align-middle">
                             <div hidden> id </div>
-                            <img class="imgActionsDelete" th:src="@{/img/close.svg}"
+                            <img class="imgActionsDelete" th:src="@{/img/close.svg}" onclick="notificationRead(event, ${notif.id})"
                             src="/img/close.svg" alt="Botón de cerrar" width="20" height="20" title="Cerrar">
                         </div>
                     </div>
@@ -54,6 +55,25 @@ function loadNotificationsOffCanvas(event){
                 notifications.forEach(element => {
                    $("#divNotificationOffCanvas").prepend(renderUnreadNotif(element));
                 });
+            })
+            .catch(e => {
+                console.log("Fail");
+                console.log(e);
+            });
+}
+
+function notificationRead(event, nId){
+
+    var params = {
+        notifId: nId
+    }
+
+    go("/user/notificationRead", 'POST', params)
+            .then(notifications => {
+                console.log("Success");
+                console.log(notifications);
+
+                $("#divNotif" + nId).hide()
             })
             .catch(e => {
                 console.log("Fail");

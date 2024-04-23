@@ -278,7 +278,7 @@
 						<h5>❗Usted es Manager de la casa.❗<br>Establezca <u>nuevo manager</u> de casa:</h5>
 						<div class="d-flex justify-content-center mb-4">
 							<select name="manager_id" id="selectNewManager" class="form-select w-50" required>
-								<option th:value="${optionDefault}" id="optionDefault" disabled hidden selected>Seleccione uno...</option>
+								<option value="-1" id="optionDefault" disabled hidden selected>Seleccione uno...</option>
 								<option th:each="houseUser: ${membersHouse}" th:value="${houseUser.id}" th:text="${houseUser.username}" th:if="${houseUser.id != u.id}"></option>
 							</select>
 						</div>

@@ -536,6 +536,7 @@ public class UserController {
 
 		// Obtén el nuevo nombre de la habitación
 		long userId = data.get("id").asLong(); // Obtén el ID del usuario
+		long newManagerId = data.get("newManager").asLong(); // Obtén el ID del nuevo manager
 		User userToDelete = entityManager.find(User.class, userId); // Encuentra el usuario en la base de datos
 
 		List<Task> tasks = entityManager.createNamedQuery("Task.byUser", Task.class)
@@ -543,8 +544,11 @@ public class UserController {
 
 		if (tasks.size() > 0) {
 			return false;
-		} else {
-			long newManagerId = data.get("newManager").asLong(); // Obtén el ID del nuevo manager
+		} 
+		else if (userToDelete.getId() == ((User) session.getAttribute("u")).getId() && newManagerId == -1) {
+			return false;
+		}
+		else {
 			if (newManagerId == -1) {
 				userToDelete.setHouse(null); // Desvincula al usuario de la casa
 				entityManager.persist(userToDelete);
@@ -646,6 +650,22 @@ public class UserController {
 		entityManager.flush();
 
 		return newNote.toTransfer();
+	}
+
+	@PostMapping("/notificationRead")
+	@Transactional
+	@ResponseBody
+	public Notification.Transfer delete(
+		HttpServletResponse response,
+		@RequestBody JsonNode data,
+		Model model, HttpSession session) {
+
+		Notification target = entityManager.find(Notification.class, data.get("notifId").asLong());
+		target.setRead(true);
+		entityManager.persist(target);
+		entityManager.flush();
+
+		return target.toTransfer();
 	}
 
 	// UTILS ----------------------------------
