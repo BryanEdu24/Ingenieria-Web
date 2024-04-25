@@ -144,8 +144,14 @@ input, select {
     color: #F8F4EA;
 }
 
-.textColor{
-    color:#202024
+.cardNotficationStyle {
+    background: linear-gradient(to right, #faedcd, white);
+    color: #202024;
+    box-shadow: 4px 4px 8px whitesmoke;
+}
+
+.cardNotficationStyle:hover {
+    transform: scale(1.05);
 }
 
 /* --- HOME --- */

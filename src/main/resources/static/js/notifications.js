@@ -28,17 +28,16 @@ if(ws.receive){
 
 function renderUnreadNotif(notif) {
     var aux = "divNotif" + notif.id
-    return `<div class="card p-3 mt-2" id="${aux}">
-                <div class="card-content d-flex align-items-center">
-                    <div class="col d-flex d-flex justify-content-between align-middle textColor">
-                        <div class="d-flex align-middle">
-                            <h6>${notif.message}</h6>
-                        </div>
-                        <div class="d-flex align-middle">
-                            <div hidden> id </div>
-                            <img class="imgActionsDelete" th:src="@{/img/close.svg}" onclick="notificationRead(event, ${notif.id})"
-                            src="/img/close.svg" alt="Botón de cerrar" width="20" height="20" title="Cerrar">
-                        </div>
+    return `<div class="card p-2 cardNotficationStyle mb-3" id="${aux}">
+                <div class="card-content d-flex justify-content-between p-2">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div><h5>🐝&nbsp;</h5></div>
+                        <div><b>${notif.message}</b></div>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center p-1">
+                        <img class="imgActionsDelete" th:src="@{/img/close.svg}" onclick="notificationRead(event, ${notif.id})"
+                        src="/img/close.svg" alt="Botón de cerrar" width="20" height="20" title="Cerrar">
+                        <span hidden> id </span>
                     </div>
                 </div>
             </div>`

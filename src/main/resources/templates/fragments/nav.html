@@ -80,19 +80,30 @@
         </nav>
 
         <!-- Offcanvas de notifications -->
-        <div class="offcanvas offcanvas-end canvasNot" tabindex="-1" id="offcanvasRight"
-            aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas offcanvas-end canvasNot" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
-                <h5 id="offcanvasRightLabel"> Notificaciones </h5>
-                <!-- <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button> -->
+                <h3 id="offcanvasRightLabel">🚨<b> <u>Notificaciones</u></b></h3>
             </div>
             <div class="offcanvas-body">
-                <div id="divNotificationOffCanvas" class="card-list p-1">
+                <div id="divNotificationOffCanvas" class="card-list">
                 </div>
             </div>
         </div>
     </header>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    var imgDelete = document.querySelector(".imgActionsDeleteNot");
+    var card = document.querySelector(".cardNotficationStyle");
 
+    imgDelete.addEventListener("mouseover", function() {
+        card.style.backgroundColor = "red";
+        card.style.transition = "background-color 0.3s ease";
+    });
+
+    imgDelete.addEventListener("mouseout", function() {
+        card.style.backgroundColor = "#faedcd";
+    });
+});
+</script>
 </html>
