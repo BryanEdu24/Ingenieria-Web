@@ -353,7 +353,7 @@ public class UserController {
 		notif.setEnabled(true);
 		notif.setUser(u_task);
 		notif.setMessage(
-				u_task.getUsername() + ", " + u_session.getUsername() + " te ha asignado a la tarea" + title + ".");
+				u_task.getUsername() + ", " + u_session.getUsername() + " te ha asignado a la tarea " + title + ".");
 
 		entityManager.persist(notif);
 		entityManager.flush();
@@ -640,14 +640,30 @@ public class UserController {
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
 
+		Task t = entityManager.find(Task.class, data.get("idTask").asLong());
 		Note newNote = new Note();
 		newNote.setAuthor(data.get("author").asText());
 		newNote.setEnabled(true);
 		newNote.setMessage(data.get("message").asText());
-		newNote.setTask(entityManager.find(Task.class, data.get("idTask").asLong()));
+		newNote.setTask(t);
 
 		entityManager.persist(newNote);
 		entityManager.flush();
+
+		// Para notificaciones
+		long ms = System.currentTimeMillis();
+
+		Notification notif = new Notification();
+		notif.setDate(new Date(ms));
+		notif.setEnabled(true);
+		notif.setUser(t.getUser());
+		notif.setMessage(
+			data.get("author").asText() + " ha comentado en tu tarea " + t.getTitle() + ".");
+
+		entityManager.persist(notif);
+		entityManager.flush();
+
+		sendNotification("/topic/" + ((User)session.getAttribute("u")).getHouse().getId(), notif);
 
 		return newNote.toTransfer();
 	}

@@ -11,6 +11,7 @@ if(ws.receive){
         //TODO revisar el Obj
         if (obj.type == "NOTIFICATION") {
             console.log("Received notification");
+            $('#noNotificaciones').hide();
             let notif = obj.notification;
             let notifsDiv = document.getElementById("divNotificationOffCanvas");
             let p = document.querySelector(`#nav-unread${notif.userId}`);
@@ -50,6 +51,10 @@ function loadNotificationsOffCanvas(event){
                 console.log(notifications);
 
                 $("#divNotificationOffCanvas").empty();
+                
+                if (notifications.length > 0) {
+                    $('#noNotificaciones').hide();
+                }
 
                 notifications.forEach(element => {
                    $("#divNotificationOffCanvas").prepend(renderUnreadNotif(element));
@@ -79,8 +84,7 @@ function notificationRead(event, nId){
                 if (p) {
                     p.textContent -= 1;
                 }
-                })
-
+            })
             .catch(e => {
                 console.log("Fail");
                 console.log(e);

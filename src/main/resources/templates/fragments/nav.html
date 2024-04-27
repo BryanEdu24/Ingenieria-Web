@@ -84,6 +84,10 @@
             <div class="offcanvas-header">
                 <h3 id="offcanvasRightLabel">🚨<b> <u>Notificaciones</u></b></h3>
             </div>
+            <div id="noNotificaciones" class="text-center">
+                <h4>No hay notificaciones</h4>
+                <img th:src="@{/img/no-bell-fill.png}" height="50" width="50">
+            </div>
             <div class="offcanvas-body">
                 <div id="divNotificationOffCanvas" class="card-list">
                 </div>
@@ -91,19 +95,5 @@
         </div>
     </header>
 </body>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-    var imgDelete = document.querySelector(".imgActionsDeleteNot");
-    var card = document.querySelector(".cardNotficationStyle");
 
-    imgDelete.addEventListener("mouseover", function() {
-        card.style.backgroundColor = "red";
-        card.style.transition = "background-color 0.3s ease";
-    });
-
-    imgDelete.addEventListener("mouseout", function() {
-        card.style.backgroundColor = "#faedcd";
-    });
-});
-</script>
 </html>

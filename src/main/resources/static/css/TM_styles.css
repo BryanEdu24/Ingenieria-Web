@@ -232,24 +232,11 @@ input, select {
     background-color: whitesmoke;
 }
 
-.carousel-item {
-    justify-content: center;
-    align-items: center;
+#carouselNotes {
+    max-height: 19em; /* Altura máxima para mostrar hasta 3 notas sin scroll */
+    overflow-y: auto; /* Habilitar desplazamiento vertical */
 }
 
-.carousel-control-prev, .carousel-control-next {
-    width: auto;
-    color: black;
-}
-
-.carousel-control-prev:hover, .carousel-control-next:hover {
-    color: black;
-}
-
-.carousel-control-prev-icon, .carousel-control-next-icon {
-    background-color: black;
-    border-radius: 50%;
-}
 /* --- EXPENSES --- */
 
 

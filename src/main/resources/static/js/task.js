@@ -143,7 +143,7 @@ function viewInfo(event) {
             $("#noTaskSelected").hide();
             $("#divDeleteTask").hide();
 
-            //Task Info
+            // Task Info
             const formattedDate = formatDateTime(d.creationDate);
             $("#divInfoCard").show();
             $("#viewFormTask").show();
@@ -155,7 +155,18 @@ function viewInfo(event) {
             $("#editTaskButton").attr("onclick", `updateInfo(event, ${idTask})`);
             $("#deleteTaskButton").attr("onclick", `deleteTask(event, ${idTask})`);
 
-            //Task Notes
+            // Task Notes
+            $('#inputNotes').show();
+            $("#noTaskSelectedNotes").hide();
+            $('#carouselNotes').empty();
+            d.notes.forEach(i => {
+                $('#carouselNotes').prepend(
+                    `<div class="card">
+                        <h2>${i.author}</h2>
+                        <p>${i.message}</p>
+                    </div>`
+                );
+            });
             $("#newNoteSendButton").attr("onclick", `newNote(event, ${idTask})`);
 
             $("#containerButtonEditDelete").show();
@@ -399,8 +410,7 @@ function tasksCardsAppends(lista){
     });
 }
 
-function newNote(event, idTask){
-
+function newNote(event, idTask) {
     var params = {
         idTask: idTask,
         author: $("#noteAuthor").val(),
@@ -413,6 +423,13 @@ function newNote(event, idTask){
         .then(d => {
             console.log("Success");
             console.log(d);
+            $('#noteMessage').val(''); // Para borrar nota
+            $('#carouselNotes').prepend(
+                `<div class="card">
+                    <h2>${d.author}</h2>
+                    <p>${d.message}</p>
+                </div>`
+            );
         })
         .catch(e => {
             console.log("Fail");

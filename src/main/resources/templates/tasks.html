@@ -177,8 +177,13 @@
                 <!--Notas-->
                 <div class="mt-2 tareas justify-content-center align-items-center p-2">
                     <div class="titleStyle mt-2">Notas de la tarea </div>
+                    <div class="p-3 text-center" id="noTaskSelectedNotes">
+                        <div class="titleStyle">
+                            <h4>No hay tarea seleccionada</h4>
+                        </div>
+                    </div>
                     <div class="card-list">
-                        <div class="p-3 justify-content-center">
+                        <div class="p-3 justify-content-center" id="inputNotes" style="display: none;">
                             <form action="" method="post">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="noteAuthor" th:value="${u.username}" hidden required>
@@ -189,39 +194,16 @@
                                 </div>
                             </form>
                         </div>
+
                         <div th:if="${#lists.size(tasks) == 0}" class="titleStyle">
                             <h4>No hay notas registradas</h4>
                             <img th:src="@{/img/noHayNotas.png}" height="50" width="50">
                         </div>
-                        <div th:each="note: ${notes}" class="card p-3">
-                            <div class="carousel slide" id="taskCarousel" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div th:each="note : ${noteslist}"> 
-                                        <span th:if="${note.task.usuario.username == user.username}">
-                                            <div class="carousel-item active">
-                                                <div class="task-card">
-                                                    <h2 th:text="${note.title}"></h2>
-                                                    <p th:text="${note.description}"></p>
-                                                </div>
-                                            </div>
-    
-                                           <div class="carousel-item">
-                                                <div class="task-card">
-                                                    <h2>Nota 3</h2>
-                                                    <p>Os quiero</p>
-                                                </div>
-                                            </div>
-    
-                                            <a class="carousel-control-prev" href="#taskCarousel" role="button" data-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            </a>
-    
-                                            <a class="carousel-control-next" href="#taskCarousel" role="button" data-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            </a>
-                                        </span>
-                                    </div>
-                                </div>
+                        
+                        <div class="masonry p-3" id="carouselNotes">
+                            <div th:each="note: ${listNotes}" class="card">
+                                <h2 th:text="${d.author}"></h2>
+                                <p th:text="${d.message}"></p>
                             </div>
                         </div>
                     </div>

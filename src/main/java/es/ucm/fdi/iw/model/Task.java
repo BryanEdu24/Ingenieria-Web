@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +30,6 @@ import java.util.List;
                 + "WHERE t.room.id = :roomId AND t.enabled= true")
 })
 public class Task implements Transferable<Task.Transfer> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")
@@ -67,13 +68,18 @@ public class Task implements Transferable<Task.Transfer> {
         private User.Transfer userT;
         private Room.Transfer room;
         private Date creationDate;
-        // private List<Note> notes;
+        private List<Note.Transfer> notes;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, title, author, enabled, user.toTransfer(), room.toTransfer(),
-                creationDate/* , notes */);
+        List<Note.Transfer> aux = new ArrayList<Note.Transfer>();
+        if (notes != null) {
+                for (Note i : notes) {
+                        aux.add(i.toTransfer());
+                }
+        }
+        return new Transfer(id, title, author, enabled, user.toTransfer(), room.toTransfer(), creationDate, aux);
     }
 
     @Override
