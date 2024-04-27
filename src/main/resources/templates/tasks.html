@@ -200,10 +200,10 @@
                             <img th:src="@{/img/noHayNotas.png}" height="50" width="50">
                         </div>
                         
-                        <div class="masonry p-3" id="carouselNotes">
-                            <div th:each="note: ${listNotes}" class="card">
-                                <h2 th:text="${d.author}"></h2>
-                                <p th:text="${d.message}"></p>
+                        <div class="masonry p-3 row text-center" id="carouselNotes">
+                            <div th:each="note: ${listNotes}" class="card text-center cardNotes my-2">
+                                <div class="titleStyleInfo" th:text="${d.author}"></div>
+                                <div th:text="${d.message}"><b></b></div>
                             </div>
                         </div>
                     </div>

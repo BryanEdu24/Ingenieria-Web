@@ -212,7 +212,7 @@ input, select {
 
 .inputInfo {
     border-color: #02b9d8 !important;
-    background-color: rgb(182, 173, 170, 0.2) !important;
+    background-color: rgba(182, 173, 170, 0.2) !important;
 }
 
 #selectUpdateByRoom, #selectUpdateByUser, #selectUpdateByDate {
@@ -221,20 +221,21 @@ input, select {
     font-weight: bold;
 }
 
-/*Carousel notas*/
-.task-card {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
-    border: 2px solid;
-    border-radius: 10px;
-    padding: 2%;
-    background-color: whitesmoke;
+#carouselNotes {
+    max-height: 15em; /* Altura máxima para mostrar hasta 3 notas sin scroll */
+    overflow-y: auto; /* Habilitar desplazamiento vertical */
+    justify-content: center;
+    width: 99%;
 }
 
-#carouselNotes {
-    max-height: 19em; /* Altura máxima para mostrar hasta 3 notas sin scroll */
-    overflow-y: auto; /* Habilitar desplazamiento vertical */
+.cardNotes {
+    width: 30em;
+    padding: 0.5em;
+    border-radius: 10px;
+    border-color: #02b9d8;
+    margin-inline: 1%;
+    background-color: rgba(182, 173, 170, 0.2);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
 }
 
 /* --- EXPENSES --- */

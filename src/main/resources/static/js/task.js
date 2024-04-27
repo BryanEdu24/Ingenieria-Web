@@ -161,9 +161,9 @@ function viewInfo(event) {
             $('#carouselNotes').empty();
             d.notes.forEach(i => {
                 $('#carouselNotes').prepend(
-                    `<div class="card">
-                        <h2>${i.author}</h2>
-                        <p>${i.message}</p>
+                    `<div class="card text-center cardNotes my-2">
+                        <div class="titleStyleInfo">${i.author}</div>
+                        <div><b>${i.message}</b></div>
                     </div>`
                 );
             });
@@ -425,9 +425,9 @@ function newNote(event, idTask) {
             console.log(d);
             $('#noteMessage').val(''); // Para borrar nota
             $('#carouselNotes').prepend(
-                `<div class="card">
-                    <h2>${d.author}</h2>
-                    <p>${d.message}</p>
+                `<div class="card text-center cardNotes my-2>
+                    <div class="titleStyleInfo">${i.author}</div>
+                    <div><b>${i.message}</b></div>
                 </div>`
             );
         })
