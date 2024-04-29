@@ -26,11 +26,11 @@ INSERT INTO IWUser (id, enabled, roles, username, password, email, house_id) VAL
 (8, TRUE, 'USER', 'Marta', '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W', 'martmart@ucm.es', 2);
 
 -- Task
-INSERT INTO Task (id, enabled, title, author, user_id, room_id) VALUES -- Falta creationDate
-(1, TRUE, 'Hacer la Comida', 'Lucas', 2, 1),
-(2, TRUE, 'Limpiar', 'Lucas', 4, 2),
-(3, TRUE, 'Recoger', 'Lucas', 3, 3),
-(4, TRUE, 'Hacer la cama', 'Lucas', 5, 3);
+INSERT INTO Task (id, enabled, done, title, author, user_id, room_id) VALUES -- Falta creationDate
+(1, TRUE, FALSE, 'Hacer la Comida', 'Lucas', 2, 1),
+(2, TRUE, FALSE, 'Limpiar', 'Lucas', 4, 2),
+(3, TRUE, FALSE, 'Recoger', 'Lucas', 3, 3),
+(4, TRUE, FALSE, 'Hacer la cama', 'Lucas', 5, 3);
 
 -- Note
 
