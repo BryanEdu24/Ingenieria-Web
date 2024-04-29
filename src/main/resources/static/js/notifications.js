@@ -11,18 +11,20 @@ if(ws.receive){
         //TODO revisar el Obj
         if (obj.type == "NOTIFICATION") {
             console.log("Received notification");
-            $('#noNotificaciones').hide();
             let notif = obj.notification;
-            let notifsDiv = document.getElementById("divNotificationOffCanvas" + notif.userId);
+            let notifsDiv = document.getElementById("divNotificationOffCanvas");
             let p = document.querySelector(`#nav-unread${notif.userId}`);
             
             console.log("New Notification", notif);
-
+            
             if (p) {
                 p.textContent = + p.textContent + 1;
             }
-
-            notifsDiv.insertAdjacentHTML("afterbegin", renderUnreadNotif(notif));
+            
+            if (config.userId === notif.userId){
+                $('#noNotificaciones').hide();
+                notifsDiv.insertAdjacentHTML("afterbegin", renderUnreadNotif(notif));
+            }
         }
     }
 }
