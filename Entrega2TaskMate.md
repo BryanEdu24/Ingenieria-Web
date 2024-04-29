@@ -19,7 +19,13 @@ Cosas que quedan por hacer.
     - modificacion (tareas y gastos)
 
 - GASTOS: 
-    - todo
+    - crear gastos
+    - eliminar gastos
+    - modificar gastos
+    - mostrar saldo 
+    - reparto de gastos
 
 - TAREAS:
     - marcar como completada
+
+
