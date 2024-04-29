@@ -420,9 +420,9 @@ function newNote(event, idTask) {
     console.log("PARAMS " + params);
 
     go("/user/newNote", 'POST', params)
-        .then(d => {
+        .then(i => {
             console.log("Success");
-            console.log(d);
+            console.log(i);
             $('#noteMessage').val(''); // Para borrar nota
             $('#carouselNotes').prepend(
                 `<div class="card text-center cardNotes my-2>
