@@ -13,7 +13,7 @@ if(ws.receive){
             console.log("Received notification");
             $('#noNotificaciones').hide();
             let notif = obj.notification;
-            let notifsDiv = document.getElementById("divNotificationOffCanvas");
+            let notifsDiv = document.getElementById("divNotificationOffCanvas" + notif.userId);
             let p = document.querySelector(`#nav-unread${notif.userId}`);
             
             console.log("New Notification", notif);
