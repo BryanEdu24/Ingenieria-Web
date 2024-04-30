@@ -1,10 +1,10 @@
 Cosas que quedan por hacer.
 
 - NOTIFICACIONES:
-    - añadir usuario (todos)
-    - eliminar usuario (todos)
-    - eliminar tarea (el que esté asignado)
-    - modificar tarea (el usuarios afectado)
+    - añadir usuario (todos) CHECK
+    - eliminar usuario (todos) CHECK
+    - eliminar tarea (el que esté asignado) CHECK
+    - modificar tarea (el usuarios afectado) CHECK
 
 - ADMIN:
     - Mostrar miembros de cada casa

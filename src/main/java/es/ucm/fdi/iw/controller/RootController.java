@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.ucm.fdi.iw.model.User;
@@ -40,22 +39,23 @@ public class RootController {
 		return passwordEncoder.encode(rawPassword);
 	}
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
-    }
+	// ----- GETs -----
+	// Enrutamiento
+	// Cargar vista de login
+    @GetMapping({"/", "/login"})
+	public String login(Model model) {
+		return "login";
+	}
 
-    @GetMapping("/")
-    public String index(Model model) {
-        return "login";
-    }
-
+	// Cargar vista de registro
     @GetMapping("/register")
 	public String register(Model model) {
 		return "register";
 	}
 
-	@PostMapping("/newuser")
+	// ----- POSTs -----
+	// Crear un nuevo usuario
+	@PostMapping("/newuser") // TODO testear
 	@Transactional
 	public String register(
 		HttpServletResponse response,
@@ -65,7 +65,7 @@ public class RootController {
 		Model model, HttpSession session) throws IOException {
             
         try {
-            User user = entityManager.createNamedQuery("User.byemail", User.class)
+            entityManager.createNamedQuery("User.byemail", User.class)
 			.setParameter("useremail", email)
 			.getSingleResult();
             return "redirect:/register";

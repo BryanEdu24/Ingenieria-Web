@@ -425,7 +425,7 @@ function newNote(event, idTask) {
             console.log(i);
             $('#noteMessage').val(''); // Para borrar nota
             $('#carouselNotes').prepend(
-                `<div class="card text-center cardNotes my-2>
+                `<div class="card text-center cardNotes my-2">
                     <div class="titleStyleInfo">${i.author}</div>
                     <div><b>${i.message}</b></div>
                 </div>`

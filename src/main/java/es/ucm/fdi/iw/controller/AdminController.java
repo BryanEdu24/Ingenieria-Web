@@ -11,29 +11,16 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties.Reactive.Session;
-import org.springframework.http.HttpStatus;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
-
 import com.fasterxml.jackson.databind.JsonNode;
 
 import es.ucm.fdi.iw.model.House;
-import es.ucm.fdi.iw.model.Task;
 import es.ucm.fdi.iw.model.User;
 
 /**
@@ -50,6 +37,9 @@ public class AdminController {
     @Autowired
     private EntityManager entityManager;
 
+    // ----- GETs -----
+	// Enrutamiento
+	// Cargar vista de admin
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
         User u = (User) session.getAttribute("u");
@@ -65,7 +55,26 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("/deleteHouse")
+    // ------ Otros GETs -----
+    // TODO añadir descripción
+    @GetMapping("/getHouseUserInfo")
+    @ResponseBody
+    public House.Transfer getHouseUserInfo(
+            HttpServletResponse response,
+            @RequestBody JsonNode data,
+            Model model, HttpSession session) {
+
+        long houseid = data.get("id").asLong();
+        House target = entityManager.find(House.class, houseid);
+
+        List<User> users = target.getUsers();
+        model.addAttribute("ListHouseUsers", users);
+        return target.toTransfer();
+    }
+
+    // ----- POSTs -----
+    // Borrar una casa
+    @PostMapping("/deleteHouse") // TODO testear
     @Transactional
     @ResponseBody
     public House.Transfer deleteHouse(
@@ -90,20 +99,5 @@ public class AdminController {
         entityManager.persist(house);
         entityManager.flush();
         return house.toTransfer(); // Devuelve los datos actualizados de la habitación
-    }
-
-    @GetMapping("/getHouseUserInfo")
-    @ResponseBody
-    public House.Transfer getHouseUserInfo(
-            HttpServletResponse response,
-            @RequestBody JsonNode data,
-            Model model, HttpSession session) {
-
-        long houseid = data.get("id").asLong();
-        House target = entityManager.find(House.class, houseid);
-
-        List<User> users = target.getUsers();
-        model.addAttribute("ListHouseUsers", users);
-        return target.toTransfer();
     }
 }

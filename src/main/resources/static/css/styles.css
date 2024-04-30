@@ -221,6 +221,10 @@ input, select {
     font-weight: bold;
 }
 
+#selectUpdateByRoom:hover ,#selectUpdateByUser:hover, #selectUpdateByDate:hover {
+    cursor: pointer;
+}
+
 #carouselNotes {
     max-height: 15em; /* Altura máxima para mostrar hasta 3 notas sin scroll */
     overflow-y: auto; /* Habilitar desplazamiento vertical */
@@ -266,10 +270,6 @@ input, select {
 
 /* --- ADMIN --- */
 
-.balance > p {
-    font-size: 2.5em;
-    margin: 1.5em;
-}
 
 /* Estilo Modal */
 .modal-footer {

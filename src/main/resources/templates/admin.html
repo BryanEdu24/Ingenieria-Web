@@ -22,7 +22,7 @@
                         <div th:text="${house.id}" hidden> </div>
                         <div class="card-content d-flex p-1 bg align-items-center">
                             <div class="col">
-                                <h5 th:text="${house.name}"> NOMBRE CASA </h5>
+                                <h5 th:text="${house.name}"></h5>
                             </div>
                             <button type="button" class="imgActionsDelete" th:onclick="deleteHouse([[${house.id}]])">
                                 <img th:src="@{/img/basura.png}" src="/img/basura.png" width="50" height="50" style="margin-right: 5%;" >
@@ -47,6 +47,20 @@
                                 <h3 th:text="${user.username}"></h3>
                             </div>
                            
+                        </div>
+                    </div>
+
+                    <div class="accordion" id="accordionPanelsStayOpenExample">
+                        <div th:each="house: ${houses}" class="accordion-item mb-3">
+                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                aria-expanded="false" aria-controls="collapseThree" th:text="${house.name}"></button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,8 +92,6 @@
 			</div>
 		</div>
 	</div>
-
-
 </body>
 
 </html>

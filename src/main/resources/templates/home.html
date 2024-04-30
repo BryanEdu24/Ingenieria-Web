@@ -16,7 +16,7 @@
             <!--Tareas-->
             <div class="col card-list tareas">
                 <div class="titleStyle mt-2">TAREAS</div>
-                <div class="p-3">
+                <div class="p-3" id="divTasksHome">
                     <div th:if="${#lists.size(tasks) == 0}" class="titleStyle">
                         <h4>No hay tareas registradas</h4>
                         <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">

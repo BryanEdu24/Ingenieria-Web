@@ -13,14 +13,13 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
             <div class="container-fluid">
                 <!--Logo-->
-                <a class="navbar-brand" href="/user/home">
+                <a class="navbar-brand" th:href="${#strings.equals(u.roles, 'ADMIN')} ? '/admin/' : '/user/home'">
                     <div class="Logo d-flex align-items-center">
                         <div class="me-4">
                             <img th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" alt="Logo TaskMate" height="70">
                         </div>
                         <div>
-                            <img th:src="@{/img/NombreTM.png}" src="/img/NombreTM.png" alt="Nombre TaskMate"
-                                height="50">
+                            <img th:src="@{/img/NombreTM.png}" src="/img/NombreTM.png" alt="Nombre TaskMate" height="50">
                         </div>
                     </div>
                 </a>

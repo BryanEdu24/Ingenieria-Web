@@ -7,20 +7,20 @@ if(ws.receive){
         oldFn(destination, obj);
 
         console.log("OBJ ", obj);
-        
+
         //TODO revisar el Obj
         if (obj.type == "NOTIFICATION") {
             console.log("Received notification");
             let notif = obj.notification;
             let notifsDiv = document.getElementById("divNotificationOffCanvas");
             let p = document.querySelector(`#nav-unread${notif.userId}`);
-            
+
             console.log("New Notification", notif);
-            
+
             if (p) {
                 p.textContent = + p.textContent + 1;
             }
-            
+
             if (config.userId === notif.userId){
                 $('#noNotificaciones').hide();
                 notifsDiv.insertAdjacentHTML("afterbegin", renderUnreadNotif(notif));
