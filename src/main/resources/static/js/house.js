@@ -13,8 +13,6 @@ function viewUser(event) {
 
             $("#noHouseSelected").hide();
 
-            
-            
             $('#divInfoCard ').html(` 
                 <div class="mb-2 d-flex">
                     <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
@@ -68,14 +66,12 @@ function deleteHouse(id){
     // // Mostrar modal de edición
     $('#deleteHouseModal').modal('show');
     $('#confirmDeleteHouseButton').attr("onclick", `confirmDeleteHouse(${id})`);
-
 }
 
 function confirmDeleteHouse(id){
     console.log("Llegué a confirm");
     var params = {
         id: id,
-        
     };
 
     console.log("PARAMS: ", params);
