@@ -1,16 +1,16 @@
-Cosas que quedan por hacer.
+URL de la VM: https://vm031.containers.fdi.ucm.es
 
-- NOTIFICACIONES:
-    - añadir usuario (todos) CHECK
-    - eliminar usuario (todos) CHECK
-    - eliminar tarea (el que esté asignado) CHECK
-    - modificar tarea (el usuarios afectado) CHECK
+Link GitHub: https://github.com/BryanEdu24/Ingenieria-Web
+(No hemos podido subir el últimno commit a la VM porque nos da error, te hemos mandado un correo con el problema
+que nos ha surgido. Debido a esto y a que no podemos ver los archivos de la VM, no sabemos qué commit está subido).
+
+Cosas que quedan por hacer.
 
 - ADMIN:
     - Mostrar miembros de cada casa
-    
+
 - MANAGER:
-    - modificar contraseña
+    - modificar contraseña de la casa
     - cuando se elimina un usuario, que no siga siendo un posible manager
 
 - HISTORICO:
@@ -18,14 +18,12 @@ Cosas que quedan por hacer.
     - eliminacion (tareas y gastos)
     - modificacion (tareas y gastos)
 
-- GASTOS: 
+- GASTOS:
     - crear gastos
     - eliminar gastos
     - modificar gastos
-    - mostrar saldo 
+    - mostrar saldo
     - reparto de gastos
 
 - TAREAS:
     - marcar como completada
-
-
