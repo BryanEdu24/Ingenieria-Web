@@ -21,20 +21,28 @@
                         <h4>No hay tareas registradas</h4>
                         <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
                     </div>
-
+                    
                     <div th:each="task : ${tasks}">
                         <!-- <span th:if="${task.usuario.username == user.username}"> -->
                         <div class="card my-2">
                             <div class="card-content d-flex p-1 align-items-center">
                                 <!-- <img th:src="${task.image}" alt="Imagen de la tarea"  width="65" height="65" style="margin-right: 5%;"/> -->
                                 <img th:src="@{/img/{img}.png(img=${task.room.img})}" src="/img/{img}.png(img=${task.room.img})" alt="Imagen de la tarea" width="65" height="65" style="margin-inline: 3%;"/>
-                                <div class="col">
-                                    <h2 th:text="${task.title}"></h2>
+                                <div>
+                                    <h3 th:text="${task.title}"></h3>
                                     <h4 th:text="${task.author}"></h4>
                                 </div>
                                 <div class="col text-center">
                                     <h4 th:text="${#dates.format(task.creationDate, 'dd-MM-yyyy')}"></h4>
                                     <h4 th:text="${task.room.name}"></h4>
+                                </div>
+                                <div class="text-center mb-2">
+                                    <label class="form-check-label" for="taskDone">
+                                        <h6>Marcar como completada</h6>
+                                    </label>
+                                    <div class="form-check col text-center">
+                                        <input class="form-check-input" type="checkbox" value="" id="taskDone">
+                                    </div>
                                 </div>
                             </div>
                         </div>

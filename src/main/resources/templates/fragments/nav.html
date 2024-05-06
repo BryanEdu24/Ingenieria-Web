@@ -50,7 +50,7 @@
                 <button onclick="loadNotificationsOffCanvas(event)" th:unless="${u.house == null}" class="Notificaciones mx-4 btn position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <img th:src="@{/img/bell-fill.png}" src="/img/bell-fill.png" alt="Notificaciones" height="40" width="40" id="notificacion-bell" title="Tus notificaciones">
                         <!-- Se puede hacer con contador, lo dejo genérico por ahora. Revisar reacción al mouse. -->
-                    <span th:id="'nav-unread' + ${u.id}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>     
+                    <span th:id="'nav-unread' + ${u.id}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"> 0 <span class="visually-hidden">unread messages</span></span>     
                 </button>
                 <!--Usuario-->
                 <div class="Perfil" id="PerfilDropdown">

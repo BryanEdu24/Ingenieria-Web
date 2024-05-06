@@ -28,7 +28,7 @@ function newTask(event) {
                             <h3>${d.title}</h3>
                             <h5>${d.userT.username}</h5>
                         </div>
-                        
+
                         <div class="col-4">
                             <div>
                                 <h5>${formattedDate}</h5>

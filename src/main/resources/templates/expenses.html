@@ -29,6 +29,19 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="mt-2 d-flex align-items-center justify-content-center">
+                    <!-- Lista Gastos -->
+                    <div class="gastos p-3 w-100">
+                        <div id="noTasks" th:if="${#lists.size(expenses) == 0}" class="titleStyle">
+                            <h4>No se encuentran gastos para la casa</h4>
+                            <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
+                        </div>
+                        <div th:each="expense : ${expenses}" class="">
+                            <div th:text="${expense.title}">Clara</div>
+                        </div>
+                    </div>
+                </div>
             </div>
     
             <div class="col-5 p-1">
@@ -59,18 +72,6 @@
             </div>
         </div>
 
-        <div class="mt-2 d-flex align-items-center justify-content-center">
-            <!-- Lista Gastos -->
-            <div class="gastos p-3 w-75">
-                <div class="titleStyle">Lista de Gastos</div>
-                <div th:each="expens : ${expenses}" class="">
-                    <div th:text="${expens.name}">Clara</div>
-                    <div th:text="${expens.money}">72.50€</div>
-                    <div th:text="${expens.issue}">Concierto</div>
-                    <div th:text="${expens.date}">23/02/2024</div>
-                </div>
-            </div>                
-        </div>
     </div>
 
     <!-- Modal NUEVO GASTO -->
@@ -83,15 +84,26 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="p-3 text-center">
-                        <form th:action="@{/newExpense}" method="post">
-                        
-                        </form>
-                    </div>
+                    <form th:action="@{/newExpense}" method="post" id="form-newExpense">
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Descripción del gasto:</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="expenseDescription" name="description" placeholder="Descripción del gasto" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Cantidad gastada:</label>
+                            <div class="col-7 d-flex">
+                                <input type="number" class="form-control" id="expenseQuantity" name="description" placeholder="Insertar Cantidad (€)" min="0" step="0.01" required>
+                                <span for="expenseQuantity"><h4>&euro;</h4></span>
+                            </div>
+                        </div>
+                    </form>
                     
                     <div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" data-bs-dismiss="modal" class="btn btn-primary">Nuevo Gasto</button>
+                        <button data-bs-dismiss="modal" class="btn btn-primary" onclick="newExpense(event)">Nuevo Gasto</button>
                     </div>
                 </div>
             </div>

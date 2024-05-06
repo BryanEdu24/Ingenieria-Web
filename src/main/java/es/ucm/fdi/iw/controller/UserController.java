@@ -6,6 +6,8 @@ import es.ucm.fdi.iw.model.Note;
 import es.ucm.fdi.iw.model.Notification;
 import es.ucm.fdi.iw.model.Room;
 import es.ucm.fdi.iw.model.Task;
+import es.ucm.fdi.iw.model.Expense;
+import es.ucm.fdi.iw.model.Historical;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
@@ -205,7 +207,13 @@ public class UserController {
 			return "redirect:/user/welcome";
 		}
 
+		List<Expense> expenses = entityManager
+				.createNamedQuery("Expense.byHouse", Expense.class)
+				.setParameter("house", entityManager.find(House.class, u.getHouse().getId()))
+				.getResultList();
+
 		model.addAttribute("u", u);
+		model.addAttribute("expenses", expenses);
 
 		return "expenses";
 	}
@@ -351,10 +359,8 @@ public class UserController {
 		target.setUser(u_task);
 		target.setEnabled(true);
 
-		long ms = System.currentTimeMillis();
-
 		// TODO Fecha no actualizada
-		target.setCreationDate(new Date(ms));
+		target.setCreationDate(currentDate());
 
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
@@ -362,6 +368,10 @@ public class UserController {
 		// Crear notification
 		String msg = u_task.getUsername() + ", " + u_session.getUsername() + " te ha asignado a la tarea <u>" + title + "</u>.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), u_task, msg);
+
+		// Crear histórico
+		String message = target.getAuthor() + " a creado la tarea \"" + target.getTitle() + "\" en la habitación " + target.getRoom().getName() + " para " + target.getUser().getUsername() + " el " + currentDate();
+		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
 	}
@@ -395,6 +405,10 @@ public class UserController {
 		String msg = "La tarea \"" + target.getTitle() + "\" ha sido modificada.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), target.getUser(), msg);
 
+		// Crear histórico
+		String message = target.getAuthor() + " a modificado la tarea \"" + target.getTitle() + "\" el " + currentDate();
+		createHistorical(message, "TASK", u_session.getHouse());
+
 		return target.toTransfer();
 	}
 
@@ -419,6 +433,10 @@ public class UserController {
 		User u_session = (User) session.getAttribute("u");
 		String msg = "La tarea \"" + target.getTitle() + "\" ha sido eliminada.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), target.getUser(), msg);
+
+		// Crear histórico
+		String message = target.getAuthor() + " a borrado la tarea \"" + target.getTitle() + "\" el " + currentDate();
+		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
 	}
@@ -456,35 +474,6 @@ public class UserController {
 		session.setAttribute("u", user);
 
 		return "redirect:/user/manager";
-	}
-
-	// Borrar una casa
-	@PostMapping("/deleteHouse")
-	@Transactional
-	@ResponseBody
-	public House.Transfer deleteHouse(
-			HttpServletResponse response,
-			@RequestBody JsonNode data,
-			Model model, HttpSession session) throws IOException {
-
-		// Obtén el nuevo nombre de la habitación
-		long house_id = data.get("id").asLong(); // Obtén el ID del usuario
-		House house = entityManager.find(House.class, house_id); // Encuentra el usuario en la base de datos
-
-		// TODO revisar
-		// // Desvincula al usuario de la casa
-		// List<User> users = house.getUsers();
-
-		// for (User u : users) {
-		// u.setHouse(null);
-		// entityManager.persist(u);
-		// // users.remove(i);
-		// }
-
-		house.setEnabled(false);
-		entityManager.persist(house);
-		entityManager.flush();
-		return house.toTransfer(); // Devuelve los datos actualizados de la habitación
 	}
 
 	// Unirse a una casa
@@ -700,14 +689,47 @@ public class UserController {
 		return newNote.toTransfer();
 	}
 
+	// Crear un nuevo gasto
+	@PostMapping("/newExpense")
+	@ResponseBody
+	public Expense.Transfer newExpense(HttpServletResponse response,
+			@RequestBody JsonNode data,Model model, HttpSession session) {
+		User u = (User) session.getAttribute("u");
+
+		// En caso de no tener casa asignada
+		if (u.getHouse() == null) {
+			return null;
+		}
+
+		String description = data.get("description").asText();
+		Double quantity = data.get("quantity").asDouble();
+
+		//Crear el gastos
+		Expense newExpense = new Expense();
+		newExpense.setAuthor(u);
+		newExpense.setTitle(description);
+		newExpense.setQuantity(quantity);
+		newExpense.setDate(currentDate());
+		newExpense.setHouse(u.getHouse());
+		newExpense.setEnabled(true);
+		//Ajustar la tabla UserExpense
+		entityManager.persist(newExpense);
+		entityManager.flush();
+
+		// Crear histórico
+		String message = u.getUsername() + " a creado el gasto con el concepto \"" + newExpense.getTitle() + "\" por el valor de " + newExpense.getQuantity() + " el " + currentDate();
+		createHistorical(message, "EXPENSE", u.getHouse());
+
+		return newExpense.toTransfer();
+	}
+
 	// ----- UTILS -----
 	// Mandar notificaciones
 	public void sendNotification(String endpoint, User u_task, String msg) {
-		long ms = System.currentTimeMillis();
 
 		//Crear objeto de la noti en la BD
 		Notification notif = new Notification();
-		notif.setDate(new Date(ms));
+		notif.setDate(currentDate());
 		notif.setEnabled(true);
 		notif.setUser(u_task);
 		notif.setMessage(msg);
@@ -728,5 +750,21 @@ public class UserController {
 			log.error("Failed to parse notification - {}}", notif);
 			log.error("Exception {}", exception);
 		}
+	}
+
+	public void createHistorical(String message, String type, House house) {
+		// Crear histórico
+		Historical history = new Historical();
+		history.setType(type);
+		history.setMessage(message);
+		history.setHouse(house);
+
+		entityManager.persist(history);
+		entityManager.flush();
+	}
+
+	public Date currentDate() {
+		long ms = System.currentTimeMillis();
+		return new Date(ms);
 	}
 }

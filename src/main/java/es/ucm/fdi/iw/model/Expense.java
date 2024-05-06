@@ -11,6 +11,11 @@ import java.util.Date;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({
+    @NamedQuery(name = "Expense.byHouse", query = "SELECT e FROM Expense e "
+            + "WHERE e.house =: house AND e.enabled = TRUE"),
+})
+
 public class Expense implements Transferable<Expense.Transfer> {
 
     @Id
@@ -23,26 +28,30 @@ public class Expense implements Transferable<Expense.Transfer> {
     private String title;
 
     @Column(nullable = false)
-    private String author;
-
-    @Column(nullable = false)
-    private Float quantity;
+    private Double quantity;
 
     @Column(nullable = false)
     private Date date;
+
+    @ManyToOne(optional = false)
+    private User author;
+
+    @ManyToOne
+    private House house;
 
     @Getter
     @AllArgsConstructor
     public static class Transfer {
         private long id;
-        private String author;
-        private Float quantity;
+        private User.Transfer author;
+        private Double quantity;
         private Date date;
+        private Long house_id;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, author, quantity, date);
+        return new Transfer(id, author.toTransfer(), quantity, date, house.getId());
     }
 
     @Override

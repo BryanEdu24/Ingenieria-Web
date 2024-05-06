@@ -55,6 +55,12 @@ public class User implements Transferable<User.Transfer> {
     @ManyToOne(optional = true)
     private House house;
 
+    @OneToMany //Gatos que tú creas
+    private List<Expense> expenses;
+
+    @OneToMany // lo que debe
+    private List<UserExpense> userexpenses;
+
     @OneToMany
     private List<Notification> notifications;
 

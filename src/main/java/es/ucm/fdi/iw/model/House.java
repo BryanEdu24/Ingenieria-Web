@@ -41,6 +41,9 @@ public class House implements Transferable<House.Transfer> {
     @JoinColumn(name = "house_id")
     private List<Room> rooms;
 
+    @OneToMany
+    private List<Expense> expenses;
+
     @Getter
     @AllArgsConstructor
     public static class Transfer {

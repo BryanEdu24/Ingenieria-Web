@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,30 +14,47 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Historical implements Transferable<Historical.Transfer> {
 
+    public enum Type {
+        TASK,
+        EXPENSE
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
     @SequenceGenerator(name = "gen", sequenceName = "gen")
     private long id;
 
-    private boolean enabled;
-
     @Column(nullable = false)
     private String message;
 
-    // 0 task, 1 expense
-    private boolean type;
+    private String type;
+
+    @ManyToOne(optional = true)
+    private House house;
+
+    /**
+     * Checks whether this historical has a given type.
+     *
+     * @param ty to check
+     * @return true iff this historical has that type.
+     */
+    public boolean hasType(Type ty) {
+        String typeName = ty.name();
+        return Arrays.asList(type.split(",")).contains(typeName);
+    }
 
     @Getter
     @AllArgsConstructor
     public static class Transfer {
         private long id;
-        private boolean type;
+        private String type;
         private String message;
+        private Long house_id;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, type, message);
+        return new Transfer(id, type, message, house.getId());
     }
 
     @Override
