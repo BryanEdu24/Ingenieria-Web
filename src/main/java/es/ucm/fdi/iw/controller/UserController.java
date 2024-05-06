@@ -691,6 +691,7 @@ public class UserController {
 
 	// Crear un nuevo gasto
 	@PostMapping("/newExpense")
+	@Transactional
 	@ResponseBody
 	public Expense.Transfer newExpense(HttpServletResponse response,
 			@RequestBody JsonNode data,Model model, HttpSession session) {

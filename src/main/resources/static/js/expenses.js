@@ -5,7 +5,7 @@ function newExpense(event) {
 
     let params = {
         description: $("#expenseDescription").val(),
-        quantity: $("expenseQuantity").val()
+        quantity: $("#expenseQuantity").val()
     };
     console.log(`PARAMS: description:${params.description}, quantity:${params.quantity}`);
 

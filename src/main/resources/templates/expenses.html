@@ -3,6 +3,7 @@
 
 <head>
     <th:block th:replace="fragments/head :: header" />
+    <script th:src="@{/js/expenses.js}" src="/js/expenses.js"></script>
     <title>Expenses</title>
 </head>
 
@@ -43,7 +44,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-5 p-1">
                 <div class="gastos p-3 w-100">
                     <!-- Balance -->
@@ -96,7 +97,7 @@
                             <label class="col-5 align-self-center"><b>·&nbsp;</b> Cantidad gastada:</label>
                             <div class="col-7 d-flex">
                                 <input type="number" class="form-control" id="expenseQuantity" name="description" placeholder="Insertar Cantidad (€)" min="0" step="0.01" required>
-                                <span for="expenseQuantity"><h4>&euro;</h4></span>
+                                <span for="expenseQuantity"><h4> &euro;</h4></span>
                             </div>
                         </div>
                     </form>
