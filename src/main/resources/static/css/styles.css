@@ -171,8 +171,19 @@ input, select {
     margin: 0;
 }
 
+.form-check-input:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+    box-shadow: 2px 2px 3px rgba(2, 185, 216, 0.8); 
+}
+
 .form-check-input:checked {
     background-color: green !important;
+}
+
+.form-check-input:checked:hover {
+    background-color: green !important;
+    box-shadow: 2px 2px 3px rgba(1, 100, 0, 0.9); 
 }
 
 /* --- WELCOME --- */

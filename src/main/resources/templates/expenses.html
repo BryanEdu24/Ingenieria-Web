@@ -36,10 +36,34 @@
                     <div class="gastos p-3 w-100">
                         <div id="noTasks" th:if="${#lists.size(expenses) == 0}" class="titleStyle">
                             <h4>No se encuentran gastos para la casa</h4>
-                            <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
+                            <img th:src="@{/img/noHayGastos.png}" height="50" width="50">
                         </div>
-                        <div th:each="expense : ${expenses}" class="">
-                            <div th:text="${expense.title}">Clara</div>
+                        <div class="card my-2" th:each="expense : ${expenses}">
+                            <div class="card-content d-flex p-1 align-items-center">
+                                <div class="col ms-2 my-1">
+                                    <h3 th:text="${expense.title}"></h3>
+                                    <h5 th:text="${#dates.format(expense.date, 'dd/MM/yyyy')}"></h5>
+                                </div>
+                                <div class="col d-flex">
+                                    <h3 th:text="${expense.quantity}"></h3>
+                                    <span><h3>&ensp;&euro;</h3></span>
+                                </div>
+                                <div class="mx-4 text-center">
+									<b><u>Acciones</u></b>
+									<div class="d-flex mt-1">
+										<div>
+											<button type="button" class="imgActionsEdit" data-id="${expense.id}" th:onclick="editExpense([[${expense.id}]])" title="Editar gasto">
+												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" >
+											</button>
+										</div>
+										<div>
+											<button type="button" class="imgActionsDelete" id="btnDeleteRoom" th:attr="data-name=${expense.title}" th:onclick="deleteExpense([[${expense.id}]], [[${expense.title}]])" title="Eliminar gasto">
+												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" >
+											</button>
+										</div>
+									</div>
+								</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,17 +111,16 @@
                 <div class="modal-body">
                     <form th:action="@{/newExpense}" method="post" id="form-newExpense">
                         <div class="row mb-3">
-                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Descripción del gasto:</label>
+                            <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Descripción del gasto:</label>
                             <div class="col-7">
                                 <input type="text" class="form-control" id="expenseDescription" name="description" placeholder="Descripción del gasto" required>
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Cantidad gastada:</label>
-                            <div class="col-7 d-flex">
+                            <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Cantidad gastada (€):</label>
+                            <div class="col-7">
                                 <input type="number" class="form-control" id="expenseQuantity" name="description" placeholder="Insertar Cantidad (€)" min="0" step="0.01" required>
-                                <span for="expenseQuantity"><h4> &euro;</h4></span>
                             </div>
                         </div>
                     </form>
