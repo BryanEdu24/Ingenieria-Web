@@ -50,7 +50,7 @@ public class User implements Transferable<User.Transfer> {
 
     private String email;
 
-    private String roles; // split by ',' to separate roles
+    private String roles;
 
     @ManyToOne(optional = true)
     private House house;
@@ -87,7 +87,6 @@ public class User implements Transferable<User.Transfer> {
 
     @Override
     public Transfer toTransfer() {
-
         if (house == null)
             return new Transfer(id, username, email, null, roles);
         else

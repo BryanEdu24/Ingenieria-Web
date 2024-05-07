@@ -12,6 +12,11 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
+@NamedQueries({
+    @NamedQuery(name = "Historical.byHouse", query = "SELECT h FROM Historical h "
+            + "WHERE h.house =: house")
+})
+
 public class Historical implements Transferable<Historical.Transfer> {
 
     public enum Type {

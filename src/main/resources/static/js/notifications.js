@@ -1,7 +1,6 @@
 "use strict"
 
 if(ws.receive){
-    //console.log("WS", ws.receive);
     const oldFn = ws.receive; // guarda referencia a manejador anterior
     ws.receive = (destination, obj) => {
         oldFn(destination, obj);

@@ -23,10 +23,8 @@
                     </div>
                     
                     <div th:each="task : ${tasks}">
-                        <!-- <span th:if="${task.usuario.username == user.username}"> -->
                         <div class="card my-2">
                             <div class="card-content d-flex p-1 align-items-center">
-                                <!-- <img th:src="${task.image}" alt="Imagen de la tarea"  width="65" height="65" style="margin-right: 5%;"/> -->
                                 <img th:src="@{/img/{img}.png(img=${task.room.img})}" src="/img/{img}.png(img=${task.room.img})" alt="Imagen de la tarea" width="65" height="65" style="margin-inline: 3%;"/>
                                 <div>
                                     <h3 th:text="${task.title}"></h3>
@@ -46,7 +44,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- </span> -->
                     </div>
                 </div>
             </div>
@@ -71,10 +68,5 @@
         </div>
     </div>
 </body>
-
-<!--Para el carousel-->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </html>

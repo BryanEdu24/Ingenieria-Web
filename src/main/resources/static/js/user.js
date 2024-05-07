@@ -30,9 +30,6 @@ function confirmDeleteUser(id){
 
     console.log("PARAMS: ", params);
 
-    //TODO href.location("DONDE QUIERO REDIRIGIR")
-    // Session dispose en el controller. Session.invalidate()
-
     go("/user/deleteUser", 'POST', params)
         .then(d => {
             console.log("Success", params);
@@ -41,6 +38,7 @@ function confirmDeleteUser(id){
                 console.log("Aqui");
                 $('#deleteMemberModal').modal('hide');
                 $('#deleteMemberModal').attr('hiden');
+                $(`#selectNewManager option[value='${params.id}']`).remove(); //borro a esa persona del select
                 $('#idCardUser' + params.id).hide();
             }
             else if (d && params.newManager != '-1') {

@@ -67,19 +67,9 @@ function newRoom(event){
 
 }
 
-
-// $('#editRoomModal').on('show.bs.modal', function (event) {
-//     var button = $(event.relatedTarget);
-//     var roomId = button.data('room-id');
-//     var roomName = button.data('room-name');
-//     $("#roomNameEdit").val(roomName);
-//     $("#editRoomModal").data('room-id', roomId);
-// });
-
 function editRoom(id) {
     
     console.log("Botón de editar clickeado");
-    // var id = $(button).data('id');
     console.log("ID de la tarjeta:", id);
     
     // // Mostrar modal de edición
@@ -91,7 +81,6 @@ function editRoom(id) {
 function updateRoom(id){
 
     console.log("Botón de editar clickeado");
-    // var id = $(button).data('id');
     console.log("ID de la tarjeta:", id);
     var newName = $("#roomNameEdit").val();
 

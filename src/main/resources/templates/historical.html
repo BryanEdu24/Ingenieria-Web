@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <th:block th:replace="fragments/head :: header" />
+    <title>Historical</title>
+</head>
+
+<body>
+    <!--Navbar-->
+    <header th:replace="fragments/nav.html :: nav"></header>
+
+    <div class="HomePrincipal container-fluid">
+        <div class="row">
+            <!--Tareas-->
+            <div class="col card-list tareas">
+                <div class="titleStyle mt-2">HISTORIAL</div>
+                <div class="p-3" id="divTasksHome">
+                    <div th:if="${#lists.size(historicals) == 0}" class="titleStyle">
+                        <h4>No hay historial aún</h4>
+                    </div>
+                    <div th:each="historical : ${historicals}">
+                        <div class="card my-2">
+                            <div class="card-content d-flex p-1 align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <h3 th:text="${historical.type}"></h3> <h4 th:text="${historical.message}" class="ms-2"></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+</body>
+
+</html>

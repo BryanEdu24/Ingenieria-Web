@@ -126,6 +126,27 @@ public class UserController {
 		return "home";
 	}
 
+	// Cargar vista historical
+	@GetMapping("/historical")
+	public String historical(Model model, HttpSession session) {
+		User u = (User) session.getAttribute("u");
+
+		// En caso de no tener casa asignada
+		if (u.getHouse() == null) {
+			return "redirect:/user/welcome";
+		}
+
+		List<Historical> historicals = entityManager
+				.createNamedQuery("Historical.byHouse", Historical.class)
+				.setParameter("house", entityManager.find(House.class, u.getHouse().getId()))
+				.getResultList();
+
+		model.addAttribute("historicals", historicals);
+		model.addAttribute("u", u);
+
+		return "historical";
+	}
+
 	// Cargar vista de welcome
 	@GetMapping("/welcome")
 	public String welcome(Model model, HttpSession session) {
@@ -217,6 +238,7 @@ public class UserController {
 
 		return "expenses";
 	}
+
 	// ------ Otros GETs -----
 	// Filtro por habitación
 	@GetMapping("/filterRoom/{id}")
@@ -304,7 +326,8 @@ public class UserController {
 	}
 
 	// ----- WebSockets -----
-	/** TODO
+	/**
+	 * TODO
 	 * Returns JSON with count of unread messages
 	 */
 	@GetMapping(path = "unread", produces = "application/json")
@@ -359,18 +382,19 @@ public class UserController {
 		target.setUser(u_task);
 		target.setEnabled(true);
 
-		// TODO Fecha no actualizada
 		target.setCreationDate(currentDate());
 
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
 
 		// Crear notification
-		String msg = u_task.getUsername() + ", " + u_session.getUsername() + " te ha asignado a la tarea <u>" + title + "</u>.";
+		String msg = u_task.getUsername() + ", " + u_session.getUsername() + " te ha asignado a la tarea <u>" + title
+				+ "</u>.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), u_task, msg);
 
 		// Crear histórico
-		String message = target.getAuthor() + " a creado la tarea \"" + target.getTitle() + "\" en la habitación " + target.getRoom().getName() + " para " + target.getUser().getUsername() + " el " + currentDate();
+		String message = target.getAuthor() + " ha creado la tarea \"" + target.getTitle() + "\" en la habitación "
+				+ target.getRoom().getName() + " para " + target.getUser().getUsername() + " el " + currentDate();
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -400,13 +424,14 @@ public class UserController {
 		entityManager.persist(target);
 		entityManager.flush(); // forces DB to add user & assign valid id
 
-		//Notification
+		// Notification
 		User u_session = (User) session.getAttribute("u");
 		String msg = "La tarea \"" + target.getTitle() + "\" ha sido modificada.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), target.getUser(), msg);
 
 		// Crear histórico
-		String message = target.getAuthor() + " a modificado la tarea \"" + target.getTitle() + "\" el " + currentDate();
+		String message = target.getAuthor() + " ha modificado la tarea \"" + target.getTitle() + "\" el "
+				+ currentDate();
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -420,7 +445,7 @@ public class UserController {
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) {
-		// TODO: process POST request
+
 		long task_id = data.get("id").asLong();
 		Task target = new Task();
 		target = entityManager.find(Task.class, task_id);
@@ -429,13 +454,13 @@ public class UserController {
 		entityManager.persist(target);
 		entityManager.flush();
 
-		//Notification
+		// Notification
 		User u_session = (User) session.getAttribute("u");
 		String msg = "La tarea \"" + target.getTitle() + "\" ha sido eliminada.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), target.getUser(), msg);
 
 		// Crear histórico
-		String message = target.getAuthor() + " a borrado la tarea \"" + target.getTitle() + "\" el " + currentDate();
+		String message = target.getAuthor() + " ha borrado la tarea \"" + target.getTitle() + "\" el " + currentDate();
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -477,7 +502,7 @@ public class UserController {
 	}
 
 	// Unirse a una casa
-	@PostMapping("/joinHouse")
+	@PostMapping("/joinHouse") // TODO añadir al websocket de la casa
 	@Transactional
 	public String joinHouse(
 			HttpServletResponse response,
@@ -491,7 +516,6 @@ public class UserController {
 				.getSingleResult();
 
 		// Comprobar existencia de la casa
-
 		House h = entityManager.createNamedQuery("House.byHousename", House.class)
 				.setParameter("name", JhouseName)
 				.getSingleResult();
@@ -508,7 +532,7 @@ public class UserController {
 		entityManager.flush();
 		session.setAttribute("u", user);
 
-		//Notification
+		// Notification
 		String msg = user.getUsername() + " se ha unido a la casa.";
 		for (User houseUser : h.getUsers()) {
 			sendNotification("/topic/" + h.getId(), houseUser, msg);
@@ -526,9 +550,15 @@ public class UserController {
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
 
+		User u = (User) session.getAttribute("u");
+
+		// En caso de no ser manager
+		if (!u.hasRole(Role.MANAGER)) {
+			return null;
+		}
+
 		Room roomNew = new Room();
 
-		User u = (User) session.getAttribute("u");
 		User user = entityManager.createNamedQuery("User.byUsername", User.class)
 				.setParameter("username", u.getUsername())
 				.getSingleResult();
@@ -544,10 +574,8 @@ public class UserController {
 
 		entityManager.persist(roomNew);
 		entityManager.flush();
-		// }
 
 		return roomNew.toTransfer();
-		// return "redirect:/user/manager";
 	}
 
 	// Modificar habitación
@@ -558,6 +586,13 @@ public class UserController {
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
+
+		User u = (User) session.getAttribute("u");
+
+		// En caso de no ser manager
+		if (!u.hasRole(Role.MANAGER)) {
+			return null;
+		}
 
 		String roomName = data.get("name").asText(); // Obtén el nuevo nombre de la habitación
 		long roomId = data.get("id").asLong(); // Obtén el ID de la habitación
@@ -578,6 +613,13 @@ public class UserController {
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
+
+		User u = (User) session.getAttribute("u");
+
+		// En caso de no ser manager
+		if (!u.hasRole(Role.MANAGER)) {
+			return false;
+		}
 
 		// Obtén el nuevo nombre de la habitación
 		long roomId = data.get("id").asLong(); // Obtén el ID de la habitación
@@ -605,13 +647,20 @@ public class UserController {
 	}
 
 	// Expulsar usuario de una casa
-	@PostMapping("/deleteUser")
+	@PostMapping("/deleteUser") // TODO desvincular al usuario del websocket
 	@Transactional
 	@ResponseBody
 	public boolean deleteUser(
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
+
+		User u = (User) session.getAttribute("u");
+
+		// En caso de no ser manager
+		if (!u.hasRole(Role.MANAGER)) {
+			return false;
+		}
 
 		// Obtén el nuevo nombre de la habitación
 		long userId = data.get("id").asLong(); // Obtén el ID del usuario
@@ -633,7 +682,7 @@ public class UserController {
 				entityManager.persist(userToDelete);
 				entityManager.flush();
 
-				//Notification
+				// Notification
 				msg = userToDelete.getUsername() + " ya no pertenece a la casa.";
 			} else {
 				userToDelete.setHouse(null); // Desvincula al usuario de la casa
@@ -648,11 +697,12 @@ public class UserController {
 
 				entityManager.flush();
 
-				//Notification cambio de manager
-				msg = userToDelete.getUsername() + " ya no pertenece a la casa y el nuevo manager es " + newManager.getUsername() + ".";
+				// Notification cambio de manager
+				msg = userToDelete.getUsername() + " ya no pertenece a la casa y el nuevo manager es "
+						+ newManager.getUsername() + ".";
 			}
 
-			//Send notification to all house users
+			// Send notification to all house users
 
 			for (User houseUser : h.getUsers()) {
 				sendNotification("/topic/" + h.getId(), houseUser, msg);
@@ -694,7 +744,7 @@ public class UserController {
 	@Transactional
 	@ResponseBody
 	public Expense.Transfer newExpense(HttpServletResponse response,
-			@RequestBody JsonNode data,Model model, HttpSession session) {
+			@RequestBody JsonNode data, Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 
 		// En caso de no tener casa asignada
@@ -705,7 +755,7 @@ public class UserController {
 		String description = data.get("description").asText();
 		Double quantity = data.get("quantity").asDouble();
 
-		//Crear el gastos
+		// Crear el gastos
 		Expense newExpense = new Expense();
 		newExpense.setAuthor(u);
 		newExpense.setTitle(description);
@@ -713,12 +763,14 @@ public class UserController {
 		newExpense.setDate(currentDate());
 		newExpense.setHouse(u.getHouse());
 		newExpense.setEnabled(true);
-		//Ajustar la tabla UserExpense
 		entityManager.persist(newExpense);
 		entityManager.flush();
 
+		// TODO Ajustar la tabla UserExpense
+
 		// Crear histórico
-		String message = u.getUsername() + " a creado el gasto con el concepto \"" + newExpense.getTitle() + "\" por el valor de " + newExpense.getQuantity() + " el " + currentDate();
+		String message = u.getUsername() + " ha creado el gasto con el concepto \"" + newExpense.getTitle()
+				+ "\" por el valor de " + newExpense.getQuantity() + " el " + currentDate();
 		createHistorical(message, "EXPENSE", u.getHouse());
 
 		return newExpense.toTransfer();
@@ -728,7 +780,7 @@ public class UserController {
 	// Mandar notificaciones
 	public void sendNotification(String endpoint, User u_task, String msg) {
 
-		//Crear objeto de la noti en la BD
+		// Crear objeto de la noti en la BD
 		Notification notif = new Notification();
 		notif.setDate(currentDate());
 		notif.setEnabled(true);

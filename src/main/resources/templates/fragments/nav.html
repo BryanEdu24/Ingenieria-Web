@@ -38,6 +38,11 @@
                                 <h5>Gastos</h5>
                             </a>
                         </li>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" id="buttonTasks" href="/user/historical" title="Página de historial">
+                                <h5>Historial</h5>
+                            </a>
+                        </li>
                         <!--Manager-->
                         <li class="nav-item mx-3" th:if="${#strings.equals(u.roles, 'MANAGER')}">
                             <a class="nav-link" id="buttonManager" href="/user/manager" title="Página de Manager">

@@ -28,7 +28,7 @@ import es.ucm.fdi.iw.model.User.Role;
 public class RootController {
 
     private static final Logger log = LogManager.getLogger(RootController.class);
-    
+
 	@Autowired
 	private EntityManager entityManager;
 
@@ -55,7 +55,7 @@ public class RootController {
 
 	// ----- POSTs -----
 	// Crear un nuevo usuario
-	@PostMapping("/newuser") // TODO testear
+	@PostMapping("/newuser")
 	@Transactional
 	public String register(
 		HttpServletResponse response,
@@ -63,7 +63,7 @@ public class RootController {
 		@RequestParam String username,
 		@RequestParam String password,
 		Model model, HttpSession session) throws IOException {
-            
+
         try {
             entityManager.createNamedQuery("User.byemail", User.class)
 			.setParameter("useremail", email)

@@ -22,7 +22,7 @@ function newTask(event) {
 
             //TODO habitación
             $('#divCardsTasks').prepend(`
-                <div class="card my-2">
+                <div class="card my-2" id="divCardTasksTask${d.id}">
                     <div class="card-content d-flex p-1 align-items-center taskCard">
                         <div class="col ms-2 my-1">
                             <h3>${d.title}</h3>

@@ -60,7 +60,6 @@ function viewUser(event) {
 
 function deleteHouse(id){
     console.log("Botón de bloquear clickeado");
-    // var id = $(button).data('id');
     console.log("ID de la tarjeta:", id);
     
     // // Mostrar modal de edición
