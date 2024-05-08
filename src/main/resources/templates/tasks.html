@@ -112,19 +112,19 @@
                         <form>
                             <div id="viewFormTask" style="display: none;">
                                 <div class="mb-2 d-flex">
-                                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Nombre de la Tarea:</div>
+                                    <div class="col-7 titleStyleInfo d-flex justify-content-start">·&nbsp; Nombre de la Tarea:</div>
                                     <div class="col">
                                         <input type="text" id="selectedTaskTitle" class="form-control inputInfo" value="${d.title}" readonly>
                                     </div>
                                 </div>
                                 <div class="mb-2 d-flex">
-                                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Autor de la tarea:</div>
+                                    <div class="col-7 titleStyleInfo d-flex justify-content-start">·&nbsp; Autor de la tarea:</div>
                                     <div class="col">
                                         <input type="text" id="selectedTaskAuthor" class="form-control inputInfo" value="${d.author}" readonly>
                                     </div>
                                 </div>
                                 <div class="updateT mb-2 d-flex">
-                                    <label class="col-7 titleStyleInfo text-left"><b>·&nbsp;</b> Asignada a:</label>
+                                    <label class="col-7 titleStyleInfo d-flex justify-content-start"><b>·&nbsp;</b> Asignada a:</label>
                                     <div class="col">
                                         <select name="user_id" id="viewTaskSelectUser" class="form-select inputInfo" required disabled>
                                             <option th:each="houseUser: ${houseUsers}" th:value="${houseUser.id}" th:text="${houseUser.username}"></option>
@@ -133,7 +133,7 @@
                                 </div>
 
                                 <div class="mb-2 d-flex">
-                                    <div class="col-7 titleStyleInfo text-left">·&nbsp; Fecha de creación:</div>
+                                    <div class="col-7 titleStyleInfo d-flex justify-content-start">·&nbsp; Fecha de creación:</div>
                                     <div class="col">
                                         <input type="text" id="selectedTaskDate" class="form-control inputInfo"
                                             value="${formattedDate}" readonly>
@@ -141,7 +141,7 @@
                                 </div>
 
                                 <div class="updateT mb-2 d-flex">
-                                    <label class="col-7 titleStyleInfo text-left"><b>·&nbsp;</b> Habitación:</label>
+                                    <label class="col-7 titleStyleInfo d-flex justify-content-start"><b>·&nbsp;</b> Habitación:</label>
                                     <div class="col">
                                         <select name="room_id" id="viewTaskSelectRoom" class="form-select inputInfo" disabled>
                                             <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
@@ -226,21 +226,21 @@
                 <div class="modal-body">
                     <form id="form-newTask">
                         <div class="row mb-3">
-                            <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Nombre de la Tarea:</label>
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Nombre de la Tarea:</label>
                             <div class="col-7">
                                 <input type="text" class="form-control" id="taskTitle" name="title"
                                     placeholder="Nombre de la Tarea" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Autor de la tarea:</label>
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Autor de la tarea:</label>
                             <div class="col-7">
                                 <input type="text" class="form-control inputInfo" id="taskAuthor" name="author"
                                     th:value="${authorName}" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Asignada a:</label>
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Asignada a:</label>
                             <div class="col-7">
                                 <select name="user_id" id="addTaskSelectUser" class="form-select" required>
                                     <option disabled hidden selected>Seleccione uno...</option>
@@ -250,7 +250,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Habitación:</label>
+                            <label class="col-5 align-self-center"><b>·&nbsp;</b> Habitación:</label>
                             <div class="col-7">
                                 <select name="room_id" id="addTaskSelectRoom" class="form-select">
                                     <option disabled hidden selected>Seleccione uno...</option>

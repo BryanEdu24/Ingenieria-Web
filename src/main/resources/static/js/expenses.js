@@ -7,6 +7,8 @@ function newExpense(event) {
         description: $("#expenseDescription").val(),
         quantity: $("#expenseQuantity").val()
     };
+    params.quantity = parseFloat(params.quantity).toFixed(2); // Redondeamos, NO SE TRUNCA
+
     console.log(`PARAMS: description:${params.description}, quantity:${params.quantity}`);
 
     go("/user/newExpense", 'POST', params)

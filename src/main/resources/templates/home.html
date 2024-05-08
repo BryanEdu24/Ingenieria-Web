@@ -34,11 +34,11 @@
                                     <h4 th:text="${#dates.format(task.creationDate, 'dd-MM-yyyy')}"></h4>
                                     <h4 th:text="${task.room.name}"></h4>
                                 </div>
-                                <div class="text-center mb-2">
+                                <div class="text-center mb-2 mx-2">
                                     <label class="form-check-label" for="taskDone">
                                         <h6>Tarea completada</h6>
                                     </label>
-                                    <div class="form-check col text-center">
+                                    <div class="form-check d-flex justify-content-center">
                                         <input class="form-check-input" type="checkbox" value="" id="taskDone">
                                     </div>
                                 </div>
