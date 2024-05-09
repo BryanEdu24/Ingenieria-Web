@@ -68,19 +68,15 @@ function newRoom(event){
 }
 
 function editRoom(id) {
-    
     console.log("Botón de editar clickeado");
     console.log("ID de la tarjeta:", id);
     
-    // // Mostrar modal de edición
-    $('#editRoomModal').modal('show');
+    $('#editRoomModal').modal('show'); // Mostrar modal de edición
     $('#buttonRoomUpdate').attr("onclick", `updateRoom(${id})`);
-    
 }
 
 function updateRoom(id){
-
-    console.log("Botón de editar clickeado");
+    console.log("Botón de editar habitación clickeado");
     console.log("ID de la tarjeta:", id);
     var newName = $("#roomNameEdit").val();
 

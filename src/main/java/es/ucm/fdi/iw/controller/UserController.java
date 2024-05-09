@@ -776,6 +776,26 @@ public class UserController {
 		return newExpense.toTransfer();
 	}
 
+	// pepe
+	@PostMapping("/updateExpense")
+	@Transactional
+	@ResponseBody
+	public Expense.Transfer updateExpense(
+			HttpServletResponse response,
+			@RequestBody JsonNode data,
+			Model model, HttpSession session) throws IOException {
+
+		String expenseName = data.get("title").asText(); // Obtén el nuevo nombre del gasto
+		long expenseId = data.get("id").asLong(); // Obtén el ID del gasto
+		Expense expenseToUpdate = entityManager.find(Expense.class, expenseId); // Encuentra el gasto en la BBDD
+		expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
+
+		entityManager.persist(expenseToUpdate); // Persiste los cambios en la base de datos
+		entityManager.flush();
+
+		return expenseToUpdate.toTransfer(); // Devuelve los datos actualizados de la habitación
+	}
+
 	// ----- UTILS -----
 	// Mandar notificaciones
 	public void sendNotification(String endpoint, User u_task, String msg) {

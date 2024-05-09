@@ -43,6 +43,7 @@ public class Expense implements Transferable<Expense.Transfer> {
     @AllArgsConstructor
     public static class Transfer {
         private long id;
+        private String title;
         private User.Transfer author;
         private Double quantity;
         private Date date;
@@ -51,7 +52,7 @@ public class Expense implements Transferable<Expense.Transfer> {
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, author.toTransfer(), quantity, date, house.getId());
+        return new Transfer(id, title, author.toTransfer(), quantity, date, house.getId());
     }
 
     @Override
