@@ -776,7 +776,7 @@ public class UserController {
 		return newExpense.toTransfer();
 	}
 
-	// pepe
+	// Modificar Gasto
 	@PostMapping("/updateExpense")
 	@Transactional
 	@ResponseBody
@@ -786,9 +786,19 @@ public class UserController {
 			Model model, HttpSession session) throws IOException {
 
 		String expenseName = data.get("title").asText(); // Obtén el nuevo nombre del gasto
+		Double expenseQuantity = data.get("quantity").asDouble(); // Obtén la nueva cantidad del gasto
 		long expenseId = data.get("id").asLong(); // Obtén el ID del gasto
 		Expense expenseToUpdate = entityManager.find(Expense.class, expenseId); // Encuentra el gasto en la BBDD
-		expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
+		if (expenseName != "" && expenseQuantity != 0.0) {
+			expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
+			expenseToUpdate.setQuantity(expenseQuantity); // Actualiza la cantidad del gasto
+		}
+		else if (expenseName != "" && expenseQuantity == 0.0) {
+			expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
+		}
+		else if (expenseQuantity != 0.0 && expenseName == "") {
+			expenseToUpdate.setQuantity(expenseQuantity); // Actualiza la cantidad del gasto
+		}
 
 		entityManager.persist(expenseToUpdate); // Persiste los cambios en la base de datos
 		entityManager.flush();

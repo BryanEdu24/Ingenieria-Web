@@ -25,6 +25,7 @@ public class Expense implements Transferable<Expense.Transfer> {
 
     private boolean enabled;
 
+    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)

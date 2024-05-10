@@ -33,8 +33,8 @@
 
                 <div class="mt-2 d-flex align-items-center justify-content-center">
                     <!-- Lista Gastos -->
-                    <div class="gastos p-3 w-100">
-                        <div id="noTasks" th:if="${#lists.size(expenses) == 0}" class="titleStyle">
+                    <div class="gastos p-3 w-100" id="divCardsExpenses">
+                        <div id="noExpenses" th:if="${#lists.size(expenses) == 0}" class="titleStyle">
                             <h4>No se encuentran gastos para la casa</h4>
                             <img th:src="@{/img/noHayGastos.png}" height="50" width="50">
                         </div>
@@ -114,7 +114,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form th:action="@{/newExpense}" method="post" id="form-newExpense">
+                    <form id="form-newExpense">
                         <div class="row mb-3">
                             <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Descripción del gasto:</label>
                             <div class="col-7">
@@ -149,7 +149,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form th:action="@{/newExpense}" method="post" id="form-newExpense">
+                    <form id="form-newExpense">
                         <div class="row mb-3">
                             <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Descripción del gasto:</label>
                             <div class="col-7">
@@ -160,14 +160,14 @@
                         <div class="row mb-3">
                             <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Cantidad gastada (€):</label>
                             <div class="col-7">
-                                <input type="number" class="form-control" id="expenseQuantityEdit" name="description" placeholder="Insertar Cantidad (€)" min="0" step="0.01" lang="es" required>
+                                <input type="number" class="form-control" id="expenseQuantityEdit" name="description" placeholder="Insertar Cantidad (€)" min="0.01" step="0.01" lang="es" required>
                             </div>
                         </div>                      
                     </form>
                     
                     <div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="buttonExpenseUpdate" data-bs-dismiss="modal" class="btn btn-primary">Confirmar cambios</button>
+                        <button id="buttonExpenseUpdate" data-bs-dismiss="modal" class="btn btn-primary">Confirmar cambios</button>
                     </div>
                 </div>
             </div>

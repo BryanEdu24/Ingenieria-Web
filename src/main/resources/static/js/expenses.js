@@ -15,6 +15,45 @@ function newExpense(event) {
         .then(d => {
             console.log("Success");
             console.log(d);
+
+            $("#noExpenses").hide()
+            $("#form-newExpense")[0].reset()
+
+            const formattedDate = formatDate(d.date);
+            $('#divCardsExpenses').prepend(`
+            <div class="card my-2" id="idCardExpense${d.id}">
+                <div class="card-content d-flex p-1 align-items-center">
+                    <div class="col ms-2 my-1">
+                        <h3>${d.title}</h3>
+                        <h5>${formattedDate}</h5>
+                    </div>
+                    <div class="col d-flex">
+                        <h3>${d.quantity}</h3>
+                        <span><h3 style="color: #FF991F;">&ensp;&euro;</h3></span>
+                    </div>
+                    <div class="mx-4 text-center">
+                        <b><u>Acciones</u></b>
+                        <div class="d-flex mt-1">
+                            <div>
+                                <button type="button" class="imgActionsEdit" data-id="${d.id}" onclick="editExpense(${d.id})" title="Editar gasto">
+                                    <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+                                </button>
+                            </div>
+                            <div>
+                                <button type="button" class="imgActionsPay" data-id="${d.id}" onclick="payExpense(${d.id})" title="Pagar gasto">
+                                    <img th:src="@{/img/pagar.png}" src="/img/pagar.png" width="35" height="35">
+                                </button>
+                            </div>
+                            <div>
+                                <button type="button" class="imgActionsDelete" id="btnDeleteRoom" attr="data-name=${d.title}" onclick="deleteExpense(${d.id}, \'${d.title}\')" title="Eliminar gasto">
+                                    <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`)
+
         })
         .catch(e => {
             console.log("Fail");
@@ -34,7 +73,7 @@ function updateExpense(id){
     console.log("Botón de editar gasto clickeado");
     console.log("ID de la tarjeta:", id);
     var newName = $("#expenseDescriptionEdit").val();
-    var newQuantity = $("#expenseQuantityEdit").val()
+    var newQuantity = $("#expenseQuantityEdit").val();
 
     var params = {
         id: id,
@@ -43,6 +82,7 @@ function updateExpense(id){
     };
 
     console.log("PARAMS: ", params);
+    params.quantity = parseFloat(params.quantity).toFixed(2); // Redondeamos, NO SE TRUNCA
 
     go("/user/updateExpense", 'POST', params)
         .then(d => {
@@ -50,12 +90,13 @@ function updateExpense(id){
             console.log(d);
 
             $('#idCardExpense' + id).empty()
+            const formattedDate = formatDate(d.date);
 
             $('#idCardExpense' + id).append(
             `<div class="card-content d-flex p-1 align-items-center">
                 <div class="col ms-2 my-1">
                     <h3>${d.title}</h3>
-                    <h5>${dates.format(d.date, 'dd/MM/yyyy')}</h5>
+                    <h5>${formattedDate}</h5>
                 </div>
                 <div class="col d-flex">
                     <h3>${d.quantity}</h3>
@@ -65,17 +106,17 @@ function updateExpense(id){
                     <b><u>Acciones</u></b>
                     <div class="d-flex mt-1">
                         <div>
-                            <button type="button" class="imgActionsEdit" data-id="${d.id}" th:onclick="editExpense(${d.id})" title="Editar gasto">
+                            <button type="button" class="imgActionsEdit" data-id="${d.id}" onclick="editExpense(${d.id})" title="Editar gasto">
                                 <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
                             </button>
                         </div>
                         <div>
-                            <button type="button" class="imgActionsPay" data-id="${d.id}" th:onclick="payExpense(${d.id})" title="Pagar gasto">
+                            <button type="button" class="imgActionsPay" data-id="${d.id}" onclick="payExpense(${d.id})" title="Pagar gasto">
                                 <img th:src="@{/img/pagar.png}" src="/img/pagar.png" width="35" height="35">
                             </button>
                         </div>
                         <div>
-                            <button type="button" class="imgActionsDelete" id="btnDeleteRoom" th:attr="data-name=${d.title}" th:onclick="deleteExpense(${d.id}, \'${d.title}\')" title="Eliminar gasto">
+                            <button type="button" class="imgActionsDelete" id="btnDeleteRoom" attr="data-name=${d.title}" onclick="deleteExpense(${d.id}, \'${d.title}\')" title="Eliminar gasto">
                                 <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
                             </button>
                         </div>
@@ -87,4 +128,22 @@ function updateExpense(id){
             console.log("Fail");
             console.log(e);
         });
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+function formatDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${day}/${month}/${year} a las ${hours}:${minutes}`;
 }
