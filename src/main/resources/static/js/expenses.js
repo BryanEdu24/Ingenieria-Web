@@ -130,20 +130,21 @@ function updateExpense(id){
         });
 }
 
+function deleteExpense(id, nameExpense) {
+    console.log("Botón de borrar clickeado");
+    console.log("Datos de deleteExpense:", id, " y ", nameExpense); 
+    
+    $('#deleteModalSpent').modal('show');
+    //$('#alertDeleteRoom').hide();
+    $('#bodyDeleteModal').empty();
+    $('#bodyDeleteModal').prepend(`<h5>¿Estás segur@ que deseas eliminar el gasto: <span style="color: #02B9D8;">${nameExpense}</span>?</h5>`)
+    $('#confirmDeleteExpenseButton').attr("onclick", `confirmDeleteExpense(${id})`);
+}
+
 function formatDate(dateString) {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
-}
-
-function formatDateTime(dateTimeString) {
-    const date = new Date(dateTimeString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${day}/${month}/${year} a las ${hours}:${minutes}`;
 }

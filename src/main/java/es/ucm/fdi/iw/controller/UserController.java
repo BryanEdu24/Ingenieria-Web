@@ -38,10 +38,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
 import java.security.SecureRandom;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 /**
  * User management.
@@ -392,9 +398,10 @@ public class UserController {
 				+ "</u>.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), u_task, msg);
 
+		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
 		// Crear histórico
 		String message = target.getAuthor() + " ha creado la tarea \"" + target.getTitle() + "\" en la habitación "
-				+ target.getRoom().getName() + " para " + target.getUser().getUsername() + " el " + currentDate();
+				+ target.getRoom().getName() + " para " + target.getUser().getUsername() + " el " + niceDateFormat.format(currentDate());
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -429,9 +436,9 @@ public class UserController {
 		String msg = "La tarea \"" + target.getTitle() + "\" ha sido modificada.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), target.getUser(), msg);
 
+		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
 		// Crear histórico
-		String message = target.getAuthor() + " ha modificado la tarea \"" + target.getTitle() + "\" el "
-				+ currentDate();
+		String message = target.getAuthor() + " ha modificado la tarea \"" + target.getTitle() + "\" el " + niceDateFormat.format(currentDate());
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -459,8 +466,9 @@ public class UserController {
 		String msg = "La tarea \"" + target.getTitle() + "\" ha sido eliminada.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), target.getUser(), msg);
 
+		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
 		// Crear histórico
-		String message = target.getAuthor() + " ha borrado la tarea \"" + target.getTitle() + "\" el " + currentDate();
+		String message = target.getAuthor() + " ha borrado la tarea \"" + target.getTitle() + "\" el " + niceDateFormat.format(currentDate());
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -768,9 +776,10 @@ public class UserController {
 
 		// TODO Ajustar la tabla UserExpense
 
+		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
 		// Crear histórico
 		String message = u.getUsername() + " ha creado el gasto con el concepto \"" + newExpense.getTitle()
-				+ "\" por el valor de " + newExpense.getQuantity() + " el " + currentDate();
+				+ "\" por el valor de " + newExpense.getQuantity() + "\u20AC el " + niceDateFormat.format(currentDate());
 		createHistorical(message, "EXPENSE", u.getHouse());
 
 		return newExpense.toTransfer();

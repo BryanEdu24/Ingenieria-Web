@@ -12,25 +12,30 @@
 
     <div class="HomePrincipal container-fluid">
         <div class="row">
-            <!--Tareas-->
             <div class="col card-list tareas">
-                <div class="titleStyle mt-2">HISTORIAL</div>
+                <div class="titleStyle mt-2">Historial</div>
                 <div class="p-3" id="divTasksHome">
                     <div th:if="${#lists.size(historicals) == 0}" class="titleStyle">
-                        <h4>No hay historial aún</h4>
+                        <h4>No se encuentra movimientos en el historial</h4>
+                        <img th:src="@{/img/noHistorial.png}" height="50" width="50">
                     </div>
                     <div th:each="historical : ${historicals}">
-                        <div class="card my-2">
+                        <div class="card mb-3 cardsHistorical">
                             <div class="card-content d-flex p-1 align-items-center">
-                                <div class="d-flex align-items-center">
-                                    <h3 th:text="${historical.type}"></h3> <h4 th:text="${historical.message}" class="ms-2"></h4>
+                                <div class="d-flex align-items-center p-3">
+                                    <h3>
+                                        <span th:if="${historical.type == 'TASK'}">📝 <u>Tarea</u>: </span>
+                                        <span th:if="${historical.type == 'EXPENSE'}">💲 <u>Gasto</u>: </span>
+                                    </h3>
+                                    <h4 th:text="${historical.message}" class="ms-2"></h4>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+        </div>
+    </div>
 </body>
 
 </html>
