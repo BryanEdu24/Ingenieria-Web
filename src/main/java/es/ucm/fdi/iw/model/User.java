@@ -24,7 +24,9 @@ import java.util.List;
                 + "FROM User u "
                 + "WHERE u.username = :username"),
         @NamedQuery(name = "User.byemail", query = "SELECT u FROM User u "
-                + "WHERE u.email = :useremail")
+                + "WHERE u.email = :useremail"),
+        @NamedQuery(name = "User.byHouse", query = "SELECT u FROM User u "
+                + "WHERE u.house = :house")
 })
 
 @Table(name = "IWUser")

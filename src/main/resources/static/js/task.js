@@ -195,7 +195,9 @@ function deleteTask(event, idTask) {
             console.log(d);
 
             $("#divDeleteTask").show();
-            $("#divInfoCard").hide();            
+            $("#divInfoCard").hide();
+            $("#inputNotes").hide()
+            $("#noTaskSelectedNotes").show();
             $("#divCardTasksTask" + idTask).hide()
         })
         .catch(e => {

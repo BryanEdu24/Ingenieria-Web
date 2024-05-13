@@ -11,6 +11,7 @@ import es.ucm.fdi.iw.model.Historical;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
+import es.ucm.fdi.iw.model.UserExpense;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -775,8 +776,20 @@ public class UserController {
 		entityManager.flush();
 
 		// TODO Ajustar la tabla UserExpense
+		List<User> users = entityManager
+				.createNamedQuery("User.byHouse", User.class)
+				.setParameter("house", u.getHouse())
+				.getResultList();
 
-		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
+		for (User user : users) {
+			UserExpense newUserExpense = new UserExpense();
+			newUserExpense.setExpense(newExpense);
+			newUserExpense.setUser(user);
+			entityManager.persist(newUserExpense);
+		}
+		entityManager.flush();
+
+		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		// Crear histórico
 		String message = u.getUsername() + " ha creado el gasto con el concepto \"" + newExpense.getTitle()
 				+ "\" por el valor de " + newExpense.getQuantity() + "\u20AC el " + niceDateFormat.format(currentDate());
@@ -797,7 +810,9 @@ public class UserController {
 		String expenseName = data.get("title").asText(); // Obtén el nuevo nombre del gasto
 		Double expenseQuantity = data.get("quantity").asDouble(); // Obtén la nueva cantidad del gasto
 		long expenseId = data.get("id").asLong(); // Obtén el ID del gasto
+
 		Expense expenseToUpdate = entityManager.find(Expense.class, expenseId); // Encuentra el gasto en la BBDD
+
 		if (expenseName != "" && expenseQuantity != 0.0) {
 			expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
 			expenseToUpdate.setQuantity(expenseQuantity); // Actualiza la cantidad del gasto
