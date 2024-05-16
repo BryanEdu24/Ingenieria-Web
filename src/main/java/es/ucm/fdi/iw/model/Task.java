@@ -71,6 +71,7 @@ public class Task implements Transferable<Task.Transfer> {
                 private Room.Transfer room;
                 private Date creationDate;
                 private List<Note.Transfer> notes;
+                private boolean done;
         }
 
         @Override
@@ -81,8 +82,7 @@ public class Task implements Transferable<Task.Transfer> {
                                 aux.add(i.toTransfer());
                         }
                 }
-                return new Transfer(id, title, author, enabled, user.toTransfer(), room.toTransfer(), creationDate,
-                                aux);
+                return new Transfer(id, title, author, enabled, user.toTransfer(), room.toTransfer(), creationDate, aux, done);
         }
 
         @Override

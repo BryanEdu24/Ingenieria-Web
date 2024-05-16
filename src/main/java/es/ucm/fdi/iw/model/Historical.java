@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @NamedQueries({
     @NamedQuery(name = "Historical.byHouse", query = "SELECT h FROM Historical h "
-            + "WHERE h.house =: house")
+            + "WHERE h.house =: house ORDER BY h.id DESC")
 })
 
 public class Historical implements Transferable<Historical.Transfer> {

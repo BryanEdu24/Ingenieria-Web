@@ -58,16 +58,16 @@ function viewUser(event) {
         });
 }
 
-function deleteHouse(id){
+function deleteHouse(id) {
     console.log("Botón de bloquear clickeado");
     console.log("ID de la tarjeta:", id);
-    
+
     // // Mostrar modal de edición
     $('#deleteHouseModal').modal('show');
     $('#confirmDeleteHouseButton').attr("onclick", `confirmDeleteHouse(${id})`);
 }
 
-function confirmDeleteHouse(id){
+function confirmDeleteHouse(id) {
     console.log("Llegué a confirm");
     var params = {
         id: id,
@@ -84,4 +84,37 @@ function confirmDeleteHouse(id){
             console.log("Fail");
             console.log(e);
         });
+}
+
+function viewHouseUserInfo(houseId) {
+
+    if ($("#infoUsersHouseButton" + houseId).attr("class") !== "btn collapsed") {
+        go("/admin/usersOfHouse/" + houseId, 'GET')
+            .then(d => {
+                console.log("Success");
+                console.log(d);
+
+
+                $("#collapseAreaHouse" + houseId).empty();
+
+                d.forEach(user => {
+                    $("#collapseAreaHouse" + houseId).append(`
+                    <div class="card p-1 mb-3" id="cardsMembersAdmin">
+                        <div class="card-content d-flex p-1 align-items-center justify-content-between">
+                            <div>
+                                <h5 class="mb-0 titleStyleInfo">${user.username}</h5>
+                            </div>
+                            <button type="button" class="imgActionsDelete">
+                                <img th:src="@{/img/basura.png}" src="/img/basura.png" width="40" height="40">
+                            </button>
+                        </div>
+                    </div>
+                    `);
+                });
+            })
+            .catch(e => {
+                console.log("Fail");
+                console.log(e);
+            });
+    }
 }

@@ -29,36 +29,17 @@
                                 <button type="button" class="imgActionsDelete" th:onclick="deleteHouse([[${house.id}]])">
                                     <img th:src="@{/img/basura.png}" src="/img/basura.png" width="50" height="50">
                                 </button>
-                                <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="viewHouseUserInfo(event)">
+                                <button class="btn" type="button" data-bs-toggle="collapse" th:id="'infoUsersHouseButton' + ${house.id}" th:attr="data-bs-target='#collapseAreaHouse' + ${house.id}" aria-expanded="false" aria-controls="collapseExample" th:onclick="viewHouseUserInfo([[${house.id}]])">
                                     <span class="image-container">
                                         <img th:src="@{/img/vista.png}" src="/img/vista.png" width="60" height="60">
                                     </span>
                                 </button>
                             </div>
                         </div>
-    
-                        <div class="p-2 collapse" id="collapseExample">
-                            <div class="card p-1 mb-3" id="cardsMembersAdmin">
-                                <div class="card-content d-flex p-1 align-items-center justify-content-between">
-                                    <div>
-                                        <h5 class="mb-0 titleStyleInfo">Miembro 1</h5>
-                                    </div>
-                                    <button type="button" class="imgActionsDelete" th:onclick="deleteHouse([[${house.id}]])">
-                                        <img th:src="@{/img/basura.png}" src="/img/basura.png" width="40" height="40">
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card p-1 mb-3" id="cardsMembersAdmin">
-                                <div class="card-content d-flex p-1 align-items-center justify-content-between">
-                                    <div>
-                                        <h5 class="mb-0 titleStyleInfo">Miembro 2</h5>
-                                    </div>
-                                    <button type="button" class="imgActionsDelete" th:onclick="deleteHouse([[${house.id}]])">
-                                        <img th:src="@{/img/basura.png}" src="/img/basura.png" width="40" height="40">
-                                    </button>
-                                </div>
-                            </div>
+
+                        <div class="p-2 collapse" th:id="'collapseAreaHouse' + ${house.id}">
                         </div>
+
                     </div>
                 </div>
             </div>

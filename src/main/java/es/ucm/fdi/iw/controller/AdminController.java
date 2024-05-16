@@ -2,6 +2,7 @@ package es.ucm.fdi.iw.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import es.ucm.fdi.iw.model.House;
+import es.ucm.fdi.iw.model.Notification;
+import es.ucm.fdi.iw.model.Task;
+import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 
 /**
@@ -70,6 +75,22 @@ public class AdminController {
         List<User> users = target.getUsers();
         model.addAttribute("ListHouseUsers", users);
         return target.toTransfer();
+    }
+
+    @GetMapping("/usersOfHouse/{id}")
+    @ResponseBody
+    public List<User.Transfer> usersOfHouse(
+            HttpServletResponse response,
+            @PathVariable long id,
+            Model model, HttpSession session) {
+
+        House house = entityManager.find(House.class, id);
+        List<User> users = entityManager
+				.createNamedQuery("User.byHouse", User.class)
+				.setParameter("house", house)
+				.getResultList();
+
+        return users.stream().map(Transferable::toTransfer).collect(Collectors.toList());
     }
 
     // ----- POSTs -----

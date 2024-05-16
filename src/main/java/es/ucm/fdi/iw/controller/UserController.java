@@ -43,6 +43,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.text.DateFormat;
@@ -367,6 +368,38 @@ public class UserController {
 		return target.toTransfer();
 	}
 
+	// Marcar notificaciones como leidas
+	@PostMapping("/changeTaskState")
+	@Transactional
+	@ResponseBody
+	public boolean changeTaskState(
+			HttpServletResponse response,
+			@RequestBody JsonNode data,
+			Model model, HttpSession session) {
+
+		long idTask = data.get("idTask").asLong();
+
+		try {
+			Task target = entityManager.find(Task.class, idTask);
+			target.setDone(!target.isDone());;
+			entityManager.persist(target);
+			entityManager.flush();
+
+			String message = target.getUser().getUsername() + " ha cambiado el estado de la tarea \"" + target.getTitle() + "\" en la habitación "
+				+ target.getRoom().getName() + " a ";
+			if(target.isDone()){
+				message += "terminada.";
+			}else{
+				message += "sin terminar.";
+			}
+			createHistorical(message, "TASK", entityManager.find(House.class, ((User) session.getAttribute("u")).getHouse().getId()));
+
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 	// Crear una nueva tarea
 	@PostMapping("/newTask")
 	@Transactional
@@ -399,7 +432,7 @@ public class UserController {
 				+ "</u>.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), u_task, msg);
 
-		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
+		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		// Crear histórico
 		String message = target.getAuthor() + " ha creado la tarea \"" + target.getTitle() + "\" en la habitación "
 				+ target.getRoom().getName() + " para " + target.getUser().getUsername() + " el " + niceDateFormat.format(currentDate());

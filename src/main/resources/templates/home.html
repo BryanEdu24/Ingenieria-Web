@@ -3,6 +3,7 @@
 
 <head>
     <th:block th:replace="fragments/head :: header" />
+    <script th:src="@{/js/homescripts.js}" src="/js/homescripts.js"></script>
     <title>Home</title>
 </head>
 
@@ -39,7 +40,8 @@
                                         <h6>Tarea completada</h6>
                                     </label>
                                     <div class="form-check d-flex justify-content-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="taskDone">
+                                        <input th:if="${task.done == false}" class="form-check-input" type="checkbox" value="" th:id="'completeTaskCheck' + ${task.id}" th:onclick="changeTaskState([[${task.id}]])">
+                                        <input th:if="${task.done == true}" class="form-check-input" type="checkbox" value="" th:id="'completeTaskCheck' + ${task.id}" th:onclick="changeTaskState([[${task.id}]])" checked>
                                     </div>
                                 </div>
                             </div>

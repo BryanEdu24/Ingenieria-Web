@@ -11,7 +11,7 @@ Cosas que quedan por hacer.
 
 - MANAGER:
     - modificar contraseña de la casa
-    - cuando se elimina un usuario, que no siga siendo un posible manager
+    - cuando se elimina un usuario, que no siga siendo un posible manager CHECK
 
 - HISTORICO:
     - creacion (tareas y gastos)
@@ -26,4 +26,4 @@ Cosas que quedan por hacer.
     - reparto de gastos
 
 - TAREAS:
-    - marcar como completada
+    - marcar como completada CHECK
