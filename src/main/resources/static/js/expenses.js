@@ -30,7 +30,12 @@ function newExpense(event) {
                     <div class="col">
                         <div class="d-flex">
                             <h3>${d.quantity}</h3>
-                            <span><h3 style="color: #FF991F;">&ensp;&euro;</h3></span>
+                            <span class="d-flex">
+                                <h3>&ensp;&euro;, por pagar:&ensp;</h3>
+                                <span class="d-flex">
+                                    <h3>${d.remainingQuantity}</h3></h3><h3>&euro;</h3>
+                                </span>
+                            </span>
                         </div>
                         <h3>${d.author.username}</h3>
                     </div>
@@ -87,38 +92,48 @@ function updateExpense(id){
             console.log("Success");
             console.log(d);
 
-            $('#idCardExpense' + id).empty()
-            const formattedDate = formatDate(d.date);
-
-            $('#idCardExpense' + id).append(
-            `<div class="card-content d-flex p-1 align-items-center">
-                <div class="col ms-2 my-1">
-                    <h3>${d.title}</h3>
-                    <h5>${formattedDate}</h5>
-                </div>
-                <div class="col">
-                    <div class="d-flex">
-                        <h3>${d.quantity}</h3>
-                        <span><h3 style="color: #FF991F;">&ensp;&euro;</h3></span>
+            if(d == null){
+                //No puedo cambiarla porque alguien ha pagado.
+                console.log("ALGUIEN HA PAGADO");
+            } else{
+                $('#idCardExpense' + id).empty()
+                const formattedDate = formatDate(d.date);
+    
+                $('#idCardExpense' + id).append(
+                `<div class="card-content d-flex p-1 align-items-center">
+                    <div class="col ms-2 my-1">
+                        <h3>${d.title}</h3>
+                        <h5>${formattedDate}</h5>
                     </div>
-                    <h3>${d.author.username}</h3>
-                </div>
-                <div class="mx-4 text-center">
-                    <b><u>Acciones</u></b>
-                    <div class="d-flex mt-1">
-                        <div>
-                            <button type="button" class="imgActionsEdit" data-id="${d.id}" onclick="editExpense(${d.id})" title="Editar gasto">
-                                <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
-                            </button>
+                    <div class="col">
+                        <div class="d-flex">
+                            <h3>${d.quantity}</h3>
+                            <span class="d-flex">
+                                <h3>&ensp;&euro;, por pagar:&ensp;</h3>
+                                <span class="d-flex">
+                                    <h3>${d.remainingQuantity}</h3></h3><h3>&euro;</h3>
+                                </span>
+                            </span>
                         </div>
-                        <div>
-                            <button type="button" class="imgActionsDelete" id="btnDeleteExpense" attr="data-name=${d.title}" onclick="deleteExpense(${d.id}, \'${d.title}\')" title="Eliminar gasto">
-                                <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
-                            </button>
+                        <h3>${d.author.username}</h3>
+                    </div>
+                    <div class="mx-4 text-center">
+                        <b><u>Acciones</u></b>
+                        <div class="d-flex mt-1">
+                            <div>
+                                <button type="button" class="imgActionsEdit" data-id="${d.id}" onclick="editExpense(${d.id})" title="Editar gasto">
+                                    <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
+                                </button>
+                            </div>
+                            <div>
+                                <button type="button" class="imgActionsDelete" id="btnDeleteExpense" attr="data-name=${d.title}" onclick="deleteExpense(${d.id}, \'${d.title}\')" title="Eliminar gasto">
+                                    <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>`)
+                </div>`)
+            }
         })
         .catch(e => {
             console.log("Fail");

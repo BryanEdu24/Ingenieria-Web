@@ -15,8 +15,10 @@ import javax.persistence.*;
                 + "WHERE ue.user =: user AND ue.paid = False"),
         @NamedQuery(name = "UserExpense.byUserAndExpense", query = "SELECT ue FROM UserExpense ue "
                 + "WHERE ue.user.id =: user AND ue.expense.id =: expense"),
-        @NamedQuery(name = "UserExpense.checkPaid", query = "SELECT ue FROM UserExpense ue "
+        @NamedQuery(name = "UserExpense.checkPaid", query = "SELECT COUNT(*) FROM UserExpense ue "
                 + "WHERE ue.expense.id =: expenseId AND ue.paid = False"),
+        @NamedQuery(name = "UserExpense.checkPaidTrue", query = "SELECT COUNT(*) FROM UserExpense ue "
+                + "WHERE ue.expense.id =: expenseId AND ue.paid = True"),
 })
 public class UserExpense implements Transferable<UserExpense.Transfer> {
 

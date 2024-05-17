@@ -15,7 +15,7 @@ Cosas que quedan por hacer.
     - modificar contraseña de la casa directamente
     - cuando se elimina un usuario, que no siga siendo un posible manager ✅
 
-- HISTORICO:
+- HISTORICO: ✅
     - creacion (tareas y gastos) ✅
     - eliminacion (tareas y gastos) ✅
     - modificacion (tareas y gastos) ✅
@@ -25,15 +25,16 @@ Cosas que quedan por hacer.
     - eliminar gastos ✅
     - modificar gastos ✅
     - mostrar saldo ✅
-    - reparto de gastos 
+    - Balance de gastos 
+    - update gastos IMPORTANTE⚠️
 
 - TAREAS:
     - marcar como completada ✅
-    - editar completado de una tarea desde vista tarea 
+    - editar completado de una tarea desde vista tarea (puede)
+    - Info tarea saber estado
 
 - HOME :
     - mostrar gasto ✅
-    - (Posible cambio) Eliminar de la vista tareas marcadas como completadas
 
 - TEST: 
     - arreglar test

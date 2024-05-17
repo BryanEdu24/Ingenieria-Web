@@ -869,16 +869,51 @@ public class UserController {
 
 		Expense expenseToUpdate = entityManager.find(Expense.class, expenseId); // Encuentra el gasto en la BBDD
 
+		// Compruebo que nadie la haya pagado, si se ha pagado, no se cambia.
+		long unpaidCount = entityManager.createNamedQuery("UserExpense.checkPaidTrue", Long.class)
+				.setParameter("expenseId", expenseId)
+				.getSingleResult();
+
+		if (unpaidCount != 0) { // Si hay UserExpenses no pagadas, retorna null
+			return null;
+		}
+
+		List<User> users = entityManager
+				.createNamedQuery("User.byHouse", User.class)
+				.setParameter("house", u.getHouse())
+				.getResultList();
+
+		// Si nadie la ha pagado la cambio.
+
+		Double oldQuantityByUser = expenseToUpdate.getQuantityByUser();
+		Double oldQuantity = expenseToUpdate.getQuantity();
+
 		if (expenseName != "" && expenseQuantity != 0.0) {
 			expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
 			expenseToUpdate.setQuantity(expenseQuantity); // Actualiza la cantidad del gasto
+			expenseToUpdate.setQuantityByUser(expenseQuantity / users.size());
+			expenseToUpdate.setRemainingQuantity(expenseQuantity - expenseToUpdate.getQuantityByUser());
 		} else if (expenseName != "" && expenseQuantity == 0.0) {
 			expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
 		} else if (expenseQuantity != 0.0 && expenseName == "") {
 			expenseToUpdate.setQuantity(expenseQuantity); // Actualiza la cantidad del gasto
+			expenseToUpdate.setQuantityByUser(expenseQuantity / users.size());
+			expenseToUpdate.setRemainingQuantity(expenseQuantity - expenseToUpdate.getQuantityByUser());
 		}
 
 		entityManager.persist(expenseToUpdate); // Persiste los cambios en la base de datos
+
+		for (User user : users) {
+			if (user.getId() != u.getId()) { // Le asigno el gasto a todos, menos al que lo crea.
+				user.setBalance(user.getBalance() + oldQuantityByUser - expenseToUpdate.getQuantityByUser());
+			} else {
+				user.setBalance(
+						user.getBalance() - oldQuantity + oldQuantityByUser + expenseToUpdate.getRemainingQuantity());
+			}
+
+			entityManager.persist(user);
+		}
+
 		entityManager.flush();
 
 		// Crear histórico
@@ -901,13 +936,16 @@ public class UserController {
 
 		// Obtén el nuevo nombre del gasto
 		long expenseId = data.get("id").asLong(); // Obtén el ID del gasto
-		/*
-		 * List<Expense> expenses = entityManager.createNamedQuery("Expense.byHouse",
-		 * Expense.class).setParameter("house", u.getHouse()).getResultList();
-		 */
+		long unpaidCount = entityManager.createNamedQuery("UserExpense.checkPaid", Long.class)
+				.setParameter("expenseId", expenseId)
+				.getSingleResult();
+
+		if (unpaidCount > 0) { // Si hay UserExpenses no pagadas, retorna false
+			return false;
+		}
+
 		Expense expenseToDelete = entityManager.find(Expense.class, expenseId); // Encuentra el gasto en la base de
 
-		// datos
 		expenseToDelete.setEnabled(false);
 		entityManager.persist(expenseToDelete); // Persiste los cambios en la base de datos
 		entityManager.flush();

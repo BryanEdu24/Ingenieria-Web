@@ -47,7 +47,12 @@
                                 <div class="col">
                                     <div class="d-flex">
                                         <h3 th:text="${expense.quantity}"></h3>
-                                        <span><h3 style="color: #FF991F;">&ensp;&euro;</h3></span>
+                                        <span class="d-flex">
+                                            <h3>&ensp;&euro;, por pagar:&ensp;</h3>
+                                            <span class="d-flex">
+                                                <h3 th:text="${expense.remainingQuantity}"></h3><h3>&euro;</h3>
+                                            </span>
+                                        </span>
                                     </div>
                                     <h3 th:text="${expense.author.username}"></h3>
                                 </div>
@@ -79,21 +84,6 @@
                         <div class="titleStyle">Balance</div>
                         <div th:each="user : ${users}" th:text="${user.name}">
                             <span th:text="${user.money}" class="bolder"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="gastos p-3 mt-2 w-100">
-                    <!-- Reparto -->
-                    <div>
-                        <div class="titleStyle">Reparto</div>
-                        <div th:each="distribution : ${distributions}" class="border border-3 border-dark d-flex flexdirection-row justify-content-around">
-                            <p th:text="${distribution.source}">Lucas</p>
-                            <p>Paga</p>
-                            <p th:text="${distribution.money}">34.21€</p>
-                            <p>A</p>
-                            <p th:text="${distribution.destination}">David</p>
-                            <button><img th:src="@{/img/tick.svg}" src="/img/tick.svg" width="30" alt="Tick"></button>
                         </div>
                     </div>
                 </div>
@@ -190,7 +180,7 @@
                     
                     <div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button data-bs-dismiss="modal" id="confirmDeleteExpenseButton" class="btn btn-primary">Borrar Gasto</button>
+                        <button id="confirmDeleteExpenseButton" class="btn btn-primary">Borrar Gasto</button>
                     </div>
                 </div>
             </div>
