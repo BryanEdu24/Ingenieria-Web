@@ -381,18 +381,21 @@ public class UserController {
 
 		try {
 			Task target = entityManager.find(Task.class, idTask);
-			target.setDone(!target.isDone());;
+			target.setDone(!target.isDone());
+			;
 			entityManager.persist(target);
 			entityManager.flush();
 
-			String message = target.getUser().getUsername() + " ha cambiado el estado de la tarea \"" + target.getTitle() + "\" en la habitación "
-				+ target.getRoom().getName() + " a ";
-			if(target.isDone()){
+			String message = target.getUser().getUsername() + " ha cambiado el estado de la tarea \""
+					+ target.getTitle() + "\" en la habitación "
+					+ target.getRoom().getName() + " a ";
+			if (target.isDone()) {
 				message += "terminada.";
-			}else{
+			} else {
 				message += "sin terminar.";
 			}
-			createHistorical(message, "TASK", entityManager.find(House.class, ((User) session.getAttribute("u")).getHouse().getId()));
+			createHistorical(message, "TASK",
+					entityManager.find(House.class, ((User) session.getAttribute("u")).getHouse().getId()));
 
 			return true;
 		} catch (Exception e) {
@@ -435,7 +438,8 @@ public class UserController {
 		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		// Crear histórico
 		String message = target.getAuthor() + " ha creado la tarea \"" + target.getTitle() + "\" en la habitación "
-				+ target.getRoom().getName() + " para " + target.getUser().getUsername() + " el " + niceDateFormat.format(currentDate());
+				+ target.getRoom().getName() + " para " + target.getUser().getUsername() + " el "
+				+ niceDateFormat.format(currentDate());
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -470,9 +474,10 @@ public class UserController {
 		String msg = "La tarea \"" + target.getTitle() + "\" ha sido modificada.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), target.getUser(), msg);
 
-		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
+		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		// Crear histórico
-		String message = target.getAuthor() + " ha modificado la tarea \"" + target.getTitle() + "\" el " + niceDateFormat.format(currentDate());
+		String message = target.getAuthor() + " ha modificado la tarea \"" + target.getTitle() + "\" el "
+				+ niceDateFormat.format(currentDate());
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -500,9 +505,10 @@ public class UserController {
 		String msg = "La tarea \"" + target.getTitle() + "\" ha sido eliminada.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), target.getUser(), msg);
 
-		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
+		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		// Crear histórico
-		String message = target.getAuthor() + " ha borrado la tarea \"" + target.getTitle() + "\" el " + niceDateFormat.format(currentDate());
+		String message = target.getAuthor() + " ha borrado la tarea \"" + target.getTitle() + "\" el "
+				+ niceDateFormat.format(currentDate());
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -825,7 +831,8 @@ public class UserController {
 		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		// Crear histórico
 		String message = u.getUsername() + " ha creado el gasto con el concepto \"" + newExpense.getTitle()
-				+ "\" por el valor de " + newExpense.getQuantity() + "\u20AC el " + niceDateFormat.format(currentDate());
+				+ "\" por el valor de " + newExpense.getQuantity() + "\u20AC el "
+				+ niceDateFormat.format(currentDate());
 		createHistorical(message, "EXPENSE", u.getHouse());
 
 		return newExpense.toTransfer();
@@ -849,11 +856,9 @@ public class UserController {
 		if (expenseName != "" && expenseQuantity != 0.0) {
 			expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
 			expenseToUpdate.setQuantity(expenseQuantity); // Actualiza la cantidad del gasto
-		}
-		else if (expenseName != "" && expenseQuantity == 0.0) {
+		} else if (expenseName != "" && expenseQuantity == 0.0) {
 			expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
-		}
-		else if (expenseQuantity != 0.0 && expenseName == "") {
+		} else if (expenseQuantity != 0.0 && expenseName == "") {
 			expenseToUpdate.setQuantity(expenseQuantity); // Actualiza la cantidad del gasto
 		}
 
@@ -862,6 +867,51 @@ public class UserController {
 
 		return expenseToUpdate.toTransfer(); // Devuelve los datos actualizados de la habitación
 	}
+
+	// Borrar gasto
+	/*
+	 * @PostMapping("/deleteExpense")
+	 * 
+	 * @Transactional
+	 * 
+	 * @ResponseBody
+	 * public boolean deleteExpense(
+	 * HttpServletResponse response,
+	 * 
+	 * @RequestBody JsonNode data,
+	 * Model model, HttpSession session) throws IOException {
+	 * 
+	 * // Obtén el nuevo nombre del gasto
+	 * 
+	 * long expenseId = data.get("id").asLong(); // Obtén el ID del gasto
+	 * List<Expense> expenses = entityManager.createNamedQuery("Expense.byHouse",
+	 * Task.class).setParameter("roomId", expenseId).getResultList();
+	 * 
+	 * if (expenses.size() > 0) {
+	 * return false;
+	 * } else {
+	 * Expense expenseToDelete = entityManager.find(Expense.class, expenseId); //
+	 * Encuentra el gasto en la base de datos
+	 * roomToDelete.setEnabled(false);
+	 * entityManager.persist(roomToDelete); // Persiste los cambios en la base de
+	 * datos
+	 * entityManager.flush();
+	 * 
+	 * House houseUpdate = entityManager.find(House.class,
+	 * roomToDelete.getHouse().getId());
+	 * houseUpdate.setExpenses(entityManager
+	 * .createNamedQuery("Expense.byHouse", Room.class)
+	 * .setParameter("houseId", houseUpdate.getId())
+	 * .getResultList());
+	 * entityManager.persist(houseUpdate); // Persiste los cambios en la base de
+	 * datos
+	 * entityManager.flush();
+	 * 
+	 * return true;
+	 * }
+	 * 
+	 * }
+	 */
 
 	// ----- UTILS -----
 	// Mandar notificaciones

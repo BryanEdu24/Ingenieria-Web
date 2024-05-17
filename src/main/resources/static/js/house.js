@@ -79,6 +79,7 @@ function confirmDeleteHouse(id) {
         .then(d => {
             console.log("Success");
             console.log(d);
+            $('houseCard' + id ).hide();
         })
         .catch(e => {
             console.log("Fail");
@@ -87,7 +88,6 @@ function confirmDeleteHouse(id) {
 }
 
 function viewHouseUserInfo(houseId) {
-
     if ($("#infoUsersHouseButton" + houseId).attr("class") !== "btn collapsed") {
         go("/admin/usersOfHouse/" + houseId, 'GET')
             .then(d => {
@@ -99,14 +99,18 @@ function viewHouseUserInfo(houseId) {
 
                 d.forEach(user => {
                     $("#collapseAreaHouse" + houseId).append(`
-                    <div class="card p-1 mb-3" id="cardsMembersAdmin">
+                    <div class="card p-1 mb-3 cardsMembersAdmin" id="cardsMembersAdmin${user.id}">
                         <div class="card-content d-flex p-1 align-items-center justify-content-between">
-                            <div>
-                                <h5 class="mb-0 titleStyleInfo">${user.username}</h5>
+                            <div class="mx-3 d-flex">
+                                <img th:src="@{/img/JefeCasa.png}" src="/img/JefeCasa.png" width="50" height="60">
+                                <img th:src="@{/img/User.png}" src="/img/User.png" width="50" height="60">
+                                <h5 class="ms-2 mb-0 d-flex align-items-center justify-content-center titleStyleInfo">${user.username}</h5>
                             </div>
-                            <button type="button" class="imgActionsDelete">
-                                <img th:src="@{/img/basura.png}" src="/img/basura.png" width="40" height="40">
-                            </button>
+                            <div class="mx-3">
+                                <button type="button" class="imgActionsDelete" onclick="banHouseUser(event, '${user.id}', \'${user.username}\')">
+                                    <img th:src="@{/img/basura.png}" src="/img/basura.png" width="40" height="40">
+                                </button>
+                            </div>
                         </div>
                     </div>
                     `);
@@ -117,4 +121,42 @@ function viewHouseUserInfo(houseId) {
                 console.log(e);
             });
     }
+}
+
+function banHouseUser(event, id, username){
+    console.log("Ban house user");
+
+    $('#BanMemberModal').modal('show');
+    $('#bodyBanModal2').empty();
+    $('#bodyBanModal2').prepend(`<h5>¿Estás segur@ que deseas eliminar el usuario: <span style="color: #02B9D8;">${username}</span>?</h5>`)
+    $('#confirmBanUserButton').attr("onclick", `confirmBanUser(${id})`);
+
+}
+
+function confirmBanUser(id){
+    console.log("confirm ban");
+    console.log("ID card UserBan:", id);
+
+    var params = {
+        id: id,
+    };
+
+    console.log("PARAMS: ", params);
+
+    go("/admin/banUser", 'POST', params)
+        .then(d => {
+            console.log("Success");
+            console.log(d);
+
+            console.log("Success");
+            console.log(d);
+            if (d) {
+                $('#BanMemberModal').modal('hide');
+                $('#cardsMembersAdmin' + id).hide();
+            }
+        })
+        .catch(e => {
+            console.log("Fail");
+            console.log(e);
+        });
 }

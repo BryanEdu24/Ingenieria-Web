@@ -27,6 +27,7 @@ import es.ucm.fdi.iw.model.Notification;
 import es.ucm.fdi.iw.model.Task;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.User.Role;
 
 /**
  * Site administration.
@@ -43,8 +44,8 @@ public class AdminController {
     private EntityManager entityManager;
 
     // ----- GETs -----
-	// Enrutamiento
-	// Cargar vista de admin
+    // Enrutamiento
+    // Cargar vista de admin
     @GetMapping("/")
     public String index(Model model, HttpSession session) {
         User u = (User) session.getAttribute("u");
@@ -86,9 +87,9 @@ public class AdminController {
 
         House house = entityManager.find(House.class, id);
         List<User> users = entityManager
-				.createNamedQuery("User.byHouse", User.class)
-				.setParameter("house", house)
-				.getResultList();
+                .createNamedQuery("User.byHouse", User.class)
+                .setParameter("house", house)
+                .getResultList();
 
         return users.stream().map(Transferable::toTransfer).collect(Collectors.toList());
     }
@@ -98,7 +99,7 @@ public class AdminController {
     @PostMapping("/deleteHouse")
     @Transactional
     @ResponseBody
-    public House.Transfer deleteHouse(
+    public boolean deleteHouse(
             HttpServletResponse response,
             @RequestBody JsonNode data,
             Model model, HttpSession session) throws IOException {
@@ -118,6 +119,32 @@ public class AdminController {
         house.setEnabled(false);
         entityManager.persist(house);
         entityManager.flush();
-        return house.toTransfer(); // Devuelve los datos actualizados de la habitación
+        // return house.toTransfer(); // Devuelve los datos actualizados de la
+        // habitación
+
+        return true;
     }
+
+    // Banear usuario
+    @PostMapping("/banUser") // TODO desvincular al usuario del websocket
+    @Transactional
+    @ResponseBody
+    public boolean banUser(
+            HttpServletResponse response,
+            @RequestBody JsonNode data,
+            Model model, HttpSession session) throws IOException {
+
+        long userId = data.get("id").asLong();
+
+        User banedUser = entityManager.find(User.class, userId);
+        // House h = entityManager.find(House.class, banedUser.getHouse().getId());
+
+        // if(banedUser.hasRole(Role.MANAGER)){}
+        banedUser.setHouse(null);
+        banedUser.setEnabled(false);
+        entityManager.persist(banedUser);
+        entityManager.flush();
+        return true;
+    }
+
 }

@@ -45,7 +45,7 @@ function newExpense(event) {
                                 </button>
                             </div>
                             <div>
-                                <button type="button" class="imgActionsDelete" id="btnDeleteRoom" attr="data-name=${d.title}" onclick="deleteExpense(${d.id}, \'${d.title}\')" title="Eliminar gasto">
+                                <button type="button" class="imgActionsDelete" id="btnDeleteExpense" attr="data-name=${d.title}" onclick="deleteExpense(${d.id}, \'${d.title}\')" title="Eliminar gasto">
                                     <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
                                 </button>
                             </div>
@@ -116,7 +116,7 @@ function updateExpense(id){
                             </button>
                         </div>
                         <div>
-                            <button type="button" class="imgActionsDelete" id="btnDeleteRoom" attr="data-name=${d.title}" onclick="deleteExpense(${d.id}, \'${d.title}\')" title="Eliminar gasto">
+                            <button type="button" class="imgActionsDelete" id="btnDeleteExpense" attr="data-name=${d.title}" onclick="deleteExpense(${d.id}, \'${d.title}\')" title="Eliminar gasto">
                                 <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35">
                             </button>
                         </div>

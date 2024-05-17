@@ -18,23 +18,32 @@
             <div class="admin p-3 w-75">
                 <div class="titleStyle">Casas</div>
                 <div class="p-3">
-                    <div th:each="house: ${houses}" class="card my-2">
+                    <div th:each="house: ${houses}" class="card my-2" id="'houseCard' + ${house.id}">
                         <div th:text="${house.id}" hidden> </div>
                         <div class="card-content d-flex p-2 align-items-center justify-content-between">
-                            <div class="d-flex ms-2">
-                                <h2 class="mb-0">🏠&ensp;</h2>
+                            <div class="d-flex">
+                                <div class="ms-3">
+                                    <h1 class="mb-0">🏠&ensp;</h1>
+                                </div>
                                 <h5 th:text="${house.name}" class="mb-0 d-flex align-items-center justify-content-center titleStyleInfo"></h5>
                             </div>
-                            <div>
-                                <button type="button" class="imgActionsDelete" th:onclick="deleteHouse([[${house.id}]])">
-                                    <img th:src="@{/img/basura.png}" src="/img/basura.png" width="50" height="50">
-                                </button>
-                                <button class="btn" type="button" data-bs-toggle="collapse" th:id="'infoUsersHouseButton' + ${house.id}" th:attr="data-bs-target='#collapseAreaHouse' + ${house.id}" aria-expanded="false" aria-controls="collapseExample" th:onclick="viewHouseUserInfo([[${house.id}]])">
-                                    <span class="image-container">
-                                        <img th:src="@{/img/vista.png}" src="/img/vista.png" width="60" height="60">
-                                    </span>
-                                </button>
-                            </div>
+                            <div class="mx-4 text-center">
+                                <b><u>Acciones</u></b>
+                                <div class="d-flex mt-1">
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="imgActionsDelete" th:onclick="deleteHouse([[${house.id}]])">
+                                            <img th:src="@{/img/basura.png}" src="/img/basura.png" width="50" height="50">
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button class="btn" type="button" data-bs-toggle="collapse" th:id="'infoUsersHouseButton' + ${house.id}" th:attr="data-bs-target='#collapseAreaHouse' + ${house.id}" aria-expanded="false" aria-controls="collapseExample" th:onclick="viewHouseUserInfo([[${house.id}]])">
+                                            <span class="image-container">
+                                                <img th:src="@{/img/vista.png}" src="/img/vista.png" width="60" height="60">
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>    
                         </div>
 
                         <div class="p-2 collapse" th:id="'collapseAreaHouse' + ${house.id}">
@@ -71,8 +80,8 @@
 		</div>
 	</div>
 
-    <!-- Modal BORRAR MIEMBROS -->
-	<div class="modal fade" id="deleteMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal BANEAR MIEMBROS -->
+	<div class="modal fade" id="BanMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -81,14 +90,14 @@
                 </div>
 
 				<div class="modal-body">
-					<div id="alertDeleteUser" class="error alert alert-danger text-center text-danger" style="display: none;" role="alert">
+					<div id="alertBanUser" class="error alert alert-danger text-center text-danger" style="display: none;" role="alert">
 						<b>⛔ El usuario tiene tareas pendientes. ⛔</b>
 					</div>
-					<div class="p-3 text-center" id="bodyDeleteModal2"></div>
-					<div class="text-center" id="divDeleteManager" style="display: none;">
-						<h5>❗Usted es Manager de la casa.❗<br>Establezca <u>nuevo manager</u> de casa:</h5>
+					<div class="p-3 text-center" id="bodyBanModal2"></div>
+					<div class="text-center" id="divBanManager" style="display: none;">
+						<h5>❗Este usuario es el Manager de la casa.❗<br>Establezca <u>nuevo manager</u> de casa:</h5>
 						<div class="d-flex justify-content-center mb-4">
-							<select name="manager_id" id="selectNewManager" class="form-select w-50" required>
+							<select name="manager_id" id="selectNewManagerForHouse" class="form-select w-50" required>
 								<option value="-1" id="optionDefault" disabled hidden selected>Seleccione uno...</option>
 								<option th:each="houseUser: ${membersHouse}" th:value="${houseUser.id}" th:text="${houseUser.username}" th:if="${houseUser.id != u.id}"></option>
 							</select>
@@ -98,7 +107,7 @@
 					
 					<div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-						<button type="submit" id="confirmDeleteUserButton" class="btn btn-primary">Confirmar</button>
+						<button type="submit" id="confirmBanUserButton" class="btn btn-primary">Confirmar</button>
 					</div>
 				</div>
 			</div>
