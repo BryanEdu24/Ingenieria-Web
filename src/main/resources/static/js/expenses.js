@@ -67,12 +67,12 @@ function newExpense(event) {
 function editExpense(id) {
     console.log("Botón de editar gasto clickeado");
     console.log("ID card gasto:", id);
-    
+
     $('#editModalSpent').modal('show'); // Mostrar modal de edición
     $('#buttonExpenseUpdate').attr("onclick", `updateExpense(${id})`);
 }
 
-function updateExpense(id){
+function updateExpense(id) {
     console.log("Botón de editar gasto clickeado");
     console.log("ID de la tarjeta:", id);
     var newName = $("#expenseDescriptionEdit").val();
@@ -92,14 +92,10 @@ function updateExpense(id){
             console.log("Success");
             console.log(d);
 
-            if(d == null){
-                //No puedo cambiarla porque alguien ha pagado.
-                console.log("ALGUIEN HA PAGADO");
-            } else{
-                $('#idCardExpense' + id).empty()
-                const formattedDate = formatDate(d.date);
-    
-                $('#idCardExpense' + id).append(
+            $('#idCardExpense' + id).empty()
+            const formattedDate = formatDate(d.date);
+
+            $('#idCardExpense' + id).append(
                 `<div class="card-content d-flex p-1 align-items-center">
                     <div class="col ms-2 my-1">
                         <h3>${d.title}</h3>
@@ -133,18 +129,18 @@ function updateExpense(id){
                         </div>
                     </div>
                 </div>`)
-            }
+
         })
         .catch(e => {
             console.log("Fail");
-            console.log(e);
+            console.log("NO PUEDES CAMBIARLA");
         });
 }
 
 function deleteExpense(id, nameExpense) {
     console.log("Botón de borrar clickeado");
-    console.log("Datos de deleteExpense:", id, " y ", nameExpense); 
-    
+    console.log("Datos de deleteExpense:", id, " y ", nameExpense);
+
     $('#deleteModalSpent').modal('show');
     $('#alertDeleteExpense').hide();
     $('#bodyDeleteModal').empty();
@@ -152,7 +148,7 @@ function deleteExpense(id, nameExpense) {
     $('#confirmDeleteExpenseButton').attr("onclick", `confirmDeleteExpense(${id})`);
 }
 
-function confirmDeleteExpense(id){
+function confirmDeleteExpense(id) {
     var params = {
         id: id,
     };
@@ -167,7 +163,7 @@ function confirmDeleteExpense(id){
                 $('#deleteModalSpent').modal('hide');
                 $('#idCardExpense' + id).hide();
             }
-            else {                
+            else {
                 $('#alertDeleteExpense').show();
             }
         })

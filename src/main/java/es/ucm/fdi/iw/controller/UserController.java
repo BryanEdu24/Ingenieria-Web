@@ -888,32 +888,44 @@ public class UserController {
 		Double oldQuantityByUser = expenseToUpdate.getQuantityByUser();
 		Double oldQuantity = expenseToUpdate.getQuantity();
 
-		if (expenseName != "" && expenseQuantity != 0.0) {
+		if (expenseName != "" && !expenseQuantity.isNaN()) {
 			expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
 			expenseToUpdate.setQuantity(expenseQuantity); // Actualiza la cantidad del gasto
 			expenseToUpdate.setQuantityByUser(expenseQuantity / users.size());
 			expenseToUpdate.setRemainingQuantity(expenseQuantity - expenseToUpdate.getQuantityByUser());
-		} else if (expenseName != "" && expenseQuantity == 0.0) {
+
+			for (User user : users) {
+				if (user.getId() != u.getId()) { // Le asigno el gasto a todos, menos al que lo crea.
+					user.setBalance(user.getBalance() + oldQuantityByUser - expenseToUpdate.getQuantityByUser());
+				} else {
+					user.setBalance(
+							user.getBalance() - oldQuantity + oldQuantityByUser + expenseToUpdate.getRemainingQuantity());
+				}
+
+				entityManager.persist(user);
+			}
+
+		} else if (expenseName != "" && expenseQuantity.isNaN()) {
 			expenseToUpdate.setTitle(expenseName); // Actualiza el nombre del gasto
-		} else if (expenseQuantity != 0.0 && expenseName == "") {
+
+		} else if (!expenseQuantity.isNaN() && expenseName == "") {
 			expenseToUpdate.setQuantity(expenseQuantity); // Actualiza la cantidad del gasto
 			expenseToUpdate.setQuantityByUser(expenseQuantity / users.size());
 			expenseToUpdate.setRemainingQuantity(expenseQuantity - expenseToUpdate.getQuantityByUser());
+
+			for (User user : users) {
+				if (user.getId() != u.getId()) { // Le asigno el gasto a todos, menos al que lo crea.
+					user.setBalance(user.getBalance() + oldQuantityByUser - expenseToUpdate.getQuantityByUser());
+				} else {
+					user.setBalance(
+							user.getBalance() - oldQuantity + oldQuantityByUser + expenseToUpdate.getRemainingQuantity());
+				}
+
+				entityManager.persist(user);
+			}
 		}
 
 		entityManager.persist(expenseToUpdate); // Persiste los cambios en la base de datos
-
-		for (User user : users) {
-			if (user.getId() != u.getId()) { // Le asigno el gasto a todos, menos al que lo crea.
-				user.setBalance(user.getBalance() + oldQuantityByUser - expenseToUpdate.getQuantityByUser());
-			} else {
-				user.setBalance(
-						user.getBalance() - oldQuantity + oldQuantityByUser + expenseToUpdate.getRemainingQuantity());
-			}
-
-			entityManager.persist(user);
-		}
-
 		entityManager.flush();
 
 		// Crear histórico
