@@ -2,7 +2,7 @@ Feature: testing app
 
 @task
 Scenario: logeo y entrada es task
-Given call read('login.feature@login_b')
+Given call read('login.feature@login_Clara')
 And delay(500)
 When click("#buttonTasks")
 And delay(1000)

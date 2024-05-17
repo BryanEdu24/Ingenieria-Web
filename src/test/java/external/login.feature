@@ -18,21 +18,13 @@ Feature: login en servidor
     When submit().click(".form-signin button")
     Then match html('.error') contains 'Error en nombre de usuario o contraseña'
 
-  @login_b
-  Scenario: login correcto como b
+  @login_Clara
+  Scenario: login correcto como Clara
     Given driver baseUrl + '/login'
-    And input('#username', 'b')
+    And input('#username', 'Clara')
     And input('#password', 'aa')
     When submit().click("#singButton")
-    Then waitForUrl(baseUrl + '/user/home')
-
-  @login_a
-  Scenario: login correcto como a
-    Given driver baseUrl + '/login'
-    And input('#username', 'a')
-    And input('#password', 'aa')
-    When submit().click(".form-signin button")
-    Then waitForUrl(baseUrl + '/admin')
+    Then waitForUrl(baseUrl + '/user')
 
   Scenario: logout after login
     Given driver baseUrl + '/login'

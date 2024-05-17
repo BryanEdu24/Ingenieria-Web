@@ -56,26 +56,6 @@ function confirmDeleteUser(id){
         });
 }
 
-// function viewHouseUserInfo(id){
-//     console.log("Llegué a confirm");
-//     var params = {
-//         id: id,
-//     };
-
-//     console.log("Boton clicado")
-//     go("/user/getHouseUserInfo/", 'GET', params)
-//         .then(d => {
-//             console.log("Success");
-//             console.log(d);
-
-//             $("HouseUsersCards").removeAttr("hidden");
-//         })
-//         .catch(e => {
-//             console.log("Fail");
-//             console.log(e);
-//         });
-// }
-
 function changePassword(event) {
     //TODO
 }
