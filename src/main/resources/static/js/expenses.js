@@ -20,6 +20,8 @@ function newExpense(event) {
             $("#form-newExpense")[0].reset()
 
             const formattedDate = formatDate(d.date);
+            const remainingQuantity = parseFloat(d.remainingQuantity).toFixed(2);
+
             $('#divCardsExpenses').prepend(`
             <div class="card my-2" id="idCardExpense${d.id}">
                 <div class="card-content d-flex p-1 align-items-center">
@@ -29,15 +31,15 @@ function newExpense(event) {
                     </div>
                     <div class="col">
                         <div class="d-flex">
-                            <h3>${d.quantity}</h3>
+                            <h5>${d.quantity}</h5>
                             <span class="d-flex">
-                                <h3>&ensp;&euro;, por pagar:&ensp;</h3>
+                                <h5>&euro;, por pagar:&ensp;</h5>
                                 <span class="d-flex">
-                                    <h3>${d.remainingQuantity}</h3></h3><h3>&euro;</h3>
+                                    <h5>${remainingQuantity}</h5><h5>&euro;</h5>
                                 </span>
                             </span>
                         </div>
-                        <h3>${d.author.username}</h3>
+                        <h5>${d.author.username}</h5>
                     </div>
                     <div class="mx-4 text-center">
                         <b><u>Acciones</u></b>
@@ -94,6 +96,7 @@ function updateExpense(id) {
 
             $('#idCardExpense' + id).empty()
             const formattedDate = formatDate(d.date);
+            const remainingQuantity = parseFloat(d.remainingQuantity).toFixed(2);
 
             $('#idCardExpense' + id).append(
                 `<div class="card-content d-flex p-1 align-items-center">
@@ -103,15 +106,15 @@ function updateExpense(id) {
                     </div>
                     <div class="col">
                         <div class="d-flex">
-                            <h3>${d.quantity}</h3>
+                            <h5>${d.quantity}</h5>
                             <span class="d-flex">
-                                <h3>&ensp;&euro;, por pagar:&ensp;</h3>
+                                <h5>&euro;, por pagar:&ensp;</h5>
                                 <span class="d-flex">
-                                    <h3>${d.remainingQuantity}</h3></h3><h3>&euro;</h3>
+                                    <h5>${remainingQuantity}</h5><h5>&euro;</h5>
                                 </span>
                             </span>
                         </div>
-                        <h3>${d.author.username}</h3>
+                        <h5>${d.author.username}</h5>
                     </div>
                     <div class="mx-4 text-center">
                         <b><u>Acciones</u></b>

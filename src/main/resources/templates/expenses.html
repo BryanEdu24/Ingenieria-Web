@@ -46,15 +46,15 @@
                                 </div>
                                 <div class="col">
                                     <div class="d-flex">
-                                        <h3 th:text="${expense.quantity}"></h3>
+                                        <h5 th:text="${expense.quantity}"></h5>
                                         <span class="d-flex">
-                                            <h3>&ensp;&euro;, por pagar:&ensp;</h3>
+                                            <h5>&euro;, por pagar:&ensp;</h5>
                                             <span class="d-flex">
-                                                <h3 th:text="${expense.remainingQuantity}"></h3><h3>&euro;</h3>
+                                                <h5 th:text="${#numbers.formatDecimal(expense.remainingQuantity, 2, 2)}"></h5><h5>&euro;</h5>
                                             </span>
                                         </span>
                                     </div>
-                                    <h3 th:text="${expense.author.username}"></h3>
+                                    <h5 th:text="${expense.author.username}"></h5>
                                 </div>
                                 <div class="mx-4 text-center">
 									<b><u>Acciones</u></b>

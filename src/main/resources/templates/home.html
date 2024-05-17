@@ -17,7 +17,7 @@
             <!--Tareas-->
             <div class="col card-list tareas">
                 <div class="titleStyle mt-2">TAREAS</div>
-                <div class="p-3" id="divTasksHome">
+                <div class="p-2" id="divTasksHome">
                     <div th:if="${#lists.size(tasks) == 0}" class="titleStyle">
                         <h4>No hay tareas registradas</h4>
                         <img th:src="@{/img/noHayTareas.png}" src="/img/noHayTareas.png" height="50" width="50">
@@ -53,29 +53,41 @@
             <div class="col">
                 <!--Gastos-->
                 <div class="row justify-content-center align-items-center text-center">
-                    <div class="gastos mt-2">
+                    <div class="gastos">
                         <div class="titleStyle mt-2">GASTOS</div>
-                        <div class="d-flex justify-content-center align-items-center text-center" id="divCurrentBalanceHome">
-                            <div id="currentBalanceHome" th:text="${u.balance}" th:if="${u.balance >= 0.0}" class="text-success"></div>
-                            <div id="currentBalanceHome" th:text="${u.balance}" th:if="${u.balance < 0.0}" class="text-danger"></div>
-                            &euro;
-                        </div>
-                        <div class="p-3">
+                        <div class="p-2">
+                            <div class="d-flex my-2 justify-content-center">
+                                <div class="card p-2 w-50">
+                                    <div class="d-flex justify-content-center" id="divCurrentBalanceHome">
+                                        <h3 id="currentBalanceHome" th:text="${u.balance}" th:if="${u.balance >= 0.0}" class="text-success"></h3>
+                                        <h3 id="currentBalanceHome" th:text="${u.balance}" th:if="${u.balance < 0.0}" class="text-danger"></h3>
+                                        <h4>&euro;</h4>
+                                    </div>
+                                </div>
+                            </div>
                             <div th:if="${#lists.size(expenses) == 0}" class="titleStyle">
                                 <h4>No hay gastos registrados</h4>
                                 <img th:src="@{/img/noHayGastos.png}" height="50" width="50">
                             </div>
-                            <div th:each="userExpenses:  ${expenses}" class="d-flex justify-content-center align-items-center text-center">
-                                <div class="card my-2" th:id="'expenseHomeCard' + ${userExpenses.id}">
-                                    <div class="card-content d-flex p-1 align-items-center">
-                                        <h5 th:text="${userExpenses.expenseT.author.username}"></h5>
-                                        <h5 th:text="${userExpenses.expenseT.title}"></h5>
-                                        <h5 th:text="${userExpenses.expenseT.quantityByUser}"></h5>
-                                        <button type="button" class="imgActionsPay" th:onclick="payExpense([[${userExpenses.id}]])" title="Pagar gasto">
-                                            <img th:src="@{/img/pagar.png}" src="/img/pagar.png" width="35" height="35" >
-                                        </button>
+                            <div class="card my-2" th:each="userExpenses: ${expenses}" th:id="'expenseHomeCard' + ${userExpenses.id}">
+                                <div class="card-content d-flex p-1 align-items-center">
+                                    <div class="text-start" style="margin-inline: 3%;">
+                                        <h3 th:text="${userExpenses.expenseT.title}"></h3>
+                                        <h4 th:text="${userExpenses.expenseT.author.username}"></h4>
+                                    </div>
+                                    <div class="col text-center">
+                                        <h4 th:text="${userExpenses.expenseT.quantityByUser}"></h4>
+                                    </div>
+                                    <div class="mx-4 text-center">
+                                        <h6>Pagar</h6>
+                                        <div>
+                                            <button type="button" class="imgActionsPay" th:onclick="payExpense([[${userExpenses.id}]])" title="Pagar gasto">
+                                                <img th:src="@{/img/pagar.png}" src="/img/pagar.png" width="35" height="35" >
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>                

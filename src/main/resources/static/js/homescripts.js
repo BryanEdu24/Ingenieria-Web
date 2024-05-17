@@ -34,12 +34,12 @@ function payExpense(userExpenseId) {
 
             if (d >= 0) {
                 $("#divCurrentBalanceHome").append(`
-                <div id="currentBalanceHome" class="text-success"> ${d} </div>
+                <h3 id="currentBalanceHome" class="text-success">${d}</h3>
                 &euro;
             `)
             } else {
                 $("#divCurrentBalanceHome").append(`
-                <div id="currentBalanceHome" class="text-danger"> ${d} </div>
+                <h3 id="currentBalanceHome" class="text-danger">${d}</h3>
                 &euro;
                 `)
             }
