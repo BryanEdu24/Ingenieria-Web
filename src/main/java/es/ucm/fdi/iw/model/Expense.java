@@ -12,8 +12,8 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @NamedQueries({
-    @NamedQuery(name = "Expense.byHouse", query = "SELECT e FROM Expense e "
-            + "WHERE e.house =: house AND e.enabled = TRUE"),
+        @NamedQuery(name = "Expense.byHouse", query = "SELECT e FROM Expense e "
+                + "WHERE e.house = :house AND e.enabled = TRUE"),
 })
 
 public class Expense implements Transferable<Expense.Transfer> {
@@ -24,6 +24,10 @@ public class Expense implements Transferable<Expense.Transfer> {
     private long id;
 
     private boolean enabled;
+
+    private Double quantityByUser;
+
+    private Double remainingQuantity;
 
     @Column(nullable = false)
     private String title;
@@ -49,11 +53,14 @@ public class Expense implements Transferable<Expense.Transfer> {
         private Double quantity;
         private Date date;
         private Long house_id;
+        private Double quantityByUser;
+        private Double remainingQuantity;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, title, author.toTransfer(), quantity, date, house.getId());
+        return new Transfer(id, title, author.toTransfer(), quantity, date, house.getId(), quantityByUser,
+                remainingQuantity);
     }
 
     @Override

@@ -44,9 +44,12 @@
                                     <h3 th:text="${expense.title}"></h3>
                                     <h5 th:text="${#dates.format(expense.date, 'dd/MM/yyyy')}"></h5>
                                 </div>
-                                <div class="col d-flex">
-                                    <h3 th:text="${expense.quantity}"></h3>
-                                    <span><h3 style="color: #FF991F;">&ensp;&euro;</h3></span>
+                                <div class="col">
+                                    <div class="d-flex">
+                                        <h3 th:text="${expense.quantity}"></h3>
+                                        <span><h3 style="color: #FF991F;">&ensp;&euro;</h3></span>
+                                    </div>
+                                    <h3 th:text="${expense.author.username}"></h3>
                                 </div>
                                 <div class="mx-4 text-center">
 									<b><u>Acciones</u></b>
@@ -54,11 +57,6 @@
 										<div>
 											<button type="button" class="imgActionsEdit" data-id="${expense.id}" th:onclick="editExpense([[${expense.id}]])" title="Editar gasto">
 												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" >
-											</button>
-										</div>
-                                        <div>
-											<button type="button" class="imgActionsPay" data-id="${expense.id}" th:onclick="payExpense([[${expense.id}]])" title="Pagar gasto">
-												<img th:src="@{/img/pagar.png}" src="/img/pagar.png" width="35" height="35" >
 											</button>
 										</div>
 										<div>
@@ -125,7 +123,7 @@
                         <div class="row mb-3">
                             <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Cantidad gastada (€):</label>
                             <div class="col-7">
-                                <input type="number" class="form-control" id="expenseQuantity" name="description" placeholder="Insertar Cantidad (€)" min="0" step="0.01" lang="es" required>
+                                <input type="number" class="form-control" id="expenseQuantity" name="description" placeholder="Insertar Cantidad (€)" min="0.01" step="0.01" lang="es" required>
                             </div>
                         </div>                      
                     </form>
@@ -174,41 +172,6 @@
         </div>
     </div>
 
-    <!-- Modal PAGAR GASTO -->
-    <div class="modal fade" id="payModalSpent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">🪙<u>Pagar Gasto</u></h4>
-                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <form th:action="@{/newExpense}" method="post" id="form-newExpense">
-                        <div class="row mb-3">
-                            <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Descripción del gasto:</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control" id="expenseDescription" name="description" placeholder="Descripción del gasto" required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Cantidad gastada (€):</label>
-                            <div class="col-7">
-                                <input type="number" class="form-control" id="expenseQuantity" name="description" placeholder="Insertar Cantidad (€)" min="0" step="0.01" lang="es" required>
-                            </div>
-                        </div>                      
-                    </form>
-                    
-                    <div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button data-bs-dismiss="modal" class="btn btn-primary" onclick="newExpense(event)">Nuevo Gasto</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal BORRAR GASTO -->
     <div class="modal fade" id="deleteModalSpent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -219,12 +182,15 @@
                 </div>
 
                 <div class="modal-body">
+                    <div id="alertDeleteExpense" class="error alert alert-danger text-center text-danger" style="display: none;" role="alert">
+						<b>⛔ El gasto tiene deudas pendientes. ⛔</b>
+					</div>
                     <div class="p-3 text-center" id="bodyDeleteModal"></div>
 					<div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>
                     
                     <div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="confirmDeleteExpenseButton" class="btn btn-primary">Nuevo Gasto</button>
+                        <button data-bs-dismiss="modal" id="confirmDeleteExpenseButton" class="btn btn-primary">Borrar Gasto</button>
                     </div>
                 </div>
             </div>

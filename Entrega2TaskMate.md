@@ -12,27 +12,27 @@ Cosas que quedan por hacer.
     - Borrar casa (ya no da error, pero no se actualiza la vista) 💡
 
 - MANAGER:
-    - modificar contraseña de la casa
+    - modificar contraseña de la casa directamente
     - cuando se elimina un usuario, que no siga siendo un posible manager ✅
 
 - HISTORICO:
     - creacion (tareas y gastos) ✅
-    - eliminacion (tareas✅ y gastos❌)
-    - modificacion (tareas✅ y gastos❌)
+    - eliminacion (tareas y gastos) ✅
+    - modificacion (tareas y gastos) ✅
 
 - GASTOS:
     - crear gastos ✅
-    - eliminar gastos 🤔💡
+    - eliminar gastos ✅
     - modificar gastos ✅
     - mostrar saldo ✅
-    - reparto de gastos
+    - reparto de gastos 
 
 - TAREAS:
     - marcar como completada ✅
-    - editar completado de una tarea desde vista tarea
+    - editar completado de una tarea desde vista tarea 
 
 - HOME :
-    - mostrar gasto
+    - mostrar gasto ✅
     - (Posible cambio) Eliminar de la vista tareas marcadas como completadas
 
 - TEST: 

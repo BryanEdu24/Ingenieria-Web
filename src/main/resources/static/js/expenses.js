@@ -7,7 +7,7 @@ function newExpense(event) {
         description: $("#expenseDescription").val(),
         quantity: $("#expenseQuantity").val()
     };
-    params.quantity = parseFloat(params.quantity).toFixed(2); // Redondeamos, NO SE TRUNCA
+    params.quantity = parseFloat(params.quantity).toFixed(4); // Redondeamos, NO SE TRUNCA
 
     console.log(`PARAMS: description:${params.description}, quantity:${params.quantity}`);
 
@@ -27,9 +27,12 @@ function newExpense(event) {
                         <h3>${d.title}</h3>
                         <h5>${formattedDate}</h5>
                     </div>
-                    <div class="col d-flex">
-                        <h3>${d.quantity}</h3>
-                        <span><h3 style="color: #FF991F;">&ensp;&euro;</h3></span>
+                    <div class="col">
+                        <div class="d-flex">
+                            <h3>${d.quantity}</h3>
+                            <span><h3 style="color: #FF991F;">&ensp;&euro;</h3></span>
+                        </div>
+                        <h3>${d.author.username}</h3>
                     </div>
                     <div class="mx-4 text-center">
                         <b><u>Acciones</u></b>
@@ -37,11 +40,6 @@ function newExpense(event) {
                             <div>
                                 <button type="button" class="imgActionsEdit" data-id="${d.id}" onclick="editExpense(${d.id})" title="Editar gasto">
                                     <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
-                                </button>
-                            </div>
-                            <div>
-                                <button type="button" class="imgActionsPay" data-id="${d.id}" onclick="payExpense(${d.id})" title="Pagar gasto">
-                                    <img th:src="@{/img/pagar.png}" src="/img/pagar.png" width="35" height="35">
                                 </button>
                             </div>
                             <div>
@@ -82,7 +80,7 @@ function updateExpense(id){
     };
 
     console.log("PARAMS: ", params);
-    params.quantity = parseFloat(params.quantity).toFixed(2); // Redondeamos, NO SE TRUNCA
+    params.quantity = parseFloat(params.quantity).toFixed(4); // Redondeamos, NO SE TRUNCA
 
     go("/user/updateExpense", 'POST', params)
         .then(d => {
@@ -98,9 +96,12 @@ function updateExpense(id){
                     <h3>${d.title}</h3>
                     <h5>${formattedDate}</h5>
                 </div>
-                <div class="col d-flex">
-                    <h3>${d.quantity}</h3>
-                    <span><h3 style="color: #FF991F;">&ensp;&euro;</h3></span>
+                <div class="col">
+                    <div class="d-flex">
+                        <h3>${d.quantity}</h3>
+                        <span><h3 style="color: #FF991F;">&ensp;&euro;</h3></span>
+                    </div>
+                    <h3>${d.author.username}</h3>
                 </div>
                 <div class="mx-4 text-center">
                     <b><u>Acciones</u></b>
@@ -108,11 +109,6 @@ function updateExpense(id){
                         <div>
                             <button type="button" class="imgActionsEdit" data-id="${d.id}" onclick="editExpense(${d.id})" title="Editar gasto">
                                 <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">
-                            </button>
-                        </div>
-                        <div>
-                            <button type="button" class="imgActionsPay" data-id="${d.id}" onclick="payExpense(${d.id})" title="Pagar gasto">
-                                <img th:src="@{/img/pagar.png}" src="/img/pagar.png" width="35" height="35">
                             </button>
                         </div>
                         <div>
@@ -135,6 +131,7 @@ function deleteExpense(id, nameExpense) {
     console.log("Datos de deleteExpense:", id, " y ", nameExpense); 
     
     $('#deleteModalSpent').modal('show');
+    $('#alertDeleteExpense').hide();
     $('#bodyDeleteModal').empty();
     $('#bodyDeleteModal').prepend(`<h5>¿Estás segur@ que deseas eliminar el gasto: <span style="color: #02B9D8;">${nameExpense}</span>?</h5>`)
     $('#confirmDeleteExpenseButton').attr("onclick", `confirmDeleteExpense(${id})`);
@@ -154,6 +151,9 @@ function confirmDeleteExpense(id){
             if (d) {
                 $('#deleteModalSpent').modal('hide');
                 $('#idCardExpense' + id).hide();
+            }
+            else {                
+                $('#alertDeleteExpense').show();
             }
         })
         .catch(e => {

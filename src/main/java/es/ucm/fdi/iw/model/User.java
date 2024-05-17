@@ -54,10 +54,12 @@ public class User implements Transferable<User.Transfer> {
 
     private String roles;
 
+    private double balance;
+
     @ManyToOne(optional = true)
     private House house;
 
-    @OneToMany //Gatos que tú creas
+    @OneToMany // Gatos que tú creas
     private List<Expense> expenses;
 
     @OneToMany // lo que debe
@@ -85,14 +87,15 @@ public class User implements Transferable<User.Transfer> {
         private String email;
         private Long house_id;
         private String roles;
+        private Double balance;
     }
 
     @Override
     public Transfer toTransfer() {
         if (house == null)
-            return new Transfer(id, username, email, null, roles);
+            return new Transfer(id, username, email, null, roles, balance);
         else
-            return new Transfer(id, username, email, house.getId(), roles);
+            return new Transfer(id, username, email, house.getId(), roles, balance);
     }
 
     @Override

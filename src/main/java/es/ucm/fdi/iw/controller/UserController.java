@@ -12,7 +12,7 @@ import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
 import es.ucm.fdi.iw.model.UserExpense;
-
+import javax.persistence.Query;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,13 +123,22 @@ public class UserController {
 			return "redirect:/user/welcome";
 		}
 
+		User user = entityManager.find(User.class, u.getId());
+
 		List<Task> tasks = entityManager
 				.createNamedQuery("Task.byUser", Task.class)
 				.setParameter("user", u)
 				.getResultList();
 
+		List<UserExpense> userExpenses = entityManager
+				.createNamedQuery("UserExpense.byUser", UserExpense.class)
+				.setParameter("user", user)
+				.getResultList();
+
 		model.addAttribute("tasks", tasks);
-		model.addAttribute("u", u);
+		model.addAttribute("expenses",
+				userExpenses.stream().map(Transferable::toTransfer).collect(Collectors.toList()));
+		model.addAttribute("u", user);
 
 		return "home";
 	}
@@ -435,11 +444,9 @@ public class UserController {
 				+ "</u>.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), u_task, msg);
 
-		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		// Crear histórico
 		String message = target.getAuthor() + " ha creado la tarea \"" + target.getTitle() + "\" en la habitación "
-				+ target.getRoom().getName() + " para " + target.getUser().getUsername() + " el "
-				+ niceDateFormat.format(currentDate());
+				+ target.getRoom().getName() + " para " + target.getUser().getUsername() + " el ";
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -474,10 +481,8 @@ public class UserController {
 		String msg = "La tarea \"" + target.getTitle() + "\" ha sido modificada.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), target.getUser(), msg);
 
-		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		// Crear histórico
-		String message = target.getAuthor() + " ha modificado la tarea \"" + target.getTitle() + "\" el "
-				+ niceDateFormat.format(currentDate());
+		String message = target.getAuthor() + " ha modificado la tarea \"" + target.getTitle() + "\" el ";
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -505,10 +510,8 @@ public class UserController {
 		String msg = "La tarea \"" + target.getTitle() + "\" ha sido eliminada.";
 		sendNotification("/topic/" + u_session.getHouse().getId(), target.getUser(), msg);
 
-		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		// Crear histórico
-		String message = target.getAuthor() + " ha borrado la tarea \"" + target.getTitle() + "\" el "
-				+ niceDateFormat.format(currentDate());
+		String message = target.getAuthor() + " ha borrado la tarea \"" + target.getTitle() + "\" el ";
 		createHistorical(message, "TASK", u_session.getHouse());
 
 		return target.toTransfer();
@@ -727,6 +730,7 @@ public class UserController {
 		} else {
 			if (newManagerId == -1) {
 				userToDelete.setHouse(null); // Desvincula al usuario de la casa
+				userToDelete.setBalance(0.00);
 				entityManager.persist(userToDelete);
 				entityManager.flush();
 
@@ -735,6 +739,7 @@ public class UserController {
 			} else {
 				userToDelete.setHouse(null); // Desvincula al usuario de la casa
 				userToDelete.setRoles(Role.USER.name());
+				userToDelete.setBalance(0.00);
 				entityManager.persist(userToDelete);
 
 				session.setAttribute("u", userToDelete);
@@ -803,36 +808,46 @@ public class UserController {
 		String description = data.get("description").asText();
 		Double quantity = data.get("quantity").asDouble();
 
-		// Crear el gastos
-		Expense newExpense = new Expense();
-		newExpense.setAuthor(u);
-		newExpense.setTitle(description);
-		newExpense.setQuantity(quantity);
-		newExpense.setDate(currentDate());
-		newExpense.setHouse(u.getHouse());
-		newExpense.setEnabled(true);
-		entityManager.persist(newExpense);
-		entityManager.flush();
-
-		// TODO Ajustar la tabla UserExpense
+		// Cargo los usuarios de la casa
 		List<User> users = entityManager
 				.createNamedQuery("User.byHouse", User.class)
 				.setParameter("house", u.getHouse())
 				.getResultList();
 
+		Double quantityByPerson = quantity / (users.size());
+
+		// Crear el gastos
+		Expense newExpense = new Expense();
+		newExpense.setAuthor(u);
+		newExpense.setTitle(description);
+		newExpense.setDate(currentDate());
+		newExpense.setHouse(u.getHouse());
+		newExpense.setEnabled(true);
+		newExpense.setQuantity(quantity);
+		newExpense.setQuantityByUser(quantityByPerson);
+		newExpense.setRemainingQuantity(quantity - quantityByPerson);
+		entityManager.persist(newExpense);
+		entityManager.flush();
+
 		for (User user : users) {
-			UserExpense newUserExpense = new UserExpense();
-			newUserExpense.setExpense(newExpense);
-			newUserExpense.setUser(user);
-			entityManager.persist(newUserExpense);
+			if (user.getId() != u.getId()) { // Le asigno el gasto a todos, menos al que lo crea.
+				UserExpense newUserExpense = new UserExpense();
+				newUserExpense.setExpense(newExpense);
+				newUserExpense.setUser(user);
+				entityManager.persist(newUserExpense);
+
+				user.setBalance(user.getBalance() - newExpense.getQuantityByUser());
+			} else {
+				user.setBalance(user.getBalance() + quantity - quantityByPerson);
+			}
+
+			entityManager.persist(user);
 		}
 		entityManager.flush();
 
-		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		// Crear histórico
 		String message = u.getUsername() + " ha creado el gasto con el concepto \"" + newExpense.getTitle()
-				+ "\" por el valor de " + newExpense.getQuantity() + "\u20AC el "
-				+ niceDateFormat.format(currentDate());
+				+ "\" por el valor de " + newExpense.getQuantity() + "\u20AC el ";
 		createHistorical(message, "EXPENSE", u.getHouse());
 
 		return newExpense.toTransfer();
@@ -846,6 +861,7 @@ public class UserController {
 			HttpServletResponse response,
 			@RequestBody JsonNode data,
 			Model model, HttpSession session) throws IOException {
+		User u = (User) session.getAttribute("u");
 
 		String expenseName = data.get("title").asText(); // Obtén el nuevo nombre del gasto
 		Double expenseQuantity = data.get("quantity").asDouble(); // Obtén la nueva cantidad del gasto
@@ -865,53 +881,79 @@ public class UserController {
 		entityManager.persist(expenseToUpdate); // Persiste los cambios en la base de datos
 		entityManager.flush();
 
+		// Crear histórico
+		String message = u.getUsername() + " ha modificado el gasto con el concepto \"" + expenseToUpdate.getTitle()
+				+ "\" por el valor de " + expenseToUpdate.getQuantity() + "\u20AC el ";
+		createHistorical(message, "EXPENSE", u.getHouse());
+
 		return expenseToUpdate.toTransfer(); // Devuelve los datos actualizados de la habitación
 	}
 
 	// Borrar gasto
-	/*
-	 * @PostMapping("/deleteExpense")
-	 * 
-	 * @Transactional
-	 * 
-	 * @ResponseBody
-	 * public boolean deleteExpense(
-	 * HttpServletResponse response,
-	 * 
-	 * @RequestBody JsonNode data,
-	 * Model model, HttpSession session) throws IOException {
-	 * 
-	 * // Obtén el nuevo nombre del gasto
-	 * 
-	 * long expenseId = data.get("id").asLong(); // Obtén el ID del gasto
-	 * List<Expense> expenses = entityManager.createNamedQuery("Expense.byHouse",
-	 * Task.class).setParameter("roomId", expenseId).getResultList();
-	 * 
-	 * if (expenses.size() > 0) {
-	 * return false;
-	 * } else {
-	 * Expense expenseToDelete = entityManager.find(Expense.class, expenseId); //
-	 * Encuentra el gasto en la base de datos
-	 * roomToDelete.setEnabled(false);
-	 * entityManager.persist(roomToDelete); // Persiste los cambios en la base de
-	 * datos
-	 * entityManager.flush();
-	 * 
-	 * House houseUpdate = entityManager.find(House.class,
-	 * roomToDelete.getHouse().getId());
-	 * houseUpdate.setExpenses(entityManager
-	 * .createNamedQuery("Expense.byHouse", Room.class)
-	 * .setParameter("houseId", houseUpdate.getId())
-	 * .getResultList());
-	 * entityManager.persist(houseUpdate); // Persiste los cambios en la base de
-	 * datos
-	 * entityManager.flush();
-	 * 
-	 * return true;
-	 * }
-	 * 
-	 * }
-	 */
+	@PostMapping("/deleteExpense")
+	@Transactional
+	@ResponseBody
+	public boolean deleteExpense(
+			HttpServletResponse response,
+			@RequestBody JsonNode data,
+			Model model, HttpSession session) throws IOException {
+		User u = (User) session.getAttribute("u");
+
+		// Obtén el nuevo nombre del gasto
+		long expenseId = data.get("id").asLong(); // Obtén el ID del gasto
+		/*
+		 * List<Expense> expenses = entityManager.createNamedQuery("Expense.byHouse",
+		 * Expense.class).setParameter("house", u.getHouse()).getResultList();
+		 */
+		Expense expenseToDelete = entityManager.find(Expense.class, expenseId); // Encuentra el gasto en la base de
+
+		// datos
+		expenseToDelete.setEnabled(false);
+		entityManager.persist(expenseToDelete); // Persiste los cambios en la base de datos
+		entityManager.flush();
+
+		// Crear histórico
+		String message = u.getUsername() + " ha borrado el gasto con el concepto \"" + expenseToDelete.getTitle()
+				+ "\" el ";
+		createHistorical(message, "EXPENSE", u.getHouse());
+
+		return true;
+	}
+
+	@PostMapping("/payExpense")
+	@Transactional
+	@ResponseBody
+	public Double payExpense(
+			HttpServletResponse response,
+			@RequestBody JsonNode data,
+			Model model, HttpSession session) throws IOException {
+
+		long userExpenseId = data.get("userExpenseId").asLong();
+
+		// Poner paid a true
+		UserExpense ue = entityManager.find(UserExpense.class, userExpenseId);
+		ue.setPaid(true);
+		entityManager.persist(ue);
+
+		// Sumo al usuario que paga y resto al autor.
+		User u = entityManager.find(User.class, ue.getUser().getId());
+		User author = entityManager.find(User.class, ue.getExpense().getAuthor().getId());
+
+		u.setBalance(u.getBalance() + ue.getExpense().getQuantityByUser());
+		author.setBalance(author.getBalance() - ue.getExpense().getQuantityByUser());
+
+		entityManager.persist(u);
+		entityManager.persist(author);
+
+		// Actualizar Expense
+		Expense e = entityManager.find(Expense.class, ue.getExpense().getId());
+		e.setRemainingQuantity(e.getRemainingQuantity() - e.getQuantityByUser());
+		entityManager.persist(e);
+
+		entityManager.flush();
+
+		return u.getBalance(); // Devuelve los datos actualizados de la habitación
+	}
 
 	// ----- UTILS -----
 	// Mandar notificaciones
@@ -943,6 +985,8 @@ public class UserController {
 	}
 
 	public void createHistorical(String message, String type, House house) {
+		DateFormat niceDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		message = message + niceDateFormat.format(currentDate());
 		// Crear histórico
 		Historical history = new Historical();
 		history.setType(type);

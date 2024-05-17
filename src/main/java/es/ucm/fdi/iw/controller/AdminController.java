@@ -113,6 +113,8 @@ public class AdminController {
 
         for (User u : users) {
             u.setHouse(null);
+            u.setRoles(User.Role.USER.name());
+            u.setBalance(0.00);
             entityManager.persist(u);
         }
 
@@ -142,6 +144,7 @@ public class AdminController {
         // if(banedUser.hasRole(Role.MANAGER)){}
         banedUser.setHouse(null);
         banedUser.setEnabled(false);
+        banedUser.setBalance(0.00);
         entityManager.persist(banedUser);
         entityManager.flush();
         return true;

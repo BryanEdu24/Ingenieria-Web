@@ -27,28 +27,28 @@ import es.ucm.fdi.iw.model.User.Role;
 @Controller
 public class RootController {
 
-    private static final Logger log = LogManager.getLogger(RootController.class);
+	private static final Logger log = LogManager.getLogger(RootController.class);
 
 	@Autowired
 	private EntityManager entityManager;
 
-    @Autowired
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-    public String encodePassword(String rawPassword) {
+	public String encodePassword(String rawPassword) {
 		return passwordEncoder.encode(rawPassword);
 	}
 
 	// ----- GETs -----
 	// Enrutamiento
 	// Cargar vista de login
-    @GetMapping({"/", "/login"})
+	@GetMapping({ "/", "/login" })
 	public String login(Model model) {
 		return "login";
 	}
 
 	// Cargar vista de registro
-    @GetMapping("/register")
+	@GetMapping("/register")
 	public String register(Model model) {
 		return "register";
 	}
@@ -58,29 +58,30 @@ public class RootController {
 	@PostMapping("/newuser")
 	@Transactional
 	public String register(
-		HttpServletResponse response,
-		@RequestParam String email,
-		@RequestParam String username,
-		@RequestParam String password,
-		Model model, HttpSession session) throws IOException {
+			HttpServletResponse response,
+			@RequestParam String email,
+			@RequestParam String username,
+			@RequestParam String password,
+			Model model, HttpSession session) throws IOException {
 
-        try {
-            entityManager.createNamedQuery("User.byemail", User.class)
-			.setParameter("useremail", email)
-			.getSingleResult();
-            return "redirect:/register";
-        } catch (NoResultException ex) {
-            User usernew = new User();
+		try {
+			entityManager.createNamedQuery("User.byemail", User.class)
+					.setParameter("useremail", email)
+					.getSingleResult();
+			return "redirect:/register";
+		} catch (NoResultException ex) {
+			User usernew = new User();
 			usernew.setUsername(username);
 			usernew.setEmail(email);
 			usernew.setPassword(encodePassword(password));
 			usernew.setRoles(Role.USER.name());
 			usernew.setHouse(null);
 			usernew.setEnabled(true);
+			usernew.setBalance(0.0);
 
 			entityManager.persist(usernew);
 			entityManager.flush();
-        }
+		}
 
 		return "redirect:/login";
 	}

@@ -7,9 +7,6 @@
 
     <body class="bodyLoginReg">
         <div class="card p-3" id="login">
-            <!-- <div class="text-center mb-3">
-                <img th:src="@{/img/LogoTM.png}" src="/img/LogoTM.png" height="100" width="100" class="roundedImg p-1" alt="Logo TaskMate" style="cursor: default;">
-            </div> -->
             <div class="titleStyle text-center mb-3 mt-3">
                 <span>—— </span>
                 <img th:src="@{/img/NombreTM.png}" src="/img/NombreTM.png" alt="Nombre TaskMate" height="50">
@@ -90,12 +87,25 @@
     <script>
         const togglePasswordButton = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
-    
+
+        const eyeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-fill pb-1" viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                         </svg>`;
+        const eyeSlashIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash-fill pb-1" viewBox="0 0 16 16">
+                                <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+                                <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+                             </svg>`;
+
         togglePasswordButton.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            this.querySelector('i').classList.toggle('bi-eye-fill');
-            this.querySelector('i').classList.toggle('bi-eye-slash-fill');
+
+            if (passwordInput.getAttribute('type') === 'password') {
+                this.innerHTML = eyeIcon;
+            } else {
+                this.innerHTML = eyeSlashIcon;
+            }
         });
     </script>
 
