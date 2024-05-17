@@ -25,8 +25,9 @@ Cosas que quedan por hacer.
     - eliminar gastos ✅
     - modificar gastos ✅
     - mostrar saldo ✅
-    - Balance de gastos 
-    - update gastos IMPORTANTE⚠️
+    - Balance de gastos
+    - update gastos funciona, pero  no da fedback cuando no se puede (Hacer que el catch de la función active un cuadro rojo
+    o así)
 
 - TAREAS:
     - marcar como completada ✅
@@ -36,5 +37,9 @@ Cosas que quedan por hacer.
 - HOME :
     - mostrar gasto ✅
 
-- TEST: 
+- TEST:
     - arreglar test
+
+- OTROS:
+    - Tenemos que hacer que haya más cosas en la BD de cara a la entrega.
+    - Actualizar el readme con todos los usuarios que haya y qué se puede hacer.
