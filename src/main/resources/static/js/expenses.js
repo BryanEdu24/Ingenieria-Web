@@ -135,10 +135,31 @@ function deleteExpense(id, nameExpense) {
     console.log("Datos de deleteExpense:", id, " y ", nameExpense); 
     
     $('#deleteModalSpent').modal('show');
-    //$('#alertDeleteRoom').hide();
     $('#bodyDeleteModal').empty();
     $('#bodyDeleteModal').prepend(`<h5>¿Estás segur@ que deseas eliminar el gasto: <span style="color: #02B9D8;">${nameExpense}</span>?</h5>`)
     $('#confirmDeleteExpenseButton').attr("onclick", `confirmDeleteExpense(${id})`);
+}
+
+function confirmDeleteExpense(id){
+    var params = {
+        id: id,
+    };
+
+    console.log("PARAMS: ", params);
+
+    go("/user/deleteExpense", 'POST', params)
+        .then(d => {
+            console.log("Success");
+            console.log(d);
+            if (d) {
+                $('#deleteModalSpent').modal('hide');
+                $('#idCardExpense' + id).hide();
+            }
+        })
+        .catch(e => {
+            console.log("Fail");
+            console.log(e);
+        });
 }
 
 function formatDate(dateString) {
