@@ -58,6 +58,8 @@ function newExpense(event) {
                     </div>
                 </div>
             </div>`)
+            
+            updateBalance()
 
         })
         .catch(e => {
@@ -131,7 +133,9 @@ function updateExpense(id) {
                             </div>
                         </div>
                     </div>
-                </div>`)
+                </div>`);
+
+            updateBalance()
 
         })
         .catch(e => {
@@ -174,6 +178,45 @@ function confirmDeleteExpense(id) {
             console.log("Fail");
             console.log(e);
         });
+}
+
+function updateBalance() {
+
+    go("/user/usersByHouse", 'GET')
+    .then(d => {
+        console.log("Success");
+        console.log(d);
+
+        $("#divBalanceCards").empty();
+
+        d.forEach(user => {
+            if(user.balance >= 0){
+                $("#divBalanceCards").append(`
+                <div class="card my-2">
+                    <div class="card-content d-flex p-1 justify-content-center">
+                        <h5 th:text="" class="bolder">${user.username}</h5>
+                        <h5 id="currentBalanceHome" class="text-success">${user.balance}</h5>
+                        <h5>&euro;</h5>
+                    </div>
+                </div>
+                `)
+            } else{
+                $("#divBalanceCards").append(`
+                <div class="card my-2">
+                    <div class="card-content d-flex p-1 justify-content-center">
+                        <h5 th:text="" class="bolder">${user.username}</h5>
+                        <h5 id="currentBalanceHome" class="text-danger">${user.balance}</h5>
+                        <h5>&euro;</h5>
+                    </div>
+                </div>
+                `)
+            }
+        });
+    })
+    .catch(e => {
+        console.log("Fail");
+        console.log(e);
+    });
 }
 
 function formatDate(dateString) {

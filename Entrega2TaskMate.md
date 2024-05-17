@@ -25,7 +25,7 @@ Cosas que quedan por hacer.
     - eliminar gastos ✅
     - modificar gastos ✅
     - mostrar saldo ✅
-    - Balance de gastos
+    - Balance de gastos ✅
     - update gastos funciona, pero  no da fedback cuando no se puede (Hacer que el catch de la función active un cuadro rojo
     o así)
 

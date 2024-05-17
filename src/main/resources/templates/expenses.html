@@ -19,12 +19,13 @@
                 <div class="gastos p-3 w-100">
                     <div class="row d-flex justify-content-center">
                         <div class="col">
-						</div>
-						<div class="titleStyle col d-flex align-items-center justify-content-center">Gastos</div>
-						<div class="col d-flex justify-content-end align-items-end">
+                        </div>
+                        <div class="titleStyle col d-flex align-items-center justify-content-center">Gastos</div>
+                        <div class="col d-flex justify-content-end align-items-end">
                             <button type="button" class="btn rounded" data-bs-toggle="tooltip">
                                 <span class="image-container" title="Añadir gasto">
-                                    <img th:src="@{/img/agregar.png}" src="/img/agregar.png" width="45" height="45" data-bs-toggle="modal" data-bs-target="#newModalSpent">
+                                    <img th:src="@{/img/agregar.png}" src="/img/agregar.png" width="45" height="45"
+                                        data-bs-toggle="modal" data-bs-target="#newModalSpent">
                                 </span>
                             </button>
                         </div>
@@ -50,27 +51,36 @@
                                         <span class="d-flex">
                                             <h5>&euro;, por pagar:&ensp;</h5>
                                             <span class="d-flex">
-                                                <h5 th:text="${#numbers.formatDecimal(expense.remainingQuantity, 2, 2)}"></h5><h5>&euro;</h5>
+                                                <h5
+                                                    th:text="${#numbers.formatDecimal(expense.remainingQuantity, 2, 2)}">
+                                                </h5>
+                                                <h5>&euro;</h5>
                                             </span>
                                         </span>
                                     </div>
                                     <h5 th:text="${expense.author.username}"></h5>
                                 </div>
                                 <div class="mx-4 text-center">
-									<b><u>Acciones</u></b>
-									<div class="d-flex mt-1">
-										<div>
-											<button type="button" class="imgActionsEdit" data-id="${expense.id}" th:onclick="editExpense([[${expense.id}]])" title="Editar gasto">
-												<img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35" >
-											</button>
-										</div>
-										<div>
-											<button type="button" class="imgActionsDelete" id="btnDeleteRoom" th:attr="data-name=${expense.title}" th:onclick="deleteExpense([[${expense.id}]], [[${expense.title}]])" title="Eliminar gasto">
-												<img th:src="@{/img/basura.png}" src="/img/basura.png" width="35" height="35" >
-											</button>
-										</div>
-									</div>
-								</div>
+                                    <b><u>Acciones</u></b>
+                                    <div class="d-flex mt-1">
+                                        <div>
+                                            <button type="button" class="imgActionsEdit" data-id="${expense.id}"
+                                                th:onclick="editExpense([[${expense.id}]])" title="Editar gasto">
+                                                <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35"
+                                                    height="35">
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="imgActionsDelete" id="btnDeleteRoom"
+                                                th:attr="data-name=${expense.title}"
+                                                th:onclick="deleteExpense([[${expense.id}]], [[${expense.title}]])"
+                                                title="Eliminar gasto">
+                                                <img th:src="@{/img/basura.png}" src="/img/basura.png" width="35"
+                                                    height="35">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -82,8 +92,17 @@
                     <!-- Balance -->
                     <div>
                         <div class="titleStyle">Balance</div>
-                        <div th:each="user : ${users}" th:text="${user.name}">
-                            <span th:text="${user.money}" class="bolder"></span>
+                        <div id="divBalanceCards">
+                            <div th:each="user : ${users}" class="card my-2">
+                                <div class="card-content d-flex p-1 justify-content-center">
+                                    <h5 th:text="${user.username}" class="bolder"></h5>
+                                    <h5 id="currentBalanceHome" th:text="${user.balance}" th:if="${user.balance >= 0.0}"
+                                        class="text-success"></h5>
+                                    <h5 id="currentBalanceHome" th:text="${user.balance}" th:if="${user.balance < 0.0}"
+                                        class="text-danger"></h5>
+                                    <h5>&euro;</h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -93,12 +112,14 @@
     </div>
 
     <!-- Modal NUEVO GASTO -->
-    <div class="modal fade" id="newModalSpent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newModalSpent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">💲<u>Nuevo Gasto</u></h4>
-                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
@@ -106,21 +127,24 @@
                         <div class="row mb-3">
                             <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Descripción del gasto:</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" id="expenseDescription" name="description" placeholder="Descripción del gasto" required>
+                                <input type="text" class="form-control" id="expenseDescription" name="description"
+                                    placeholder="Descripción del gasto" required>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Cantidad gastada (€):</label>
                             <div class="col-7">
-                                <input type="number" class="form-control" id="expenseQuantity" name="description" placeholder="Insertar Cantidad (€)" min="0.01" step="0.01" lang="es" required>
+                                <input type="number" class="form-control" id="expenseQuantity" name="description"
+                                    placeholder="Insertar Cantidad (€)" min="0.01" step="0.01" lang="es" required>
                             </div>
-                        </div>                      
+                        </div>
                     </form>
-                    
+
                     <div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button data-bs-dismiss="modal" class="btn btn-primary" onclick="newExpense(event)">Nuevo Gasto</button>
+                        <button data-bs-dismiss="modal" class="btn btn-primary" onclick="newExpense(event)">Nuevo
+                            Gasto</button>
                     </div>
                 </div>
             </div>
@@ -128,12 +152,14 @@
     </div>
 
     <!-- Modal EDITAR GASTO -->
-    <div class="modal fade" id="editModalSpent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModalSpent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">✒️ <u>Editar Gasto</u></h4>
-                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
@@ -141,21 +167,24 @@
                         <div class="row mb-3">
                             <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Descripción del gasto:</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" id="expenseDescriptionEdit" name="description" placeholder="Descripción del gasto" required>
+                                <input type="text" class="form-control" id="expenseDescriptionEdit" name="description"
+                                    placeholder="Descripción del gasto" required>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label class="col-5 align-self-center m-0"><b>·&nbsp;</b> Cantidad gastada (€):</label>
                             <div class="col-7">
-                                <input type="number" class="form-control" id="expenseQuantityEdit" name="description" placeholder="Insertar Cantidad (€)" min="0.01" step="0.01" lang="es" required>
+                                <input type="number" class="form-control" id="expenseQuantityEdit" name="description"
+                                    placeholder="Insertar Cantidad (€)" min="0.01" step="0.01" lang="es" required>
                             </div>
-                        </div>                      
+                        </div>
                     </form>
-                    
+
                     <div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button id="buttonExpenseUpdate" data-bs-dismiss="modal" class="btn btn-primary">Confirmar cambios</button>
+                        <button id="buttonExpenseUpdate" data-bs-dismiss="modal" class="btn btn-primary">Confirmar
+                            cambios</button>
                     </div>
                 </div>
             </div>
@@ -163,21 +192,24 @@
     </div>
 
     <!-- Modal BORRAR GASTO -->
-    <div class="modal fade" id="deleteModalSpent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModalSpent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">⚠️ <u>Borrar Gasto</u></h4>
-                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close modalCross" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
-                    <div id="alertDeleteExpense" class="error alert alert-danger text-center text-danger" style="display: none;" role="alert">
-						<b>⛔ El gasto tiene deudas pendientes. ⛔</b>
-					</div>
+                    <div id="alertDeleteExpense" class="error alert alert-danger text-center text-danger"
+                        style="display: none;" role="alert">
+                        <b>⛔ El gasto tiene deudas pendientes. ⛔</b>
+                    </div>
                     <div class="p-3 text-center" id="bodyDeleteModal"></div>
-					<div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>
-                    
+                    <div class="text-danger text-center"><b>*Una vez confirmado no se podrá recuperar*</b></div>
+
                     <div class="modal-footer text-center d-flex justify-content-between align-items-center mt-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button id="confirmDeleteExpenseButton" class="btn btn-primary">Borrar Gasto</button>

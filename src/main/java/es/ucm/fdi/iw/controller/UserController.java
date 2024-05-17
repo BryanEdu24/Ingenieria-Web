@@ -250,8 +250,14 @@ public class UserController {
 				.setParameter("house", entityManager.find(House.class, u.getHouse().getId()))
 				.getResultList();
 
+		List<User> users = entityManager
+				.createNamedQuery("User.byHouse", User.class)
+				.setParameter("house", u.getHouse())
+				.getResultList();
+
 		model.addAttribute("u", u);
 		model.addAttribute("expenses", expenses);
+		model.addAttribute("users", users);
 
 		return "expenses";
 	}
@@ -324,6 +330,27 @@ public class UserController {
 		return target.toTransfer();
 	}
 
+	// Lista de transfers de users de la casa
+	@GetMapping("/usersByHouse")
+	@Transactional // para no recibir resultados inconsistentes
+	@ResponseBody // para indicar que no devuelve vista, sino un objeto (jsonizado)
+	public List<User.Transfer> usersByHouse(HttpSession session) {
+
+		User u = (User) session.getAttribute("u");
+
+		// En caso de no tener casa asignada
+		if (u.getHouse() == null) {
+			return null;
+		}
+
+		List<User> users = entityManager
+				.createNamedQuery("User.byHouse", User.class)
+				.setParameter("house", u.getHouse())
+				.getResultList();
+
+		return users.stream().map(Transferable::toTransfer).collect(Collectors.toList());
+	}
+
 	/**
 	 * TODO
 	 * Returns JSON with all received USER messages
@@ -341,6 +368,7 @@ public class UserController {
 
 		return notifications.stream().map(Transferable::toTransfer).collect(Collectors.toList());
 	}
+
 
 	// ----- WebSockets -----
 	/**
@@ -899,7 +927,8 @@ public class UserController {
 					user.setBalance(user.getBalance() + oldQuantityByUser - expenseToUpdate.getQuantityByUser());
 				} else {
 					user.setBalance(
-							user.getBalance() - oldQuantity + oldQuantityByUser + expenseToUpdate.getRemainingQuantity());
+							user.getBalance() - oldQuantity + oldQuantityByUser
+									+ expenseToUpdate.getRemainingQuantity());
 				}
 
 				entityManager.persist(user);
@@ -918,7 +947,8 @@ public class UserController {
 					user.setBalance(user.getBalance() + oldQuantityByUser - expenseToUpdate.getQuantityByUser());
 				} else {
 					user.setBalance(
-							user.getBalance() - oldQuantity + oldQuantityByUser + expenseToUpdate.getRemainingQuantity());
+							user.getBalance() - oldQuantity + oldQuantityByUser
+									+ expenseToUpdate.getRemainingQuantity());
 				}
 
 				entityManager.persist(user);
