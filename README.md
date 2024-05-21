@@ -66,10 +66,10 @@ En el apartado de tareas los usuarios podrán gestionar todas las tareas de la c
 - Visualización de información de cada tarea, modificación y eliminación: los usuarios pueden ir revisando la información de cada tarea, que es toda la entregada más la fecha de creación; por otro lado se les da la opción de modificar información como el nombre, la asginación y la habitación a la que pertenece; o simplemente la opción de eliminar la tarea.
 - Notas: una vez se hace click en el botón que muestra la información de la tarea, también se puede añadir una nota, las cuales quedarán guardadas para que puedan ser leidas por todo aquel que vea la información de la tarea en un futuro.
 
-### Gatos
+### Gastos
 En el apartado de gastos los usuarios pueden hacer y ver lo siguiente:
-- Creación de gatos: dándole click al "+", los usuarios pueden crear un nuevo gasto para la casa, para esto se debe poner el nombre del gasto y la cantidad que lo conforma. Este gasto será repartido a partes iguales entre todos los integrantes de la casa, el que lo crea incluido (su parte se paga automaticamente).
-- Visualización de gastos: en esta vista se podrán ver todos los gatos que hay en la casa en ese momento, de ellos se verá el nombre, la fecha en la que se creo, el valor inicial dado, cuánto queda por pagar, quién lo creo y dos acciones, eliminar (solo se podrá hacer si todo el mundo ha pagado) y editar (solo se podrá hacer si nadie lo ha pagado en el momento en que se intenta la eliminación).
+- Creación de gastos: dándole click al "+", los usuarios pueden crear un nuevo gasto para la casa, para esto se debe poner el nombre del gasto y la cantidad que lo conforma. Este gasto será repartido a partes iguales entre todos los integrantes de la casa, el que lo crea incluido (su parte se paga automaticamente).
+- Visualización de gastos: en esta vista se podrán ver todos los gastos que hay en la casa en ese momento, de ellos se verá el nombre, la fecha en la que se creo, el valor inicial dado, cuánto queda por pagar, quién lo creo y dos acciones, eliminar (solo se podrá hacer si todo el mundo ha pagado) y editar (solo se podrá hacer si nadie lo ha pagado en el momento en que se intenta la eliminación).
 - Vista del balance: nos permite ver el estado de las cuentas de todos los usuarios de la casa. Si están en rojo y negativo significa que tienen gastos por pagar. En verde y positivo es que tienen pagos que recibir.
 
 ### Manager
