@@ -60,7 +60,7 @@ Lo primero que ve el usuario es su home, donde tiene una vista rápida de las ta
 Por otro lado, el usuario tiene la oportunidad de navegar por las diferentes páginas de la web a través de la navbar, así como de deslogear, haciendo click en la foto de arriba a la derecha y posteriormente en cerrar sesión.
 
 ### Tareas
-En el apartado de tareas los usuarios podrán gestionar todas las tareas de la casa, para ellos tendrán las siguiente funcionalidades:
+En el apartado de tareas los usuarios podrán gestionar todas las tareas de la casa, para ello tendrán las siguiente funcionalidades:
 - Filtros: donde se podrán ver las tareas ordenadas en base a diferentes criterios. (No pudiendo crear nuevas mientras las demás están filtradas).
 - Creación de nuevas tareas: dándo click al "+", lo usuarios podrán crear nuevas tareas para la casa. Para esto se le pedirá: el nombre de usuario, a quién se le asgina (pudiendo ser uno mismo) y la habitación a la que pertenece esa tarea.
 - Visualización de información de cada tarea, modificación y eliminación: los usuarios pueden ir revisando la información de cada tarea, que es toda la entregada más la fecha de creación; por otro lado se les da la opción de modificar información como el nombre, la asginación y la habitación a la que pertenece; o simplemente la opción de eliminar la tarea.
@@ -74,6 +74,9 @@ En el apartado de gastos los usuarios pueden hacer y ver lo siguiente:
 
 ### Manager
 Esta vista es accesible unicamente por el manager de la casa, que será uno por casa. Desde esta vista se pueden gestionar los usuarios y habitaciones de la casa.
+- Creación de habitaciones: los managers podrán crear habitaciones nuevas para una casa, deben dar el nombre que tendrá la habitación y la imagen con la que se mostrará esa habitación en la "home" de la aplicación.
+- Modificar y Eliminar habitaciones: los managers también podrán cambiar el nombre de una habitación o eliminarla directamente (esto solo se podrá hacer si esa habitación no tiene tareas asignadas).
+-Gestión de usuario: los manager podrán eliminar usuarios de una casa, lo que hace que estos pasen a estar sin casa asignada. Solo se podrán eliminar aquellos usuarios que no tengan tareas asignadas (deberás eliminar sus tareas si quieres eliminarlo). Por otro lado si el manager se elimina así mismo tendrá que seleccionar un nuevo manager entre los demás usuarios de la casa.
 
 ### Historial
 En esta parte de la web se puede ver el historial de diferentes acciones que han tenido lugar dentro de la página, estos movimientos estarás referenciados como TAREA, si esa entrada del historial la ha generado una acción sobre una tarea, o GASTO si por el contrario ha sido por un gasto.
