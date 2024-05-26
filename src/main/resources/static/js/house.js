@@ -58,12 +58,14 @@ function viewUser(event) {
         });
 }
 
-function deleteHouse(id) {
+function deleteHouse(id) { // Banea Casa
     console.log("Botón de bloquear clickeado");
     console.log("ID de la tarjeta:", id);
 
     // // Mostrar modal de edición
     $('#deleteHouseModal').modal('show');
+    $('#titleDeleteModal').empty();
+    $('#titleDeleteModal').prepend(`<h5>¿Estás segur@ que deseas eliminar el usuario (name casa): <span style="color: #02B9D8;">${name}</span>?</h5>`);
     $('#confirmDeleteHouseButton').attr("onclick", `confirmDeleteHouse(${id})`);
 }
 
@@ -98,22 +100,36 @@ function viewHouseUserInfo(houseId) {
                 $("#collapseAreaHouse" + houseId).empty();
 
                 d.forEach(user => {
-                    $("#collapseAreaHouse" + houseId).append(`
-                    <div class="card p-1 mb-3 cardsMembersAdmin" id="cardsMembersAdmin${user.id}">
-                        <div class="card-content d-flex p-1 align-items-center justify-content-between">
-                            <div class="mx-3 d-flex">
-                                <img th:src="@{/img/JefeCasa.png}" src="/img/JefeCasa.png" width="50" height="60">
-                                <img th:src="@{/img/User.png}" src="/img/User.png" width="50" height="60">
-                                <h5 class="ms-2 mb-0 d-flex align-items-center justify-content-center titleStyleInfo">${user.username}</h5>
+                    if(user.roles == "MANAGER") {
+                        $("#collapseAreaHouse" + houseId).append(`
+                            <div class="card p-1 mb-3 cardsMembersAdmin" id="cardsMembersAdmin${user.id}">
+                                <div class="card-content d-flex p-1 align-items-center justify-content-between">
+                                    <div class="mx-3 d-flex">
+                                        <img th:src="@{/img/JefeCasa.png}" src="/img/JefeCasa.png" width="50" height="60">
+                                        <h5 class="ms-2 mb-0 d-flex align-items-center justify-content-center titleStyleInfo">${user.username}</h5>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mx-3">
-                                <button type="button" class="imgActionsDelete" onclick="banHouseUser(event, '${user.id}', \'${user.username}\')">
-                                    <img th:src="@{/img/basura.png}" src="/img/basura.png" width="40" height="40">
-                                </button>
+                        `);
+                    }
+                    else {
+                        $("#collapseAreaHouse" + houseId).append(`
+                        <div class="card p-1 mb-3 cardsMembersAdmin" id="cardsMembersAdmin${user.id}">
+                            <div class="card-content d-flex p-1 align-items-center justify-content-between">
+                                <div class="mx-3 d-flex">
+                                    <img th:src="@{/img/User.png}" src="/img/User.png" width="50" height="60">
+                                    <h5 class="ms-2 mb-0 d-flex align-items-center justify-content-center titleStyleInfo">${user.username}</h5>
+                                </div>
+                                <div class="mx-3">
+                                    <button type="button" class="imgActionsDelete" onclick="banHouseUser(event, '${user.id}', \'${user.username}\')">
+                                        <img th:src="@{/img/basura.png}" src="/img/basura.png" width="40" height="40">
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     `);
+                    }
+                    
                 });
             })
             .catch(e => {
@@ -123,14 +139,13 @@ function viewHouseUserInfo(houseId) {
     }
 }
 
-function banHouseUser(event, id, username){
+function banHouseUser(event, id, username){ // Banea User
     console.log("Ban house user");
 
     $('#BanMemberModal').modal('show');
     $('#bodyBanModal2').empty();
-    $('#bodyBanModal2').prepend(`<h5>¿Estás segur@ que deseas eliminar el usuario: <span style="color: #02B9D8;">${username}</span>?</h5>`)
+    $('#bodyBanModal2').prepend(`<h5>¿Estás segur@ que deseas eliminar el usuario: <span style="color: #02B9D8;">${username}</span>?</h5>`);
     $('#confirmBanUserButton').attr("onclick", `confirmBanUser(${id})`);
-
 }
 
 function confirmBanUser(id){

@@ -150,6 +150,18 @@
                                 </div>
                                 <div id="containerButtonEditDelete">
                                     <div class="d-flex justify-content-end mt-4" id="editDeleteButtonTask">
+                                        <div>
+                                            <div class="col-1" id="taskInfoStateCompleted">
+                                                <div class="d-flex">
+                                                    <h5>Estado de la tarea:</h5> <h1>✅</h1>
+                                                </div>
+                                            </div>
+                                            <div class="col-1" id="taskInfoStateNotCompleted">
+                                                <div>
+                                                    <h5>Estado de la tarea:</h5> <h1>❌</h1>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="mx-2">
                                             <button type="button" id="editTaskButton" class="btn imgActionsEdit" title="Editar tarea">
                                                 <img th:src="@{/img/lapiz.png}" src="/img/lapiz.png" width="35" height="35">

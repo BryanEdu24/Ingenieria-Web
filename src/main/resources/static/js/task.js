@@ -142,6 +142,8 @@ function viewInfo(event) {
 
             $("#noTaskSelected").hide();
             $("#divDeleteTask").hide();
+            $("#taskInfoStateCompleted").hide();
+            $("#taskInfoStateNotCompleted").hide();
 
             // Task Info
             const formattedDate = formatDateTime(d.creationDate);
@@ -152,6 +154,12 @@ function viewInfo(event) {
             $("#selectedTaskDate").val(formattedDate);
             $("#viewTaskSelectUser").val(d.userT.id);
             $("#viewTaskSelectRoom").val(d.room.id);
+            if (d.done) {
+                $("#taskInfoStateCompleted").show();
+            }
+            else {
+                $("#taskInfoStateNotCompleted").show();
+            }
             $("#editTaskButton").attr("onclick", `updateInfo(event, ${idTask})`);
             $("#deleteTaskButton").attr("onclick", `deleteTask(event, ${idTask})`);
 
