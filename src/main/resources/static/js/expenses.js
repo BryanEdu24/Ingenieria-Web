@@ -190,27 +190,45 @@ function updateBalance() {
         $("#divBalanceCards").empty();
 
         d.forEach(user => {
-            if(user.balance >= 0){
-                $("#divBalanceCards").append(`
-                <div class="card my-2">
-                    <div class="card-content d-flex p-1 justify-content-center">
-                        <h5 th:text="" class="bolder">${user.username}</h5>
-                        <h5 id="currentBalanceHome" class="text-success">${user.balance}</h5>
-                        <h5>&euro;</h5>
-                    </div>
-                </div>
-                `)
-            } else{
-                $("#divBalanceCards").append(`
-                <div class="card my-2">
-                    <div class="card-content d-flex p-1 justify-content-center">
-                        <h5 th:text="" class="bolder">${user.username}</h5>
-                        <h5 id="currentBalanceHome" class="text-danger">${user.balance}</h5>
-                        <h5>&euro;</h5>
-                    </div>
-                </div>
-                `)
+            let balanceHtml;
+            if (user.balance >= 0) {
+                balanceHtml = `
+                    <div class="card my-2">
+                        <div class="card-content d-flex p-2 justify-content-center align-items-center">
+                            <div class="titleStyle textCardManager">${user.username}:&ensp;</div>
+                            <h3 class="m-0">
+                                <div class="d-flex align-items-center">
+                                    <span class="text-success">${user.balance} &euro;</span>
+                                    <span class="text-success ms-2">
+                                         por recibir
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-graph-down-arrow" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 11.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-1 0v2.6l-3.613-4.417a.5.5 0 0 0-.74-.037L7.06 8.233 3.404 3.206a.5.5 0 0 0-.808.588l4 5.5a.5.5 0 0 0 .758.06l2.609-2.61L13.445 11H10.5a.5.5 0 0 0-.5.5"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </h3>
+                        </div>
+                    </div>`;
+            } else {
+                balanceHtml = `
+                    <div class="card my-2">
+                        <div class="card-content d-flex p-2 justify-content-center align-items-center">
+                            <div class="titleStyle textCardManager">${user.username}:&ensp;</div>
+                            <h3 class="m-0">
+                                <div class="d-flex align-items-center">
+                                    <span class="text-danger">${user.balance} &euro;</span>
+                                    <span class="text-danger ms-2">
+                                         por pagar
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </h3>
+                        </div>
+                    </div>`;
             }
+            $("#divBalanceCards").append(balanceHtml);
         });
     })
     .catch(e => {

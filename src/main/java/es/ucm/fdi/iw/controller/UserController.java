@@ -427,9 +427,9 @@ public class UserController {
 					+ target.getTitle() + "\" en la habitación "
 					+ target.getRoom().getName() + " a ";
 			if (target.isDone()) {
-				message += "terminada.";
+				message += "terminada el ";
 			} else {
-				message += "sin terminar.";
+				message += "sin terminar el";
 			}
 			createHistorical(message, "TASK",
 					entityManager.find(House.class, ((User) session.getAttribute("u")).getHouse().getId()));

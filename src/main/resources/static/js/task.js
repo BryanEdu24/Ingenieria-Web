@@ -155,9 +155,11 @@ function viewInfo(event) {
             $("#viewTaskSelectUser").val(d.userT.id);
             $("#viewTaskSelectRoom").val(d.room.id);
             if (d.done) {
+                $("#taskCompletedInput").val(`✅ "Completada"`);
                 $("#taskInfoStateCompleted").show();
             }
             else {
+                $("#taskNotCompletedInput").val(`❌ "Incompleta"`);
                 $("#taskInfoStateNotCompleted").show();
             }
             $("#editTaskButton").attr("onclick", `updateInfo(event, ${idTask})`);
