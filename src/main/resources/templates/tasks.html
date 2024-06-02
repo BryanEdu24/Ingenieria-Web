@@ -84,7 +84,8 @@
                                 </div>
                                 <button class="btn" type="button" onclick="viewInfo(event)">
                                     <div class="d-none" id="taskPersonalID" th:text="${task.id}"></div>
-                                    <span class="image-container" title="Ver información de la tarea">
+                                    <span th:id="'spanInfoCardTask' + ${task.id}" class="image-container" title="Ver información de la tarea">
+                                        <div th:id="'pillNumNotesTask' + ${task.id}" th:if="${#lists.size(task.notes) > 0}" th:text="${#lists.size(task.notes)}" class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-secondary"> </div>
                                         <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
                                     </span>
                                 </button>

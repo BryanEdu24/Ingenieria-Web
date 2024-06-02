@@ -396,29 +396,56 @@ function resetFilters(event, houseId) {
 function tasksCardsAppends(lista){
     lista.forEach(taskT => {
         const formattedDate = formatDate(taskT.creationDate);
-        $('#divCardsTasks').append(
-            `<div class="card my-2" id="divCardTasksTask${taskT.id}">
-                <div class="card-content d-flex p-1 align-items-center taskCard">
-                <div class="col ms-2 my-1">
-                    <h3>${taskT.title}</h3>
-                    <h5>${taskT.userT.username}</h5>
-                </div>
-                <div class="col-4">
-                    <div>
-                        <h5>${formattedDate}</h5>
+        if(taskT.notes.length > 0){
+            $('#divCardsTasks').append(
+                `<div class="card my-2" id="divCardTasksTask${taskT.id}">
+                    <div class="card-content d-flex p-1 align-items-center taskCard">
+                    <div class="col ms-2 my-1">
+                        <h3>${taskT.title}</h3>
+                        <h5>${taskT.userT.username}</h5>
                     </div>
-                    <div>
-                        <h5>${taskT.room.name}</h5>
+                    <div class="col-4">
+                        <div>
+                            <h5>${formattedDate}</h5>
+                        </div>
+                        <div>
+                            <h5>${taskT.room.name}</h5>
+                        </div>
                     </div>
+                    <button class="btn" type="button" onclick="viewInfo(event)">
+                        <div class="d-none" id="taskPersonalID">${taskT.id}</div>
+                        <span id="spanInfoCardTask${taskT.id}" class="image-container">
+                            <div id="pillNumNotesTask${taskT.id}" class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-secondary"> ${taskT.notes.length} </div>
+                            <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
+                        </span>
+                    </button>
                 </div>
-                <button class="btn" type="button" onclick="viewInfo(event)">
-                    <div class="d-none" id="taskPersonalID">${taskT.id}</div>
-                    <span class="image-container">
-                        <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
-                    </span>
-                </button>
-            </div>
-    </div>`)
+        </div>`)
+        } else {
+            $('#divCardsTasks').append(
+                `<div class="card my-2" id="divCardTasksTask${taskT.id}">
+                    <div class="card-content d-flex p-1 align-items-center taskCard">
+                    <div class="col ms-2 my-1">
+                        <h3>${taskT.title}</h3>
+                        <h5>${taskT.userT.username}</h5>
+                    </div>
+                    <div class="col-4">
+                        <div>
+                            <h5>${formattedDate}</h5>
+                        </div>
+                        <div>
+                            <h5>${taskT.room.name}</h5>
+                        </div>
+                    </div>
+                    <button class="btn" type="button" onclick="viewInfo(event)">
+                        <div class="d-none" id="taskPersonalID">${taskT.id}</div>
+                        <span id="spanInfoCardTask${taskT.id}" class="image-container">
+                            <img th:src="@{/img/vista.png}" src="/img/vista.png" width="65" height="65">
+                        </span>
+                    </button>
+                </div>
+        </div>`)
+        }
     });
 }
 
@@ -435,6 +462,19 @@ function newNote(event, idTask) {
         .then(i => {
             console.log("Success");
             console.log(i);
+
+            const pillNumNotes = $("#pillNumNotesTask" + idTask);
+            var num = pillNumNotes.text();
+
+            if(num){
+                pillNumNotes.text(Number(num) + 1);
+            } else {
+                $("#spanInfoCardTask" + idTask).prepend(`
+                    <div id="pillNumNotesTask${idTask}" class="position-absolute top-50 start-100 translate-middle badge rounded-pill bg-secondary"> 1 </div>
+                `)
+            }
+
+
             $('#noteMessage').val(''); // Para borrar nota
             $('#carouselNotes').prepend(
                 `<div class="card text-center cardNotes my-2">
