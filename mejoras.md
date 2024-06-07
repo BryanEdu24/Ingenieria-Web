@@ -18,3 +18,5 @@ Mejoras que hemos realizado:
         · Gastos -> Gastos (m), donde m = cuánto me deben (si me deben, en verde); o cúanto debo (si debo, en rojo)
 
     - Test en Gastos para comprobar que los parentesis de la navbar funcionan (Preguta de examen)
+
+    - Correcion de las terminaciones de las imagenes en ".PNG" a ".png"

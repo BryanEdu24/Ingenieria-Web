@@ -1,6 +1,6 @@
 Cosas de la correción que son errores.
 
-* LogoTM.png devuelve 404. El nombre del fichero es LogoTM.PNG. Modificad el nombre para que todas las extensiones sean en minúscula (hay varios otros ficheros con este mismo problema, buscad PNG con mayúsculas activas en este enunciado). Este problema sólo es visible en Linux / Mac (donde las mayúsculas son importantes en nombres de fichero).
+* LogoTM.png devuelve 404. El nombre del fichero es LogoTM.PNG. Modificad el nombre para que todas las extensiones sean en minúscula (hay varios otros ficheros con este mismo problema, buscad PNG con mayúsculas activas en este enunciado). Este problema sólo es visible en Linux / Mac (donde las mayúsculas son importantes en nombres de fichero). ✅
 
 * Tendría sentido, cuando mostráis "qué ha pasado" en el panel lateral de notificaciones, que se pudiese saltar a la cosa que ha pasado.
 
