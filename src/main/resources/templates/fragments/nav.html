@@ -29,13 +29,26 @@
                         <!--Tareas-->
                         <li class="nav-item mx-3">
                             <a class="nav-link" id="buttonTasks" href="/user/tasks" title="Página de tareas">
-                                <h5>Tareas</h5>
+                                <div>
+                                    <h5>Tareas
+                                        <span>(</span>
+                                        <span th:id="'nTasksUser' + ${u.id}" th:text="${numTareas}"></span>
+                                        <span>)</span>
+                                    </h5>
+                                </div>
                             </a>
                         </li>
                         <!--Gastos-->
                         <li class="nav-item mx-3">
                             <a class="nav-link" id="buttonExpenses" href="/user/expenses" title="Página de gastos">
-                                <h5>Gastos</h5>
+                                <div>
+                                    <h5>Gastos
+                                        <span>(</span>
+                                        <span th:id="'balanceUserNav' + ${u.id}" th:if="${balance < 0}" th:text="${balance} + '€'" class="text-danger"></span>
+                                        <span th:id="'balanceUserNav' + ${u.id}" th:if="${balance >= 0}" th:text="${balance} + '€'" class="text-success"></span>
+                                        <span>)</span>
+                                    </h5>
+                                </div>
                             </a>
                         </li>
                         <li class="nav-item mx-3">

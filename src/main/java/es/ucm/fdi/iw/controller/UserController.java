@@ -140,7 +140,22 @@ public class UserController {
 				userExpenses.stream().map(Transferable::toTransfer).collect(Collectors.toList()));
 		model.addAttribute("u", user);
 
+		model.addAttribute("numTareas", tasks.size());
+		model.addAttribute("balance", user.getBalance());
+
 		return "home";
+	}
+
+	// Lo utilizo para que el los contadores de tareas y gastos estén actualizados, te muevas donde te muevas.
+	private void actualizarValoresSesión(User user, HttpSession session) {
+		User u = entityManager.find(User.class, user.getId()); // Lo busco de nuevo, por si acaso está desactualizado
+
+		long counTask = entityManager.createNamedQuery("Task.nTasksbyUser", Long.class)
+				.setParameter("user", u)
+				.getSingleResult();
+
+		session.setAttribute("numTareas", counTask);
+		session.setAttribute("balance", u.getBalance());
 	}
 
 	// Cargar vista historical
@@ -160,6 +175,11 @@ public class UserController {
 
 		model.addAttribute("historicals", historicals);
 		model.addAttribute("u", u);
+
+		actualizarValoresSesión(u, session);
+
+		model.addAttribute("numTareas", session.getAttribute("numTareas"));
+		model.addAttribute("balance", session.getAttribute("balance"));
 
 		return "historical";
 	}
@@ -203,6 +223,11 @@ public class UserController {
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("u", u);
 
+		actualizarValoresSesión(u, session);
+
+		model.addAttribute("numTareas", session.getAttribute("numTareas"));
+		model.addAttribute("balance", session.getAttribute("balance"));
+
 		return "tasks";
 	}
 
@@ -232,6 +257,11 @@ public class UserController {
 		model.addAttribute("rooms", rooms);
 		model.addAttribute("u", u);
 
+		actualizarValoresSesión(u, session);
+
+		model.addAttribute("numTareas", session.getAttribute("numTareas"));
+		model.addAttribute("balance", session.getAttribute("balance"));
+
 		return "manager";
 	}
 
@@ -258,6 +288,11 @@ public class UserController {
 		model.addAttribute("u", u);
 		model.addAttribute("expenses", expenses);
 		model.addAttribute("users", users);
+
+		actualizarValoresSesión(u, session);
+
+		model.addAttribute("numTareas", session.getAttribute("numTareas"));
+		model.addAttribute("balance", session.getAttribute("balance"));
 
 		return "expenses";
 	}

@@ -121,8 +121,6 @@ public class AdminController {
         house.setEnabled(false);
         entityManager.persist(house);
         entityManager.flush();
-        // return house.toTransfer(); // Devuelve los datos actualizados de la
-        // habitación
 
         return true;
     }

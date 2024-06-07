@@ -22,6 +22,10 @@ function newExpense(event) {
             const formattedDate = formatDate(d.date);
             const remainingQuantity = parseFloat(d.remainingQuantity).toFixed(2);
 
+            var aux = $("#balanceUserNav" + d.author.id).text();
+            var sol = Number(aux) + Number(d.remainingQuantity);
+            $("#balanceUserNav" + d.author.id).text(sol + "€");
+
             $('#divCardsExpenses').prepend(`
             <div class="card my-2" id="idCardExpense${d.id}">
                 <div class="card-content d-flex p-1 align-items-center">
@@ -73,6 +77,7 @@ function editExpense(id) {
     console.log("ID card gasto:", id);
 
     $('#editModalSpent').modal('show'); // Mostrar modal de edición
+    $('#alertUpdateExpense').hide();
     $('#buttonExpenseUpdate').attr("onclick", `updateExpense(${id})`);
 }
 
@@ -136,11 +141,12 @@ function updateExpense(id) {
                 </div>`);
 
             updateBalance()
+            $('#editModalSpent').modal('hide');
 
         })
         .catch(e => {
             console.log("Fail");
-            console.log("NO PUEDES CAMBIARLA");
+            $('#alertUpdateExpense').show();
         });
 }
 
@@ -191,6 +197,9 @@ function updateBalance() {
 
         d.forEach(user => {
             let balanceHtml;
+            
+            $("#balanceUserNav" + user.id).text(user.balance + "€");
+
             if (user.balance >= 0) {
                 balanceHtml = `
                     <div class="card my-2">

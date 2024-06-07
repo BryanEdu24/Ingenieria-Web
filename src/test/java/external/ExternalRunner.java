@@ -17,7 +17,7 @@ class ExternalRunner {
 
     @Karate.Test
     Karate testLogin() {
-        return Karate.run("userExperience").relativeTo(getClass());
+        return Karate.run("testExamen").relativeTo(getClass());
     }
 
 }

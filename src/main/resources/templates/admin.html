@@ -18,7 +18,7 @@
             <div class="admin p-3 w-75">
                 <div class="titleStyle">Casas</div>
                 <div class="p-3">
-                    <div th:each="house: ${houses}" class="card my-2" id="'houseCard' + ${house.id}">
+                    <div th:each="house: ${houses}" class="card my-2" th:id="'houseCard' + ${house.id}">
                         <div th:text="${house.id}" hidden> </div>
                         <div class="card-content d-flex p-2 align-items-center justify-content-between">
                             <div class="d-flex">

@@ -27,7 +27,10 @@ import java.util.List;
                                 + "WHERE t.id = :taskId"),
                 @NamedQuery(name = "Task.byRoom", query = "SELECT t "
                                 + "FROM Task t "
-                                + "WHERE t.room.id = :roomId AND t.enabled= true")
+                                + "WHERE t.room.id = :roomId AND t.enabled= true"),
+                @NamedQuery(name = "Task.nTasksbyUser", query = "SELECT COUNT(*) "
+                                + "FROM Task t "
+                                + "WHERE t.user = :user AND t.enabled= true"),
 })
 public class Task implements Transferable<Task.Transfer> {
         @Id

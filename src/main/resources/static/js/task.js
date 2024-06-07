@@ -18,6 +18,10 @@ function newTask(event) {
 
             $("#form-newTask")[0].reset()
 
+            var aux = $("#nTasksUser" + d.userT.id).text();
+            var sol = Number(aux) + 1;
+            $("#nTasksUser" + d.userT.id).text(sol);
+
             const formattedDate = formatDate(d.creationDate);
 
             //TODO habitación
@@ -198,7 +202,7 @@ function deleteTask(event, idTask) {
     let params = {
         id: idTask,
     };
-
+    
     go("/user/deleteTask", 'POST', params)
         .then(d => {
             console.log("Success");
@@ -209,6 +213,10 @@ function deleteTask(event, idTask) {
             $("#inputNotes").hide()
             $("#noTaskSelectedNotes").show();
             $("#divCardTasksTask" + idTask).hide()
+
+            var aux = $("#nTasksUser" + d.userT.id).text();
+            var sol = Number(aux) - 1;
+            $("#nTasksUser" + d.userT.id).text(sol);
         })
         .catch(e => {
             console.log("Fail");

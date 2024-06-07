@@ -65,7 +65,7 @@ function deleteHouse(id) { // Banea Casa
     // // Mostrar modal de edición
     $('#deleteHouseModal').modal('show');
     $('#titleDeleteModal').empty();
-    $('#titleDeleteModal').prepend(`<h5>¿Estás segur@ que deseas eliminar el usuario (name casa): <span style="color: #02B9D8;">${name}</span>?</h5>`);
+    $('#titleDeleteModal').prepend(`<h5>¿Estás segur@ que deseas eliminar la casa?</h5>`);
     $('#confirmDeleteHouseButton').attr("onclick", `confirmDeleteHouse(${id})`);
 }
 
@@ -81,7 +81,7 @@ function confirmDeleteHouse(id) {
         .then(d => {
             console.log("Success");
             console.log(d);
-            $('houseCard' + id ).hide();
+            $('#houseCard' + id ).hide();
         })
         .catch(e => {
             console.log("Fail");

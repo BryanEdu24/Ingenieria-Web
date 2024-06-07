@@ -18,7 +18,6 @@ function changeTaskState(idTask) {
 }
 
 function payExpense(userExpenseId) {
-
     var params = {
         userExpenseId: userExpenseId
     };
