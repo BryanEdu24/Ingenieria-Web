@@ -16,7 +16,7 @@ PREGUNTAS O CORRECCIONES DEL EXAMEN
 
 - Test en Gastos para comprobar que los parentesis de la navbar funcionan. Hemos añadido un nuevo testExamen.feature y modificado ExternalRunner.java para que se ejecute.
 
-- Hacer que las notificaciones de los gatos sean clickeables (en este caso tiene un botón junto a la cruz, que es una flecha (-->)) para ir a ver la infomración de la tarea. Para esta pregunta ha habido que modificar el UserController.java, creando una nueva ruta con un parámetro que es el name de la tarea, un par de javascripts: el encargado de las notificaciones y el de las tareas; por otro lado se ha hecho un pequeño cambio en tasks.html y en styles.css.
+- Hacer que las notificaciones de las tareas sean clickeables (en este caso tiene un botón junto a la cruz, que es una flecha (-->)) para ir a ver la infomración de la tarea. Para esta pregunta ha habido que modificar el UserController.java, creando una nueva ruta con un parámetro que es el name de la tarea, un par de javascripts: el encargado de las notificaciones y el de las tareas; por otro lado se ha hecho un pequeño cambio en tasks.html y en styles.css.
 
 - En la navbar:
     · Tareas -> Tareas (n), donde n = cuántas tengo asignadas
