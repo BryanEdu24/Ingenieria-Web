@@ -12,7 +12,7 @@ PREGUNTAS O CORRECCIONES DEL EXAMEN
 
 - En /user/tasks ahora se pueden ver las notas que hay en cada tarea antes de darle a ver información. Hemos tenido que modificar task.html y el js de task.js.
 
-- Respecto a: "Echo en falta poder marcar mis deudas como saldadas. En este momento, con el mecanismo de reparto de gastos, es muy difícil volver a 0. Un botón de "marcar como pagado" permitiría convertir un número negativo en un hermoso 0 (dejando constancia en el historial, para evitar tramposos)." Para que el balance de un usuario vuelva a 0, debe pagar todas sus deudas desde /user/home y/o tener todos los gastos que haya creado pagados por los demás usuarios de la casa.
+- Respecto a: "Echo en falta poder marcar mis deudas como saldadas. En este momento, con el mecanismo de reparto de gastos, es muy difícil volver a 0. Un botón de "marcar como pagado" permitiría convertir un número negativo en un hermoso 0 (dejando constancia en el historial, para evitar tramposos)." Para que el balance de un usuario vuelva a 0, debe pagar todas sus deudas desde /user/home con el botón del dolar y/o tener todos los gastos que haya creado pagados por los demás usuarios de la casa.
 
 - Test en Gastos para comprobar que los parentesis de la navbar funcionan. Hemos añadido un nuevo testExamen.feature y modificado ExternalRunner.java para que se ejecute.
 
