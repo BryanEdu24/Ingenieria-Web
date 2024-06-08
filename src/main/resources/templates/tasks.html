@@ -7,7 +7,7 @@
     <title>Task</title>
 </head>
 
-<body>
+<body th:attr="data-task=${task}">
     <!--Navbar-->
     <header th:replace="fragments/nav.html :: nav"></header>
 

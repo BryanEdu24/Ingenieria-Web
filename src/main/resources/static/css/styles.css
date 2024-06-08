@@ -154,6 +154,10 @@ input, select {
     transform: scale(1.05);
 }
 
+.notificationLink {
+    color: #2e2e3e;
+}
+
 /* --- HOME --- */
 .HomePrincipal {
     padding: 2%;

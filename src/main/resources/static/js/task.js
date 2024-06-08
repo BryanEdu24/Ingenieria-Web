@@ -1,5 +1,27 @@
 "use strict"
 
+$(() => {
+
+    const task = $("body").data("task");
+    console.log(task)
+
+    let taskElements = document.querySelectorAll('.card-content h3');
+
+    taskElements.forEach(function(element) {
+    if (element.textContent === task) {
+        let parentDiv = element.closest('.card');
+        console.log('Encontrado:', parentDiv);
+        
+        let button = parentDiv.querySelector('button');
+        if (button) {
+            button.click();
+            console.log('Botón pulsado');
+        }
+    }
+});
+
+});
+
 function newTask(event) {
     event.preventDefault();
 

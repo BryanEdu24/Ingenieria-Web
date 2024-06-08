@@ -2,7 +2,7 @@ Cosas de la correción que son errores.
 
 * LogoTM.png devuelve 404. El nombre del fichero es LogoTM.PNG. Modificad el nombre para que todas las extensiones sean en minúscula (hay varios otros ficheros con este mismo problema, buscad PNG con mayúsculas activas en este enunciado). Este problema sólo es visible en Linux / Mac (donde las mayúsculas son importantes en nombres de fichero). ✅
 
-* Tendría sentido, cuando mostráis "qué ha pasado" en el panel lateral de notificaciones, que se pudiese saltar a la cosa que ha pasado.
+* Tendría sentido, cuando mostráis "qué ha pasado" en el panel lateral de notificaciones, que se pudiese saltar a la cosa que ha pasado. ✅
 
 * Echo en falta poder marcar mis deudas como saldadas. En este momento, con el mecanismo de reparto de gastos, es muy difícil volver a 0. Un botón de "marcar como pagado" permitiría convertir un número negativo en un hermoso 0 (dejando constancia en el historial, para evitar tramposos). ✅
 
@@ -10,7 +10,7 @@ Cosas de la correción que son errores.
 
 Ejercicios del examen, que podemos añadir.
 
-- Haz que notificaciones a una tarea tengan enlaces que, al pulsarlos, tengan el mismo efecto que navegar a la vista de tareas y pulsar en el botón de detalles.
+- Haz que notificaciones a una tarea tengan enlaces que, al pulsarlos, tengan el mismo efecto que navegar a la vista de tareas y pulsar en el botón de detalles. ✅
 
 - Haz que en los menús de la barra de navegación aparezcan, en paréntesis, detalles sobre ciertos elementos:
     - Tareas -> Tareas (n), donde n = cuántas tengo asignadas

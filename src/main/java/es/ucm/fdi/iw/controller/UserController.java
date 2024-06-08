@@ -201,7 +201,7 @@ public class UserController {
 	// Cargar vista de tasks
 	@GetMapping("/tasks")
 	@Transactional
-	public String task(Model model, HttpSession session) {
+	public String tasks(Model model, HttpSession session) {
 		User u = (User) session.getAttribute("u");
 		House h = u.getHouse();
 
@@ -227,6 +227,41 @@ public class UserController {
 
 		model.addAttribute("numTareas", session.getAttribute("numTareas"));
 		model.addAttribute("balance", session.getAttribute("balance"));
+
+		return "tasks";
+	}
+
+	// Cargar vista de tasks
+	@GetMapping("/tasks/{name}")
+	@Transactional
+	public String task(Model model, HttpSession session,  @PathVariable String name) {
+		User u = (User) session.getAttribute("u");
+		House h = u.getHouse();
+
+		// En caso de no tener casa asignada
+		if (h == null) {
+			return "redirect:/user/welcome";
+		}
+
+		House target = entityManager.find(House.class, h.getId());
+		List<Task> tasks = entityManager
+				.createNamedQuery("Task.forHouse", Task.class)
+				.setParameter("house", target)
+				.getResultList();
+
+		model.addAttribute("houseUsers", target.getUsers());
+		model.addAttribute("rooms", target.getRooms());
+		model.addAttribute("authorName", u.getUsername());
+
+		model.addAttribute("tasks", tasks);
+		model.addAttribute("u", u);
+
+		actualizarValoresSesión(u, session);
+
+		model.addAttribute("numTareas", session.getAttribute("numTareas"));
+		model.addAttribute("balance", session.getAttribute("balance"));
+
+		model.addAttribute("task", name);
 
 		return "tasks";
 	}
@@ -503,8 +538,7 @@ public class UserController {
 		entityManager.flush(); // forces DB to add user & assign valid id
 
 		// Crear notification
-		String msg = u_task.getUsername() + ", " + u_session.getUsername() + " te ha asignado a la tarea <u>" + title
-				+ "</u>.";
+		String msg = u_task.getUsername() + ", " + u_session.getUsername() + " te ha asignado a la tarea \"<i>" + title + "</i>\".";
 		sendNotification("/topic/" + u_session.getHouse().getId(), u_task, msg);
 
 		// Crear histórico
